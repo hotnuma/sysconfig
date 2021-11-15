@@ -44,6 +44,8 @@ dtoverlay=disable-bt
 EOF
 fi
 
+# sudo geany /etc/xdg/lxsession/LXDE-pi/desktop.conf
+
 # install / remove -----------------------------------------------------
 
 dest=/usr/bin/mpv
