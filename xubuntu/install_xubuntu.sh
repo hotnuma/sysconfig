@@ -18,8 +18,7 @@ fi
 dest=/etc/sudoers.d/custom
 if [[ ! -f $dest ]]; then
     echo "*** edit /etc/sudoers"
-    sudo tee -a $dest > /dev/null << 'EOF'
-
+    sudo tee $dest > /dev/null << 'EOF'
 hotnuma ALL=(ALL) NOPASSWD: ALL
 
 EOF
@@ -39,8 +38,8 @@ if [[ ! -f $dest ]]; then
     # install base
     sudo apt -y install htop geany rofi gimp xfce4-taskmanager net-tools
     sudo apt -y install p7zip-full engrampa lm-sensors hardinfo gparted
-	sudo apt -y install mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui
-    sudo apt -y install build-essential git ninja-build dos2unix
+    sudo apt -y install mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui
+    sudo apt -y install build-essential git meson ninja-build dos2unix
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
@@ -48,8 +47,10 @@ if [[ ! -f $dest ]]; then
     sudo apt -y purge synaptic thunderbird fwupd thermald at-spi2-core
     
     # services
-	sudo systemctl disable bluetooth cups cups-browsed unattended-upgrades
-    sudo systemctl disable wpa_supplicant
+	sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
+    sudo systemctl stop unattended-upgrades
+	sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
+    sudo systemctl disable unattended-upgrades
 	
 	sudo apt -y autoremove
 fi
