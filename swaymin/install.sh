@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# vulkan-broadcom
+
 dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
-    sudo pacman -Sy sway swayidle wofi xfce4-terminal thunar
-    sudo pacman -Sy gvfs pulseaudo htop
-    sudo pacman -Sy geany firefox firefox-ublock-origin
+    sudo pacman -S mesa-demos sway swayidle wofi xfce4-terminal thunar
+    sudo pacman -S gvfs pulseaudo htop
+    sudo pacman -S geany firefox firefox-ublock-origin
     mkdir ~/.config
     mkdir ~/.config/sway
     cp -pr /backup/config_minimal/config ~/.config/sway/config
