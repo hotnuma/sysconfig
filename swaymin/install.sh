@@ -24,16 +24,15 @@ hotnuma ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# vulkan-broadcom mesa-demos 
+# vulkan-broadcom mesa-demos pulseaudio 
 
 dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
     sudo pacman -S sway swayidle wofi thunar xfce4-terminal
-    sudo pacman -S gvfs pulseaudo htop
+    sudo pacman -S gvfs htop
     sudo pacman -S geany firefox firefox-ublock-origin
-    mkdir -p ~/.config/sway
     cp -r ~/sysconfig/swaymin/config/* ~/.config/
 fi
 

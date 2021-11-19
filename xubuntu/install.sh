@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # test if sudo is succesfull -------------------------------------------
 
