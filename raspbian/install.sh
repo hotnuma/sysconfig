@@ -62,7 +62,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
-    sudo apt purge thonny vim xarchiver system-config-printer
+    sudo apt -y purge thonny vim xarchiver system-config-printer
     
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
