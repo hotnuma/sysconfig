@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # test if sudo is succesfull -------------------------------------------
 
@@ -56,8 +56,8 @@ if [[ ! -f $dest ]]; then
     sudo apt update && sudo apt full-upgrade
     
     # install base
-    sudo apt -y install xfce4-terminal xfce4-taskmanager rofi
-    sudo apt -y install engrampa p7zip-full mpv firefox-esr
+    sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi
+    sudo apt -y install firefox-esr mpv engrampa p7zip-full
     sudo apt -y install build-essential git meson ninja-build dos2unix
     sudo apt -y install --no-install-recommends smartmontools
 	
