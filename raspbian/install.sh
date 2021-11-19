@@ -57,7 +57,8 @@ if [[ ! -f $dest ]]; then
     
     # install base
     sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi
-    sudo apt -y install firefox-esr mpv engrampa p7zip-full
+    sudo apt -y install firefox-esr webext-ublock-origin-firefox
+    sudo apt -y install mpv engrampa p7zip-full
     sudo apt -y install build-essential git meson ninja-build dos2unix
     sudo apt -y install --no-install-recommends smartmontools
 	
