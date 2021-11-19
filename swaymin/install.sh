@@ -1,17 +1,40 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-# vulkan-broadcom
+# test if sudo is succesfull -------------------------------------------
+
+if [[ "$EUID" = 0 ]]; then
+    echo "*** must not be run as root: abort."
+    exit 1
+else
+    sudo -k # make sure to ask for password on next sudo
+    if ! sudo true; then
+        echo "*** sudo failed: abort."
+        exit 1
+    fi
+fi
+
+# set no password sudo -------------------------------------------------
+
+dest=/etc/sudoers.d/custom
+if [[ ! -f $dest ]]; then
+    echo "*** edit /etc/sudoers"
+    sudo tee $dest > /dev/null << 'EOF'
+hotnuma ALL=(ALL) NOPASSWD: ALL
+
+EOF
+fi
+
+# vulkan-broadcom mesa-demos 
 
 dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
-    sudo pacman -S mesa-demos sway swayidle wofi xfce4-terminal thunar
+    sudo pacman -S sway swayidle wofi thunar xfce4-terminal
     sudo pacman -S gvfs pulseaudo htop
     sudo pacman -S geany firefox firefox-ublock-origin
-    mkdir ~/.config
-    mkdir ~/.config/sway
-    cp -pr /backup/config_minimal/config ~/.config/sway/config
+    mkdir -p ~/.config/sway
+    cp -r ~/sysconfig/swaymin/config/* ~/.config/
 fi
 
 dest=/etc/environment
