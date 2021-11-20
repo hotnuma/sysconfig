@@ -303,13 +303,13 @@
   </keybind>
 
   <!-- Keybindings for running applications -->
-  <keybind key="W-t">
+  <keybind key="W-b">
     <action name="Execute">
       <startupnotify>
         <enabled>true</enabled>
-        <name>Terminal</name>
+        <name>Firefox</name>
       </startupnotify>
-      <command>xfce4-terminal</command>
+      <command>firefox</command>
     </action>
   </keybind>
   <keybind key="W-e">
@@ -321,13 +321,14 @@
       <command>thunar</command>
     </action>
   </keybind>
-  <keybind key="W-b">
+  <keybind key="W-t">
     <action name="Execute">
-      <startupnotify>
-        <enabled>true</enabled>
-        <name>Firefox</name>
-      </startupnotify>
-      <command>firefox</command>
+      <command>xfce4-terminal</command>
+    </action>
+  </keybind>
+  <keybind key="W-S-c">
+    <action name="Execute">
+      <command>openbox --reconfigure</command>
     </action>
   </keybind>
   <!-- Launch scrot when Print is pressed -->

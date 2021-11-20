@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -44,8 +46,6 @@ dtoverlay=disable-bt
 EOF
 fi
 
-# sudo geany /etc/xdg/lxsession/LXDE-pi/desktop.conf
-
 # install / remove -----------------------------------------------------
 
 dest=/usr/bin/mpv
@@ -64,25 +64,36 @@ if [[ ! -f $dest ]]; then
 	
 	# uninstall
     sudo apt -y purge thonny vim xarchiver system-config-printer
-    sudo apt -y purge lxterminal lxtask mousepad
+    sudo apt -y purge lxtask mousepad
     
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
 
+    # autoremove
     sudo apt -y autoremove
 fi
 
-# install dev apps -----------------------------------------------------
+dest=~/config
+if [[ ! -d $dest ]]; then
+    echo "*** config link"
+    ln -s ~/.config $dest
+fi
 
-#~ dest=/usr/bin/qtcreator
-#~ if [[ ! -f $dest ]]; then
-    #~ echo "*** install dev softwares"
+#~ dest=~/.config/mpv
+#~ if [[ ! -d $dest ]]; then
+    #~ echo "*** configure mpv"
     
-	#~ # install dev
-	#~ sudo apt -y install qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools
-	#~ sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev
-	
+    #~ mkdir -p $dest
+    #~ cp -a $BASEDIR/config/mpv/ ~/.config/
+#~ fi
+
+#~ dest=~/.config/openbox
+#~ if [[ ! -d $dest ]]; then
+    #~ echo "*** configure openbox"
+    
+    #~ mkdir -p $dest
+    #~ cp -a $BASEDIR/config/openbox/ ~/.config/
 #~ fi
 
 

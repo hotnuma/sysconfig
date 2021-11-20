@@ -255,14 +255,9 @@
         <command>scrot</command>
       </action>
     </keybind>
-    <keybind key="Super-T">
-      <action name="Execute">
-         <command>xfce4-terminal</command>
-      </action>
-    </keybind>
     <keybind key="C-A-T">
       <action name="Execute">
-         <command>xfce4-terminal</command>
+         <command>x-terminal-emulator</command>
       </action>
     </keybind>
     <!--keybindings for LXPanel -->
