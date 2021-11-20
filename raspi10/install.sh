@@ -80,6 +80,18 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest
 fi
 
+dest=~/Bookshelf
+if [[ -d $dest ]]; then
+    echo "*** clean home dir"
+    rm -rf ~/Bookshelf
+    rm -rf ~/Music
+    rm -rf ~/Pictures
+    rm -rf ~/Public
+    rm -rf ~/Music
+    rm -rf ~/Templates
+    rm -rf ~/Videos
+fi
+
 #~ dest=~/.config/mpv
 #~ if [[ ! -d $dest ]]; then
     #~ echo "*** configure mpv"
