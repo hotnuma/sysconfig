@@ -64,7 +64,7 @@ if [[ ! -f $dest ]]; then
 	
 	# uninstall
     sudo apt -y purge thonny vim xarchiver system-config-printer
-    sudo apt -y purge lxtask mousepad
+    sudo apt -y purge lxtask mousepad tumbler
     
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
