@@ -70,7 +70,8 @@ if [[ ! -f $dest ]]; then
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
-    sudo systemctl disable raspi-config
+    sudo systemctl stop triggerhappy
+    sudo systemctl disable triggerhappy raspi-config
 
     # autoremove
     sudo apt -y autoremove
