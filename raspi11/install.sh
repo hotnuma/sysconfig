@@ -60,6 +60,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install firefox-esr webext-ublock-origin-firefox
     sudo apt -y install mpv engrampa p7zip-full numlockx feh
     sudo apt -y install build-essential git meson ninja-build dos2unix
+    sudo apt -y install cpufrequtils
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
@@ -69,29 +70,40 @@ if [[ ! -f $dest ]]; then
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
+    sudo systemctl disable raspi-config
 
     # autoremove
     sudo apt -y autoremove
 fi
 
+# /etc settings
+dest=/etc/default/cpufrequtils
+if [[ ! -f $dest ]]; then
+    echo "*** set governor to performance"
+    sudo tee $dest > /dev/null << 'EOF'
+GOVERNOR="performance"
+
+EOF
+fi
+
+# /home settings
 dest=~/config
 if [[ ! -d $dest ]]; then
     echo "*** config link"
     ln -s ~/.config $dest
 fi
 
-dest=~/.config/mpv
-if [[ ! -d $dest ]]; then
-    echo "*** configure mpv"
+#~ dest=~/.config/mpv
+#~ if [[ ! -d $dest ]]; then
+    #~ echo "*** configure mpv"
     
-    mkdir -p $dest
-    cp -a $BASEDIR/config/mpv/ ~/.config/
-fi
+    #~ mkdir -p $dest
+    #~ cp -a $BASEDIR/config/mpv/ ~/.config/
+#~ fi
 
 dest=~/.config/openbox
 if [[ ! -d $dest ]]; then
     echo "*** configure openbox"
-    
     mkdir -p $dest
     cp -a $BASEDIR/config/openbox/ ~/.config/
 fi
