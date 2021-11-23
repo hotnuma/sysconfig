@@ -94,13 +94,21 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest
 fi
 
-#~ dest=~/.config/mpv
-#~ if [[ ! -d $dest ]]; then
-    #~ echo "*** configure mpv"
+dest=~/.config/lxpanel
+if [[ ! -d $dest ]]; then
+    echo "*** configure panel"
     
-    #~ mkdir -p $dest
-    #~ cp -a $BASEDIR/config/mpv/ ~/.config/
-#~ fi
+    mkdir -p $dest
+    cp -a $BASEDIR/config/lxpanel/ ~/.config/
+fi
+
+dest=~/.config/lxsession
+if [[ ! -d $dest ]]; then
+    echo "*** configure session"
+    
+    mkdir -p $dest
+    cp -a $BASEDIR/config/lxsession/ ~/.config/
+fi
 
 dest=~/.config/openbox
 if [[ ! -d $dest ]]; then
