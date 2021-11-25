@@ -1,0 +1,11 @@
+###########################
+# xbindkeys configuration #
+###########################
+
+"xbindkeys_show" 
+  control+shift + q
+  
+"firefox"
+  Mod2+Mod4 + w
+
+
