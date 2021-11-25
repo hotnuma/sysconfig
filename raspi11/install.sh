@@ -94,6 +94,8 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest
 fi
 
+#TODO : append 'export GTK_OVERLAY_SCROLLING=0' into ~/.profile
+
 dest=~/.config/lxpanel
 if [[ ! -d $dest ]]; then
     echo "*** configure panel"
