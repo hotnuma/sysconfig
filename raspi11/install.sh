@@ -116,17 +116,6 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest
 fi
 
-#TODO : append 'export GTK_OVERLAY_SCROLLING=0' into ~/.profile
-
-#~ dest=~/.profile
-#~ if [[ ! -f $dest ]]; then
-    #~ echo "*** set governor to performance"
-    #~ sudo tee $dest > /dev/null << 'EOF'
-#~ export GTK_OVERLAY_SCROLLING=0"
-
-#~ EOF
-#~ fi
-
 dest=~/.config/lxpanel
 if [[ ! -d $dest ]]; then
     echo "*** configure panel"
@@ -148,9 +137,36 @@ if [[ ! -d $dest ]]; then
     cp -a $BASEDIR/config/openbox/ ~/.config/
 fi
 
+dest=~/Bookshelf
+if [[ -d $dest ]]; then
+    echo "*** clean home dir"
+    rm -rf ~/Bookshelf
+    rm -rf ~/Music
+    rm -rf ~/Pictures
+    rm -rf ~/Public
+    rm -rf ~/Music
+    rm -rf ~/Templates
+    rm -rf ~/Videos
+fi
+
+dest=~/.profile
+if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
+    echo "*** disable overlay scrolling"
+    sudo tee -a $dest > /dev/null << 'EOF'
+
+export GTK_OVERLAY_SCROLLING=0"
+
+EOF
+fi
+
 test=0
 if [[ $test == 1 ]]; then
     echo "*** run test"
 fi
+
+# TODO
+
+#~ openbox double click
+#~ <doubleClickTime>800</doubleClickTime>
 
 
