@@ -15,6 +15,8 @@ else
     fi
 fi
 
+# write config.txt -----------------------------------------------------
+
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
     echo "*** edit /boot/config.txt"
@@ -72,12 +74,31 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl stop triggerhappy
     sudo systemctl disable triggerhappy raspi-config
+    
+    # services used by thunar
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service
 
     # autoremove
     sudo apt -y autoremove
 fi
 
-# /etc settings
+# install dev ----------------------------------------------------------
+
+dev=0
+if [[ $dev == 1 ]]; then
+    dest=/usr/bin/qtcreator
+    if [[ ! -f $dest ]]; then
+        echo "*** install dev softwares"
+        sudo apt -y install qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools
+        sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev
+    fi
+fi
+
+# /etc settings --------------------------------------------------------
+
 dest=/etc/default/cpufrequtils
 if [[ ! -f $dest ]]; then
     echo "*** set governor to performance"
@@ -87,7 +108,8 @@ GOVERNOR="performance"
 EOF
 fi
 
-# /home settings
+# /home settings -------------------------------------------------------
+
 dest=~/config
 if [[ ! -d $dest ]]; then
     echo "*** config link"
@@ -96,10 +118,18 @@ fi
 
 #TODO : append 'export GTK_OVERLAY_SCROLLING=0' into ~/.profile
 
+#~ dest=~/.profile
+#~ if [[ ! -f $dest ]]; then
+    #~ echo "*** set governor to performance"
+    #~ sudo tee $dest > /dev/null << 'EOF'
+#~ export GTK_OVERLAY_SCROLLING=0"
+
+#~ EOF
+#~ fi
+
 dest=~/.config/lxpanel
 if [[ ! -d $dest ]]; then
     echo "*** configure panel"
-    
     mkdir -p $dest
     cp -a $BASEDIR/config/lxpanel/ ~/.config/
 fi
@@ -107,7 +137,6 @@ fi
 dest=~/.config/lxsession
 if [[ ! -d $dest ]]; then
     echo "*** configure session"
-    
     mkdir -p $dest
     cp -a $BASEDIR/config/lxsession/ ~/.config/
 fi
@@ -117,6 +146,11 @@ if [[ ! -d $dest ]]; then
     echo "*** configure openbox"
     mkdir -p $dest
     cp -a $BASEDIR/config/openbox/ ~/.config/
+fi
+
+test=0
+if [[ $test == 1 ]]; then
+    echo "*** run test"
 fi
 
 
