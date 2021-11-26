@@ -154,7 +154,7 @@ if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
     echo "*** disable overlay scrolling"
     sudo tee -a $dest > /dev/null << 'EOF'
 
-export GTK_OVERLAY_SCROLLING=0"
+export GTK_OVERLAY_SCROLLING=0
 
 EOF
 fi
