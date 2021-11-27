@@ -47,12 +47,12 @@ if [[ ! -f $dest ]]; then
     sudo apt -y purge synaptic thunderbird fwupd thermald at-spi2-core
     
     # services
-	sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
+    sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl stop unattended-upgrades
-	sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
+    sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl disable unattended-upgrades
-	
-	sudo apt -y autoremove
+
+    sudo apt -y autoremove
 fi
 
 # install dev apps -----------------------------------------------------
