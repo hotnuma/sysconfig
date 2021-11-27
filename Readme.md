@@ -1,5 +1,7 @@
 # Installation
 
+**These are very experimental post-install scripts, they need custom tweaking before execution. :-P**
+
 #### apt
 ```
 sudo apt install git
@@ -14,6 +16,6 @@ git clone https://github.com/hotnuma/sysconfig.git
 cd sysconfig
 ```
 
-Then run the corresponding install script.
+Then run the corresponding install script and pray.
 
 
