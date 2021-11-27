@@ -66,7 +66,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
-    sudo apt -y purge thonny vim xarchiver system-config-printer
+    sudo apt -y purge bluez thonny vim xarchiver system-config-printer
     sudo apt -y purge lxtask mousepad tumbler
     
     # services
