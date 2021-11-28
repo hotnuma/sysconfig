@@ -2,6 +2,20 @@
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        dev)
+        DEV=1
+        shift
+        ;;
+        *)
+        shift
+        ;;
+    esac
+done
+
+
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -87,13 +101,13 @@ fi
 
 # install dev ----------------------------------------------------------
 
-dev=0
-if [[ $dev == 1 ]]; then
+if [[ $DEV == 1 ]]; then
     dest=/usr/bin/qtcreator
     if [[ ! -f $dest ]]; then
-        echo "*** install dev softwares"
+        echo "*** install dev tools"
         sudo apt -y install qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools
-        sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev
+        sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev
+        sudo apt -y install libprocps-dev
     fi
 fi
 
@@ -164,8 +178,8 @@ if [[ $test == 1 ]]; then
     echo "*** run test"
 fi
 
-# TODO
 
+# TODO
 #~ openbox double click
 #~ <doubleClickTime>800</doubleClickTime>
 
