@@ -321,7 +321,8 @@
         <direction>down</direction>
       </action>
     </keybind>
-    <!-- Keybindings for running applications -->
+    
+    <!--             Keybindings for running applications            -->
     <keybind key="W-b">
       <action name="Execute">
         <startupnotify>
@@ -345,14 +346,19 @@
         <command>rofi -show run</command>
       </action>
     </keybind>
+    <keybind key="W-t">
+      <action name="Execute">
+        <command>xfce4-terminal</command>
+      </action>
+    </keybind>
     <keybind key="W-s">
       <action name="Execute">
         <command>xfce4-taskmanager</command>
       </action>
     </keybind>
-    <keybind key="W-t">
+    <keybind key="W-g">
       <action name="Execute">
-        <command>xfce4-terminal</command>
+        <command>geany</command>
       </action>
     </keybind>
     <keybind key="W-S-c">
@@ -367,11 +373,15 @@
       </action>
     </keybind>
   </keyboard>
+  
   <mouse>
+    
     <dragThreshold>1</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->
-    <doubleClickTime>500</doubleClickTime>
-    <!-- in milliseconds (1000 = 1 second) -->
+    
+    <doubleClickTime>1000</doubleClickTime>
+    <!--            in milliseconds (1000 = 1 second)                -->
+    
     <screenEdgeWarpTime>400</screenEdgeWarpTime>
     <!-- Time before changing desktops when the pointer touches the edge of the
        screen while moving a window, in milliseconds (1000 = 1 second).
