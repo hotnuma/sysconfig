@@ -1,6 +1,6 @@
 # Installation
 
-**These are very experimental post-install scripts, they need custom tweaking before execution. :-P**
+These are very experimental post-install scripts, they need custom tweaking before execution. :-P
 
 #### apt
 ```
