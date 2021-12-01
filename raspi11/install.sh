@@ -86,8 +86,8 @@ if [[ ! -f $dest ]]; then
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
     sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
-    sudo systemctl stop triggerhappy
-    sudo systemctl disable triggerhappy raspi-config
+    sudo systemctl stop triggerhappy ModemManager
+    sudo systemctl disable raspi-config triggerhappy ModemManager
     
     # services used by thunar
     sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service

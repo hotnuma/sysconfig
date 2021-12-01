@@ -366,6 +366,17 @@
         <command>openbox --reconfigure</command>
       </action>
     </keybind>
+    <keybind key="W-S-r">
+      <action name="Execute">
+        <command>systemctl reboot</command>
+      </action>
+    </keybind>
+    <keybind key="W-S-q">
+      <action name="Execute">
+        <command>systemctl poweroff</command>
+      </action>
+    </keybind>
+    
     <!-- Launch scrot when Print is pressed -->
     <keybind key="Print">
       <action name="Execute">

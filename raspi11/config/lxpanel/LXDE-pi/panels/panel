@@ -56,7 +56,7 @@ Plugin {
   type=launchbar
   Config {
     Button {
-      id=firefox-esr.desktop
+      id=chromium-browser.desktop
     }
     Button {
       id=thunar.desktop
