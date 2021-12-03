@@ -79,8 +79,8 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
-    sudo apt -y purge bluez thonny vim xarchiver system-config-printer
-    sudo apt -y purge lxtask mousepad tumbler
+    sudo apt -y purge bluez thonny vim xarchiver xcompmgr
+    sudo apt -y purge system-config-printer lxtask mousepad tumbler
     
     # services
     sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
