@@ -73,10 +73,9 @@ if [[ ! -f $dest ]]; then
     
     # install base
     sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi
-    sudo apt -y install firefox-esr webext-ublock-origin-firefox
     sudo apt -y install mpv engrampa p7zip-full numlockx feh
     sudo apt -y install build-essential git meson ninja-build dos2unix
-    sudo apt -y install cpufrequtils
+    sudo apt -y install compton cpufrequtils
     sudo apt -y install --no-install-recommends smartmontools
 	
 	# uninstall
@@ -149,6 +148,12 @@ if [[ ! -d $dest ]]; then
     echo "*** configure openbox"
     mkdir -p $dest
     cp -a $BASEDIR/config/openbox/ ~/.config/
+fi
+
+dest=~/.config/compton.conf
+if [[ ! -f $dest ]]; then
+    echo "*** configure compton"
+    cp $BASEDIR/config/compton.conf $dest
 fi
 
 dest=~/Bookshelf
