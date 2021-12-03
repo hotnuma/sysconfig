@@ -156,14 +156,12 @@ if [[ ! -f $dest ]]; then
     cp $BASEDIR/config/compton.conf $dest
 fi
 
-dest=~/Bookshelf
+dest=~/Music
 if [[ -d $dest ]]; then
     echo "*** clean home dir"
-    rm -rf ~/Bookshelf
     rm -rf ~/Music
     rm -rf ~/Pictures
     rm -rf ~/Public
-    rm -rf ~/Music
     rm -rf ~/Templates
     rm -rf ~/Videos
 fi
