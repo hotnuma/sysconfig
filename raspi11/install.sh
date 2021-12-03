@@ -83,8 +83,9 @@ if [[ ! -f $dest ]]; then
     sudo apt -y purge lxtask mousepad tumbler
     
     # services
-    sudo systemctl stop bluetooth cups cups-browsed wpa_supplicant
-    sudo systemctl disable bluetooth cups cups-browsed wpa_supplicant
+    # bluetooth is already disabled
+    sudo systemctl stop cups cups-browsed smartd wpa_supplicant
+    sudo systemctl disable cups cups-browsed smartd wpa_supplicant
     sudo systemctl stop triggerhappy ModemManager
     sudo systemctl disable raspi-config triggerhappy ModemManager
     
