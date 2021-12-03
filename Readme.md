@@ -1,21 +1,12 @@
 # Installation
 
-These are very experimental post-install scripts, they need custom tweaking before execution. :-P
-
-#### apt
+These are very experimental post-install scripts, they will remove some
+programs, install other, disable bluetooth, wifi etc... this might not
+be what everybody wants, then it's required to study and tweak the
+scripts before execution. :-P
 ```
 sudo apt install git
 git clone https://github.com/hotnuma/sysconfig.git
 cd sysconfig
 ```
-
-#### pacman
-```
-sudo pacman -S git
-git clone https://github.com/hotnuma/sysconfig.git
-cd sysconfig
-```
-
-Then study how it works and tweak it to you needs.
-
 
