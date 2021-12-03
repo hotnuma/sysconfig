@@ -179,8 +179,3 @@ if [[ $test == 1 ]]; then
 fi
 
 
-# TODO
-#~ openbox double click
-#~ <doubleClickTime>800</doubleClickTime>
-
-
