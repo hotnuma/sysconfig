@@ -325,9 +325,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Firefox</name>
+          <name>Chromium</name>
         </startupnotify>
-        <command>firefox</command>
+        <command>chromium-browser</command>
       </action>
     </keybind>
     <keybind key="W-e">
