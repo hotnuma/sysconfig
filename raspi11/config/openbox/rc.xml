@@ -325,9 +325,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Chromium</name>
+          <name>Firefox</name>
         </startupnotify>
-        <command>chromium-browser</command>
+        <command>firefox</command>
       </action>
     </keybind>
     <keybind key="W-e">
@@ -339,14 +339,9 @@
         <command>thunar</command>
       </action>
     </keybind>
-    <keybind key="W-space">
+    <keybind key="W-g">
       <action name="Execute">
-        <command>rofi -show run</command>
-      </action>
-    </keybind>
-    <keybind key="W-t">
-      <action name="Execute">
-        <command>xfce4-terminal</command>
+        <command>geany</command>
       </action>
     </keybind>
     <keybind key="W-s">
@@ -354,9 +349,19 @@
         <command>xfce4-taskmanager</command>
       </action>
     </keybind>
-    <keybind key="W-g">
+    <keybind key="W-t">
       <action name="Execute">
-        <command>geany</command>
+        <command>xfce4-terminal</command>
+      </action>
+    </keybind>
+    <keybind key="W-w">
+      <action name="Execute">
+        <command>prcrun</command>
+      </action>
+    </keybind>
+    <keybind key="W-space">
+      <action name="Execute">
+        <command>rofi -show run</command>
       </action>
     </keybind>
     <keybind key="W-S-c">
@@ -374,7 +379,6 @@
         <command>systemctl poweroff</command>
       </action>
     </keybind>
-    
     <!-- Launch scrot when Print is pressed -->
     <keybind key="Print">
       <action name="Execute">
