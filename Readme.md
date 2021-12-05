@@ -7,6 +7,5 @@ scripts before execution. :-P
 ```
 sudo apt install git
 git clone https://github.com/hotnuma/sysconfig.git
-cd sysconfig
 ```
 
