@@ -177,6 +177,37 @@ export GTK_OVERLAY_SCROLLING=0
 EOF
 fi
 
+# custom session -------------------------------------------------------
+
+dest=/usr/bin/startmod
+if [[ ! -f $dest ]]; then
+    echo "*** startmod script"
+    sudo cp $BASEDIR/../samples/startmod $dest
+fi
+
+dest=/usr/share/xsessions/custom.desktop
+if [[ ! -f $dest ]]; then
+    echo "*** custom session"
+    sudo tee $dest > /dev/null << 'EOF'
+[Desktop Entry]
+Name=LXDE
+Comment=LXDE - Lightweight X11 desktop environment
+Exec=/usr/bin/startmod
+Type=Application
+EOF
+fi
+
+dest=~/.dmrc
+if [[ ! -f $dest ]]; then
+    echo "*** dmrc"
+    sudo tee $dest > /dev/null << 'EOF'
+[Desktop]
+Session=custom
+EOF
+fi
+
+# test -----------------------------------------------------------------
+
 test=0
 if [[ $test == 1 ]]; then
     echo "*** run test"
