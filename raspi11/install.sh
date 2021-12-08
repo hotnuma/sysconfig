@@ -19,12 +19,12 @@ done
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort."
+    echo " *** must not be run as root: abort."
     exit 1
 else
     sudo -k # make sure to ask for password on next sudo
     if ! sudo true; then
-        echo "*** sudo failed: abort."
+        echo " *** sudo failed: abort."
         exit 1
     fi
 fi
@@ -33,7 +33,7 @@ fi
 
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
-    echo "*** edit /boot/config.txt"
+    echo " *** edit /boot/config.txt"
     sudo cp $dest $dest.bak
     sudo tee $dest > /dev/null << 'EOF'
 # http://rpf.io/configtxt
@@ -62,11 +62,17 @@ dtoverlay=disable-bt
 EOF
 fi
 
+dest=/boot/cmdline.txt
+if [[ ! -f $dest.bak ]]; then
+    echo " *** edit /boot/cmdline.txt"
+    sudo cp $dest $dest.bak
+fi
+
 # install / remove -----------------------------------------------------
 
 dest=/usr/bin/mpv
 if [[ ! -f $dest ]]; then
-    echo "*** install softwares"
+    echo " *** install softwares"
     
     # update
     sudo apt update && sudo apt full-upgrade
@@ -104,7 +110,7 @@ fi
 if [[ $DEV == 1 ]]; then
     dest=/usr/bin/qtcreator
     if [[ ! -f $dest ]]; then
-        echo "*** install dev tools"
+        echo " *** install dev tools"
         sudo apt -y install qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools
         sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev
         sudo apt -y install libprocps-dev
@@ -115,7 +121,7 @@ fi
 
 dest=/etc/default/cpufrequtils
 if [[ ! -f $dest ]]; then
-    echo "*** set governor to performance"
+    echo " *** set governor to performance"
     sudo tee $dest > /dev/null << 'EOF'
 GOVERNOR="performance"
 
@@ -126,40 +132,40 @@ fi
 
 dest=~/config
 if [[ ! -d $dest ]]; then
-    echo "*** config link"
+    echo " *** config link"
     ln -s ~/.config $dest
 fi
 
 dest=~/.config/lxpanel
 if [[ ! -d $dest ]]; then
-    echo "*** configure panel"
+    echo " *** configure panel"
     mkdir -p $dest
     cp -a $BASEDIR/config/lxpanel/ ~/.config/
 fi
 
 dest=~/.config/lxsession
 if [[ ! -d $dest ]]; then
-    echo "*** configure session"
+    echo " *** configure session"
     mkdir -p $dest
     cp -a $BASEDIR/config/lxsession/ ~/.config/
 fi
 
 dest=~/.config/openbox
 if [[ ! -d $dest ]]; then
-    echo "*** configure openbox"
+    echo " *** configure openbox"
     mkdir -p $dest
     cp -a $BASEDIR/config/openbox/ ~/.config/
 fi
 
 dest=~/.config/compton.conf
 if [[ ! -f $dest ]]; then
-    echo "*** configure compton"
+    echo " *** configure compton"
     cp $BASEDIR/config/compton.conf $dest
 fi
 
 dest=~/Music
 if [[ -d $dest ]]; then
-    echo "*** clean home dir"
+    echo " *** clean home dir"
     rm -rf ~/Music
     rm -rf ~/Pictures
     rm -rf ~/Public
@@ -169,7 +175,7 @@ fi
 
 dest=~/.profile
 if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
-    echo "*** disable overlay scrolling"
+    echo " *** disable overlay scrolling"
     sudo tee -a $dest > /dev/null << 'EOF'
 
 export GTK_OVERLAY_SCROLLING=0
@@ -181,13 +187,13 @@ fi
 
 dest=/usr/bin/startmod
 if [[ ! -f $dest ]]; then
-    echo "*** startmod script"
+    echo " *** startmod script"
     sudo cp $BASEDIR/../samples/startmod $dest
 fi
 
 dest=/usr/share/xsessions/custom.desktop
 if [[ ! -f $dest ]]; then
-    echo "*** custom session"
+    echo " *** custom session"
     sudo tee $dest > /dev/null << 'EOF'
 [Desktop Entry]
 Name=LXDE
@@ -199,7 +205,7 @@ fi
 
 dest=~/.dmrc
 if [[ ! -f $dest ]]; then
-    echo "*** dmrc"
+    echo " *** dmrc"
     sudo tee $dest > /dev/null << 'EOF'
 [Desktop]
 Session=custom
@@ -210,7 +216,7 @@ fi
 
 test=0
 if [[ $test == 1 ]]; then
-    echo "*** run test"
+    echo " *** run test"
 fi
 
 
