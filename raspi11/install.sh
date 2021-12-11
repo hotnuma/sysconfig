@@ -137,8 +137,9 @@ if [[ ! -d $dest ]]; then
 fi
 
 dest=~/.config/lxpanel
-if [[ ! -d $dest ]]; then
+if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
     echo " *** configure panel"
+    mv $dest $dest.bak
     mkdir -p $dest
     cp -a $BASEDIR/config/lxpanel/ ~/.config/
 fi
