@@ -3,6 +3,7 @@
 dest=/usr/bin/automake
 if [[ ! -f $dest ]]; then
 	sudo apt -y install git build-essential autoconf automake intltool
+	sudo apt -y install libgtk-3-dev
 fi
 
 dest=~/DevFiles
@@ -19,7 +20,7 @@ if [[ ! -d $dest ]]; then
 	./autogen.sh
 	intltoolize --force
 	./configure --enable-gtk3 --enable-debug
-	make
+	make && sudo make install
 fi
 
 
