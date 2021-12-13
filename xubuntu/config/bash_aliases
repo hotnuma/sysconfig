@@ -1,0 +1,4 @@
+
+alias ls='ls -la --color=auto'
+alias cgrep='grep -inr --include \*.h --include \*.c --include \*.cpp'
+
