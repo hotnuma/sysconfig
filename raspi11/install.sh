@@ -2,7 +2,7 @@
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-while [[ $# -gt 0 ]]; do
+while [[ $# > 0 ]]; do
     key="$1"
     case $key in
         dev)
