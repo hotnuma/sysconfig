@@ -35,7 +35,7 @@ if [[ ! -f $dest ]]; then
     sudo pacman -S sway swayidle wofi thunar gvfs xfce4-terminal
     sudo pacman -S htop geany firefox firefox-ublock-origin
     sudo pacman -S mpv git meson base-devel
-    cp -r ~/sysconfig/swaymin/config/* ~/.config/
+    #cp -r ~/sysconfig/sway/config/* ~/.config/
 fi
 
 dest=/etc/environment
@@ -97,10 +97,10 @@ if [[ ! -d $dest ]]; then
 fi
 
 dest=~/.config/sway
-if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
+if [[ ! -d $dest ]]; then
     echo " *** configure sway"
-    mv $dest $dest.bak
-    mkdir -p $dest
+    #mv $dest $dest.bak
+    #mkdir -p $dest
     cp -a $BASEDIR/config/sway/ ~/.config/
 fi
 
