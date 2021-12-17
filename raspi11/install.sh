@@ -136,6 +136,12 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest
 fi
 
+dest="$XDG_CONFIG_HOME/autostart"
+if [[ ! -d $dest ]]; then
+    echo " *** create autostart directory"
+    mkdir -p $dest
+fi
+
 dest=~/.config/lxpanel
 if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
     echo " *** configure panel"
