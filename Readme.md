@@ -5,7 +5,6 @@ programs, install other, disable bluetooth, wifi etc... this might not
 be what everybody wants, then it's required to study and tweak the
 scripts before execution. :-P
 ```
-sudo apt install git
 git clone https://github.com/hotnuma/sysconfig.git
 ```
 
