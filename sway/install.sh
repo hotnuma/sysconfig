@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -78,6 +80,28 @@ dtoverlay=disable-wifi
 dtoverlay=disable-bt
 
 EOF
+fi
+
+# /home settings -------------------------------------------------------
+
+dest=~/config
+if [[ ! -d $dest ]]; then
+    echo " *** config link"
+    ln -s ~/.config $dest
+fi
+
+dest=~/.config/autostart
+if [[ ! -d $dest ]]; then
+    echo " *** create autostart directory"
+    mkdir -p $dest
+fi
+
+dest=~/.config/sway
+if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
+    echo " *** configure sway"
+    mv $dest $dest.bak
+    mkdir -p $dest
+    cp -a $BASEDIR/config/sway/ ~/.config/
 fi
 
 
