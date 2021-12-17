@@ -33,9 +33,9 @@ if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
     sudo pacman -S sway swayidle wofi thunar gvfs xfce4-terminal
-    sudo pacman -S wget htop geany firefox firefox-ublock-origin
-    sudo pacman -S mpv git meson base-devel
-    #cp -r ~/sysconfig/sway/config/* ~/.config/
+    sudo pacman -S wget htop geany xfce4-taskmanager
+    sudo pacman -S git meson base-devel
+    sudo pacman -S mpv firefox firefox-ublock-origin
 fi
 
 dest=/etc/environment
