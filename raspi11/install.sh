@@ -4,15 +4,23 @@ BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ARCH=$(uname -m)
 VERSION=$(cat /etc/debian_version)
 
+# should test also : cat /proc/cpuinfo
+
 if [[ $ARCH != "aarch64" ]] || [[ $VERSION != 11* ]]; then
     echo " *** This script was tested only on a Raspberry Pi 4B 64 bit"
     echo " *** abort..."
     exit 1
 fi
 
+BASE=0
+
 while [[ $# > 0 ]]; do
     key="$1"
     case $key in
+        base)
+        BASE=1
+        shift
+        ;;
         dev)
         DEV=1
         shift
@@ -23,6 +31,13 @@ while [[ $# > 0 ]]; do
     esac
 done
 
+if [[ $BASE != 1 ]]; then
+    echo "This scrip is not meant to be run as is, it will setup"
+    echo "overclocking, remove some programs, install others,"
+    echo "disable bluetooth, wifi, etc... so it needs to be"
+    echo "studied and tweaked to perticuliar needs."
+    echo "abort..."
+fi
 
 # test if sudo is succesfull -------------------------------------------
 
