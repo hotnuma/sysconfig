@@ -76,6 +76,7 @@ if [[ ! -f $dest ]]; then
     
     # update
     sudo apt update && sudo apt full-upgrade
+    sudo apt -y install libgtk-3-dev libpcre3-dev
     
     # install base
     sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi
