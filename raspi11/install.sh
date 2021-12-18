@@ -4,10 +4,13 @@ BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ARCH=$(uname -m)
 VERSION=$(cat /etc/debian_version)
 
-# should test also : cat /proc/cpuinfo
+# https://forums.raspberrypi.com/viewtopic.php?t=34678
+# https://forums.raspberrypi.com/viewtopic.php?t=200059
+# cat /proc/cpuinfo
 # grep -q BCM2708 /proc/cpuinfo
 # cat /etc/*-release
 # cat /proc/device-tree/model
+# cat /sys/firmware/devicetree/base/model
 
 if [[ $ARCH != "aarch64" ]] || [[ $VERSION != 11* ]]; then
     echo " *** This script was tested only on a Raspberry Pi 4B 64 bit"
