@@ -1,6 +1,14 @@
 #!/usr/bin/bash
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+ARCH=$(uname -m)
+VERSION=$(cat /etc/debian_version)
+
+if [[ $ARCH != "aarch64" ]] || [[ $VERSION != 11* ]]; then
+    echo " *** This script was tested only on a Raspberry Pi 4B 64 bit"
+    echo " *** abort..."
+    exit 1
+fi
 
 while [[ $# > 0 ]]; do
     key="$1"
