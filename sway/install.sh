@@ -38,6 +38,8 @@ if [[ ! -f $dest ]]; then
     sudo pacman -S mpv firefox firefox-ublock-origin
 fi
 
+    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa
+    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav gst-plugin-pipewire libva-v4l2-request
 dest=/etc/environment
 if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
     echo "*** edit /etc/environment"
