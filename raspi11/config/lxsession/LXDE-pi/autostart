@@ -1,4 +1,4 @@
-@feh --bg-scale --randomize /usr/share/rpd-wallpaper/
+@feh --bg-scale /usr/share/rpd-wallpaper/clouds.jpg
 @lxpanel --profile LXDE-pi
 @Thunar --daemon
 @numlockx on
