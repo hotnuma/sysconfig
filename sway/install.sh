@@ -32,14 +32,14 @@ dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
-    sudo pacman -S sway swayidle wofi thunar gvfs xfce4-terminal
+    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal
+    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa
+    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav gst-plugin-pipewire libva-v4l2-request
     sudo pacman -S wget htop geany xfce4-taskmanager
     sudo pacman -S git meson base-devel
     sudo pacman -S mpv firefox firefox-ublock-origin
 fi
 
-    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa
-    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav gst-plugin-pipewire libva-v4l2-request
 dest=/etc/environment
 if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
     echo "*** edit /etc/environment"
@@ -101,8 +101,6 @@ fi
 dest=~/.config/sway
 if [[ ! -d $dest ]]; then
     echo " *** configure sway"
-    #mv $dest $dest.bak
-    #mkdir -p $dest
     cp -a $BASEDIR/config/sway/ ~/.config/
 fi
 
