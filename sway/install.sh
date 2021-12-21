@@ -46,6 +46,7 @@ if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
     sudo tee -a $dest > /dev/null << 'EOF'
 
 MOZ_ENABLE_WAYLAND=1
+MOZ_X11_EGL=1
 
 EOF
 fi
