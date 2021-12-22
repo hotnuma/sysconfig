@@ -88,6 +88,7 @@ EOF
     if [[ ! -f $dest.bak ]]; then
         echo " *** edit /boot/cmdline.txt" 2>&1 | tee -a $OUTFILE
         sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
+        sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' $dest
     fi
 
     # install / remove -------------------------------------------------------------------
