@@ -2,7 +2,6 @@
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 OUTFILE="$HOME/install.log"
-OUT="2>&1 | tee -a $OUTFILE"
 
 rm -f $OUTFILE
 
@@ -29,23 +28,23 @@ done
 ALL=$(( $BASE + $DEV ))
 
 if [[ $ALL < 1 ]]; then
-    eval echo "This scrip is not meant to be run as is, it will setup" $OUT
-    eval echo "overclocking, remove some programs, install others," $OUT
-    eval echo "disable bluetooth, wifi, etc... so it needs to be" $OUT
-    eval echo "studied and tweaked to perticuliar needs." $OUT
-    eval echo "abort..." $OUT
+    echo "This scrip is not meant to be run as is, it will setup" 2>&1 | tee -a $OUTFILE
+    echo "overclocking, remove some programs, install others," 2>&1 | tee -a $OUTFILE
+    echo "disable bluetooth, wifi, etc... so it needs to be" 2>&1 | tee -a $OUTFILE
+    echo "studied and tweaked to perticuliar needs." 2>&1 | tee -a $OUTFILE
+    echo "abort..." 2>&1 | tee -a $OUTFILE
     exit 1
 fi
 
 # test if sudo is succesfull -------------------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
-    eval echo " *** must not be run as root: abort." $OUT
+    echo " *** must not be run as root: abort." 2>&1 | tee -a $OUTFILE
     exit 1
 else
     sudo -k
     if ! sudo true; then
-        eval echo " *** sudo failed: abort." $OUT
+        echo " *** sudo failed: abort." 2>&1 | tee -a $OUTFILE
         exit 1
     fi
 fi
@@ -56,8 +55,8 @@ if [[ $BASE == 1 ]]; then
 
     dest=/boot/config.txt
     if [[ ! -f $dest.bak ]]; then
-        eval echo " *** edit /boot/config.txt" $OUT
-        eval sudo cp $dest $dest.bak $OUT
+        echo " *** edit /boot/config.txt" 2>&1 | tee -a $OUTFILE
+        sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
         sudo tee $dest > /dev/null << 'EOF'
 # http://rpf.io/configtxt
 
@@ -87,52 +86,52 @@ EOF
 
     dest=/boot/cmdline.txt
     if [[ ! -f $dest.bak ]]; then
-        eval echo " *** edit /boot/cmdline.txt" $OUT
-        eval sudo cp $dest $dest.bak $OUT
+        echo " *** edit /boot/cmdline.txt" 2>&1 | tee -a $OUTFILE
+        sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
     fi
 
     # install / remove -------------------------------------------------------------------
 
     dest=/usr/bin/mpv
     if [[ ! -f $dest ]]; then
-        eval echo " *** install softwares" $OUT
+        echo " *** install softwares" 2>&1 | tee -a $OUTFILE
         
         # update
-        eval sudo apt update && sudo apt full-upgrade $OUT
-        eval sudo apt -y install libgtk-3-dev libpcre3-dev $OUT
+        sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libgtk-3-dev libpcre3-dev 2>&1 | tee -a $OUTFILE
         
         # install base
-        eval sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi $OUT
-        eval sudo apt -y install mpv engrampa p7zip-full numlockx feh $OUT
-        eval sudo apt -y install build-essential git meson ninja-build dos2unix $OUT
-        eval sudo apt -y install compton cpufrequtils $OUT
-        eval sudo apt -y install --no-install-recommends smartmontools $OUT
+        sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi 2>&1 | tee -a $OUTFILE
+        sudo apt -y install mpv engrampa p7zip-full numlockx feh 2>&1 | tee -a $OUTFILE
+        sudo apt -y install build-essential git meson ninja-build dos2unix 2>&1 | tee -a $OUTFILE
+        sudo apt -y install compton cpufrequtils 2>&1 | tee -a $OUTFILE
+        sudo apt -y install --no-install-recommends smartmontools 2>&1 | tee -a $OUTFILE
         
         # uninstall
-        eval sudo apt -y purge bluez dillo thonny vim xarchiver xcompmgr $OUT
-        eval sudo apt -y purge system-config-printer lxtask mousepad tumbler $OUT
+        sudo apt -y purge bluez dillo thonny vim xarchiver xcompmgr 2>&1 | tee -a $OUTFILE
+        sudo apt -y purge system-config-printer lxtask mousepad tumbler 2>&1 | tee -a $OUTFILE
         
         # services
-        eval sudo systemctl stop cups cups-browsed smartd wpa_supplicant $OUT
-        eval sudo systemctl disable cups cups-browsed smartd wpa_supplicant $OUT
-        eval sudo systemctl stop triggerhappy ModemManager $OUT
-        eval sudo systemctl disable raspi-config triggerhappy ModemManager $OUT
+        sudo systemctl stop cups cups-browsed smartd wpa_supplicant 2>&1 | tee -a $OUTFILE
+        sudo systemctl disable cups cups-browsed smartd wpa_supplicant 2>&1 | tee -a $OUTFILE
+        sudo systemctl stop triggerhappy ModemManager 2>&1 | tee -a $OUTFILE
+        sudo systemctl disable raspi-config triggerhappy ModemManager 2>&1 | tee -a $OUTFILE
         
         # services used by thunar
-        eval sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service $OUT
-        eval sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service $OUT
-        eval sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service $OUT
-        eval sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service $OUT
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
 
         # autoremove
-        eval sudo apt -y autoremove $OUT
+        sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
     fi
 
     # /etc settings ----------------------------------------------------------------------
 
     dest=/etc/default/cpufrequtils
     if [[ ! -f $dest ]]; then
-        eval echo " *** set governor to performance" $OUT
+        echo " *** set governor to performance" 2>&1 | tee -a $OUTFILE
         sudo tee $dest > /dev/null << 'EOF'
 GOVERNOR="performance"
 
@@ -143,57 +142,57 @@ EOF
 
     dest=~/config
     if [[ ! -d $dest ]]; then
-        eval echo " *** config link" $OUT
-        eval ln -s ~/.config $dest $OUT
+        echo " *** config link" 2>&1 | tee -a $OUTFILE
+        ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
     fi
 
     dest="$XDG_CONFIG_HOME/autostart"
     if [[ ! -d $dest ]]; then
-        eval echo " *** create autostart directory" $OUT
-        eval mkdir -p $dest $OUT
+        echo " *** create autostart directory" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/.config/lxpanel
     if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
-        eval echo " *** configure panel" $OUT
-        eval mv $dest $dest.bak $OUT
-        eval mkdir -p $dest $OUT
-        eval cp -a $BASEDIR/config/lxpanel/ ~/.config/ $OUT
+        echo " *** configure panel" 2>&1 | tee -a $OUTFILE
+        mv $dest $dest.bak 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/lxpanel/ ~/.config/ 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/.config/lxsession
     if [[ ! -d $dest ]]; then
-        eval echo " *** configure session" $OUT
-        eval mkdir -p $dest $OUT
-        eval cp -a $BASEDIR/config/lxsession/ ~/.config/ $OUT
+        echo " *** configure session" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/lxsession/ ~/.config/ 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/.config/openbox
     if [[ ! -d $dest ]]; then
-        eval echo " *** configure openbox" $OUT
-        eval mkdir -p $dest $OUT
-        eval cp -a $BASEDIR/config/openbox/ ~/.config/ $OUT
+        echo " *** configure openbox" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/.config/compton.conf
     if [[ ! -f $dest ]]; then
-        eval echo " *** configure compton" $OUT
-        eval cp $BASEDIR/config/compton.conf $dest $OUT
+        echo " *** configure compton" 2>&1 | tee -a $OUTFILE
+        cp $BASEDIR/config/compton.conf $dest 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/Music
     if [[ -d $dest ]]; then
-        eval echo " *** clean home dir" $OUT
-        eval rm -rf ~/Music $OUT
-        eval rm -rf ~/Pictures $OUT
-        eval rm -rf ~/Public $OUT
-        eval rm -rf ~/Templates $OUT
-        eval rm -rf ~/Videos $OUT
+        echo " *** clean home dir" 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Music 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Pictures 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Public 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Templates 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Videos 2>&1 | tee -a $OUTFILE
     fi
 
     dest=~/.profile
     if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
-        eval echo " *** disable overlay scrolling" $OUT
+        echo " *** disable overlay scrolling" 2>&1 | tee -a $OUTFILE
         sudo tee -a $dest > /dev/null << 'EOF'
 
 export GTK_OVERLAY_SCROLLING=0
@@ -205,13 +204,13 @@ EOF
 
     dest=/usr/bin/startmod
     if [[ ! -f $dest ]]; then
-        eval echo " *** startmod script" $OUT
-        eval sudo cp $BASEDIR/../samples/startmod $dest $OUT
+        echo " *** startmod script" 2>&1 | tee -a $OUTFILE
+        sudo cp $BASEDIR/../samples/startmod $dest 2>&1 | tee -a $OUTFILE
     fi
 
     dest=/usr/share/xsessions/custom.desktop
     if [[ ! -f $dest ]]; then
-        eval echo " *** custom session" $OUT
+        echo " *** custom session" 2>&1 | tee -a $OUTFILE
         sudo tee $dest > /dev/null << 'EOF'
 [Desktop Entry]
 Name=LXDE
@@ -223,7 +222,7 @@ EOF
 
     dest=~/.dmrc
     if [[ ! -f $dest ]]; then
-        eval echo " *** dmrc" $OUT
+        echo " *** dmrc" 2>&1 | tee -a $OUTFILE
         sudo tee $dest > /dev/null << 'EOF'
 [Desktop]
 Session=custom
@@ -236,11 +235,11 @@ fi
 if [[ $DEV == 1 ]]; then
     dest=/usr/bin/qtcreator
     if [[ ! -f $dest ]]; then
-        eval echo " *** install dev tools" $OUT
-        eval sudo apt -y install qtcreator qtchooser qt5-qmake $OUT
-        eval sudo apt -y install qtbase5-dev qtbase5-dev-tools $OUT
-        eval sudo apt -y install libgtk-3-dev gtk-3-examples $OUT
-        eval sudo apt -y install libprocps-dev libmediainfo-dev $OUT
+        echo " *** install dev tools" 2>&1 | tee -a $OUTFILE
+        sudo apt -y install qtcreator qtchooser qt5-qmake 2>&1 | tee -a $OUTFILE
+        sudo apt -y install qtbase5-dev qtbase5-dev-tools 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libgtk-3-dev gtk-3-examples 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libprocps-dev libmediainfo-dev 2>&1 | tee -a $OUTFILE
     fi
 fi
 
