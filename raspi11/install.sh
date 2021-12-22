@@ -108,7 +108,7 @@ EOF
         sudo apt -y install --no-install-recommends smartmontools 2>&1 | tee -a $OUTFILE
         
         # uninstall
-        sudo apt -y purge bluez dillo thonny vim xarchiver xcompmgr 2>&1 | tee -a $OUTFILE
+        sudo apt -y purge bluez dillo thonny xarchiver xcompmgr 2>&1 | tee -a $OUTFILE
         sudo apt -y purge system-config-printer lxtask mousepad tumbler 2>&1 | tee -a $OUTFILE
         
         # services
