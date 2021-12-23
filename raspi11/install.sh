@@ -194,7 +194,7 @@ EOF
     dest=~/.profile
     if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
         echo " *** disable overlay scrolling" 2>&1 | tee -a $OUTFILE
-        sudo tee -a $dest > /dev/null << 'EOF'
+        tee -a $dest > /dev/null << 'EOF'
 
 export GTK_OVERLAY_SCROLLING=0
 
@@ -224,7 +224,7 @@ EOF
     dest=~/.dmrc
     if [[ ! -f $dest ]]; then
         echo " *** dmrc" 2>&1 | tee -a $OUTFILE
-        sudo tee $dest > /dev/null << 'EOF'
+        tee $dest > /dev/null << 'EOF'
 [Desktop]
 Session=custom
 EOF
