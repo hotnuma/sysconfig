@@ -1,10 +1,20 @@
 #!/usr/bin/bash
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+OUTFILE="$HOME/install.log"
 
-while [[ $# -gt 0 ]]; do
+rm -f $OUTFILE
+
+BASE=0
+DEV=0
+
+while [[ $# > 0 ]]; do
     key="$1"
     case $key in
+        base)
+        BASE=1
+        shift
+        ;;
         dev)
         DEV=1
         shift
@@ -15,27 +25,39 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+ALL=$(( $BASE + $DEV ))
 
-# test if sudo is succesfull -------------------------------------------
+if [[ $ALL < 1 ]]; then
+    echo "This scrip is not meant to be run as is, it will setup" 2>&1 | tee -a $OUTFILE
+    echo "overclocking, remove some programs, install others," 2>&1 | tee -a $OUTFILE
+    echo "disable bluetooth, wifi, etc... so it needs to be" 2>&1 | tee -a $OUTFILE
+    echo "studied and tweaked to perticuliar needs." 2>&1 | tee -a $OUTFILE
+    echo "abort..." 2>&1 | tee -a $OUTFILE
+    exit 1
+fi
+
+# test if sudo is succesfull -------------------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort."
+    echo " *** must not be run as root: abort." 2>&1 | tee -a $OUTFILE
     exit 1
 else
-    sudo -k # make sure to ask for password on next sudo
+    sudo -k
     if ! sudo true; then
-        echo "*** sudo failed: abort."
+        echo " *** sudo failed: abort." 2>&1 | tee -a $OUTFILE
         exit 1
     fi
 fi
 
-# write config.txt -----------------------------------------------------
+if [[ $BASE == 1 ]]; then
 
-dest=/boot/config.txt
-if [[ ! -f $dest.bak ]]; then
-    echo "*** edit /boot/config.txt"
-    sudo cp $dest $dest.bak
-    sudo tee $dest > /dev/null << 'EOF'
+    # write config.txt -------------------------------------------------------------------
+
+    dest=/boot/config.txt
+    if [[ ! -f $dest.bak ]]; then
+        echo " *** edit /boot/config.txt" 2>&1 | tee -a $OUTFILE
+        sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
+        sudo tee $dest > /dev/null << 'EOF'
 # http://rpf.io/configtxt
 
 disable_overscan=1
@@ -60,157 +82,174 @@ dtoverlay=disable-wifi
 dtoverlay=disable-bt
 
 EOF
-fi
-
-# install / remove -----------------------------------------------------
-
-dest=/usr/bin/mpv
-if [[ ! -f $dest ]]; then
-    echo "*** install softwares"
-    
-    # update
-    sudo apt update && sudo apt full-upgrade
-    
-    # install base
-    sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi
-    sudo apt -y install mpv engrampa p7zip-full numlockx feh
-    sudo apt -y install build-essential git meson ninja-build dos2unix
-    sudo apt -y install compton cpufrequtils
-    sudo apt -y install --no-install-recommends smartmontools
-	
-	# uninstall
-    sudo apt -y purge bluez dillo thonny vim xarchiver xcompmgr
-    sudo apt -y purge system-config-printer lxtask mousepad tumbler
-    
-    # services
-    # bluetooth is already disabled
-    sudo systemctl stop cups cups-browsed smartd wpa_supplicant
-    sudo systemctl disable cups cups-browsed smartd wpa_supplicant
-    sudo systemctl stop triggerhappy ModemManager
-    sudo systemctl disable raspi-config triggerhappy ModemManager
-    
-    # services used by thunar
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service
-
-    # autoremove
-    sudo apt -y autoremove
-fi
-
-# install dev ----------------------------------------------------------
-
-if [[ $DEV == 1 ]]; then
-    dest=/usr/bin/qtcreator
-    if [[ ! -f $dest ]]; then
-        echo "*** install dev tools"
-        sudo apt -y install qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools
-        sudo apt -y install libgtk-3-dev gtk-3-examples libmediainfo-dev
-        sudo apt -y install libprocps-dev
     fi
-fi
 
-# /etc settings --------------------------------------------------------
+    dest=/boot/cmdline.txt
+    if [[ ! -f $dest.bak ]]; then
+        echo " *** edit /boot/cmdline.txt" 2>&1 | tee -a $OUTFILE
+        sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
+        sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' $dest
+    fi
 
-dest=/etc/default/cpufrequtils
-if [[ ! -f $dest ]]; then
-    echo "*** set governor to performance"
-    sudo tee $dest > /dev/null << 'EOF'
+    # install / remove -------------------------------------------------------------------
+
+    dest=/usr/bin/mpv
+    if [[ ! -f $dest ]]; then
+        echo " *** install softwares" 2>&1 | tee -a $OUTFILE
+        
+        # update
+        sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libgtk-3-dev libpcre3-dev 2>&1 | tee -a $OUTFILE
+        
+        # install base
+        sudo apt -y install thunar xfce4-terminal xfce4-taskmanager rofi 2>&1 | tee -a $OUTFILE
+        sudo apt -y install mpv engrampa p7zip-full numlockx feh 2>&1 | tee -a $OUTFILE
+        sudo apt -y install build-essential git meson ninja-build dos2unix 2>&1 | tee -a $OUTFILE
+        sudo apt -y install compton cpufrequtils 2>&1 | tee -a $OUTFILE
+        sudo apt -y install --no-install-recommends smartmontools 2>&1 | tee -a $OUTFILE
+        
+        # uninstall
+        sudo apt -y purge vim-tiny bluez dillo thonny xarchiver xcompmgr 2>&1 | tee -a $OUTFILE
+        sudo apt -y purge system-config-printer lxtask mousepad tumbler 2>&1 | tee -a $OUTFILE
+        
+        # services
+        sudo systemctl stop cups cups-browsed smartd wpa_supplicant 2>&1 | tee -a $OUTFILE
+        sudo systemctl disable cups cups-browsed smartd wpa_supplicant 2>&1 | tee -a $OUTFILE
+        sudo systemctl stop triggerhappy ModemManager 2>&1 | tee -a $OUTFILE
+        sudo systemctl disable raspi-config triggerhappy ModemManager 2>&1 | tee -a $OUTFILE
+        
+        # services used by thunar
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service 2>&1 | tee -a $OUTFILE
+        sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
+
+        # autoremove
+        sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
+    fi
+
+    # /etc settings ----------------------------------------------------------------------
+
+    dest=/etc/default/cpufrequtils
+    if [[ ! -f $dest ]]; then
+        echo " *** set governor to performance" 2>&1 | tee -a $OUTFILE
+        sudo tee $dest > /dev/null << 'EOF'
 GOVERNOR="performance"
 
 EOF
-fi
+    fi
 
-# /home settings -------------------------------------------------------
+    # /home settings ---------------------------------------------------------------------
 
-dest=~/config
-if [[ ! -d $dest ]]; then
-    echo "*** config link"
-    ln -s ~/.config $dest
-fi
+    dest=~/config
+    if [[ ! -d $dest ]]; then
+        echo " *** config link" 2>&1 | tee -a $OUTFILE
+        ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/.config/lxpanel
-if [[ ! -d $dest ]]; then
-    echo "*** configure panel"
-    mkdir -p $dest
-    cp -a $BASEDIR/config/lxpanel/ ~/.config/
-fi
+    dest="$XDG_CONFIG_HOME/autostart"
+    if [[ ! -d $dest ]]; then
+        echo " *** create autostart directory" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/.config/lxsession
-if [[ ! -d $dest ]]; then
-    echo "*** configure session"
-    mkdir -p $dest
-    cp -a $BASEDIR/config/lxsession/ ~/.config/
-fi
+    dest=~/.config/lxpanel
+    if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
+        echo " *** configure panel" 2>&1 | tee -a $OUTFILE
+        mv $dest $dest.bak 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/lxpanel/ ~/.config/ 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/.config/openbox
-if [[ ! -d $dest ]]; then
-    echo "*** configure openbox"
-    mkdir -p $dest
-    cp -a $BASEDIR/config/openbox/ ~/.config/
-fi
+    dest=~/.config/lxsession
+    if [[ ! -d $dest ]]; then
+        echo " *** configure session" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/lxsession/ ~/.config/ 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/.config/compton.conf
-if [[ ! -f $dest ]]; then
-    echo "*** configure compton"
-    cp $BASEDIR/config/compton.conf $dest
-fi
+    dest=~/.config/openbox
+    if [[ ! -d $dest ]]; then
+        echo " *** configure openbox" 2>&1 | tee -a $OUTFILE
+        mkdir -p $dest 2>&1 | tee -a $OUTFILE
+        cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/Music
-if [[ -d $dest ]]; then
-    echo "*** clean home dir"
-    rm -rf ~/Music
-    rm -rf ~/Pictures
-    rm -rf ~/Public
-    rm -rf ~/Templates
-    rm -rf ~/Videos
-fi
+    dest=~/.config/compton.conf
+    if [[ ! -f $dest ]]; then
+        echo " *** configure compton" 2>&1 | tee -a $OUTFILE
+        cp $BASEDIR/config/compton.conf $dest 2>&1 | tee -a $OUTFILE
+    fi
 
-dest=~/.profile
-if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
-    echo "*** disable overlay scrolling"
-    sudo tee -a $dest > /dev/null << 'EOF'
+    dest=~/Music
+    if [[ -d $dest ]]; then
+        echo " *** clean home dir" 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Music 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Pictures 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Public 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Templates 2>&1 | tee -a $OUTFILE
+        rm -rf ~/Videos 2>&1 | tee -a $OUTFILE
+    fi
+
+    dest=~/.profile
+    if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
+        echo " *** disable overlay scrolling" 2>&1 | tee -a $OUTFILE
+        tee -a $dest > /dev/null << 'EOF'
 
 export GTK_OVERLAY_SCROLLING=0
 
 EOF
-fi
+    fi
 
-# custom session -------------------------------------------------------
+    # custom session ---------------------------------------------------------------------
 
+<<<<<<< HEAD
 dest=/usr/bin/startmod
 if [[ ! -f $dest ]]; then
     echo "*** startmod script"
     sudo cp $BASEDIR/config/startmod $dest
 fi
+=======
+    dest=/usr/bin/startmod
+    if [[ ! -f $dest ]]; then
+        echo " *** startmod script" 2>&1 | tee -a $OUTFILE
+        sudo cp $BASEDIR/../samples/startmod $dest 2>&1 | tee -a $OUTFILE
+    fi
+>>>>>>> 8111c0ac1f3db27957b5bd76bc4d49c8e62550e7
 
-dest=/usr/share/xsessions/custom.desktop
-if [[ ! -f $dest ]]; then
-    echo "*** custom session"
-    sudo tee $dest > /dev/null << 'EOF'
+    dest=/usr/share/xsessions/custom.desktop
+    if [[ ! -f $dest ]]; then
+        echo " *** custom session" 2>&1 | tee -a $OUTFILE
+        sudo tee $dest > /dev/null << 'EOF'
 [Desktop Entry]
 Name=LXDE
 Comment=LXDE - Lightweight X11 desktop environment
 Exec=/usr/bin/startmod
 Type=Application
 EOF
-fi
+    fi
 
-dest=~/.dmrc
-if [[ ! -f $dest ]]; then
-    echo "*** dmrc"
-    sudo tee $dest > /dev/null << 'EOF'
+    dest=~/.dmrc
+    if [[ ! -f $dest ]]; then
+        echo " *** dmrc" 2>&1 | tee -a $OUTFILE
+        tee $dest > /dev/null << 'EOF'
 [Desktop]
 Session=custom
 EOF
+    fi
 fi
 
-# test -----------------------------------------------------------------
+# install dev ============================================================================
 
-test=0
-if [[ $test == 1 ]]; then
-    echo "*** run test"
+if [[ $DEV == 1 ]]; then
+    dest=/usr/bin/qtcreator
+    if [[ ! -f $dest ]]; then
+        echo " *** install dev tools" 2>&1 | tee -a $OUTFILE
+        sudo apt -y install qtcreator qtchooser qt5-qmake 2>&1 | tee -a $OUTFILE
+        sudo apt -y install qtbase5-dev qtbase5-dev-tools 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libgtk-3-dev gtk-3-examples 2>&1 | tee -a $OUTFILE
+        sudo apt -y install libprocps-dev libmediainfo-dev 2>&1 | tee -a $OUTFILE
+    fi
 fi
 
 

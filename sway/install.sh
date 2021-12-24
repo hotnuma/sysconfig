@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -30,10 +32,12 @@ dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"
     sudo pacman -Syu
-    sudo pacman -S sway swayidle wofi thunar gvfs xfce4-terminal
-    sudo pacman -S htop geany firefox firefox-ublock-origin
-    sudo pacman -S mpv git meson base-devel
-    cp -r ~/sysconfig/swaymin/config/* ~/.config/
+    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal
+    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa
+    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav gst-plugin-pipewire libva-v4l2-request
+    sudo pacman -S wget htop geany xfce4-taskmanager
+    sudo pacman -S git meson base-devel
+    sudo pacman -S mpv firefox firefox-ublock-origin
 fi
 
 dest=/etc/environment
@@ -42,6 +46,7 @@ if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
     sudo tee -a $dest > /dev/null << 'EOF'
 
 MOZ_ENABLE_WAYLAND=1
+MOZ_X11_EGL=1
 
 EOF
 fi
@@ -78,6 +83,26 @@ dtoverlay=disable-wifi
 dtoverlay=disable-bt
 
 EOF
+fi
+
+# /home settings -------------------------------------------------------
+
+dest=~/config
+if [[ ! -d $dest ]]; then
+    echo " *** config link"
+    ln -s ~/.config $dest
+fi
+
+dest=~/.config/autostart
+if [[ ! -d $dest ]]; then
+    echo " *** create autostart directory"
+    mkdir -p $dest
+fi
+
+dest=~/.config/sway
+if [[ ! -d $dest ]]; then
+    echo " *** configure sway"
+    cp -a $BASEDIR/config/sway/ ~/.config/
 fi
 
 
