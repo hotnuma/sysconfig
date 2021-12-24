@@ -182,7 +182,7 @@ fi
 dest=/usr/bin/startmod
 if [[ ! -f $dest ]]; then
     echo "*** startmod script"
-    sudo cp $BASEDIR/../samples/startmod $dest
+    sudo cp $BASEDIR/config/startmod $dest
 fi
 
 dest=/usr/share/xsessions/custom.desktop
