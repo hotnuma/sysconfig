@@ -203,11 +203,11 @@ EOF
 
     # custom session ---------------------------------------------------------------------
 
-dest=/usr/bin/startmod
-if [[ ! -f $dest ]]; then
-    echo "*** startmod script" 2>&1 | tee -a $OUTFILE
-    sudo cp $BASEDIR/config/startmod $dest 2>&1 | tee -a $OUTFILE
-fi
+    dest=/usr/bin/startmod
+    if [[ ! -f $dest ]]; then
+        echo " *** startmod script" 2>&1 | tee -a $OUTFILE
+        sudo cp $BASEDIR/config/startmod $dest 2>&1 | tee -a $OUTFILE
+    fi
 
     dest=/usr/share/xsessions/custom.desktop
     if [[ ! -f $dest ]]; then
