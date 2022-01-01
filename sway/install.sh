@@ -103,4 +103,10 @@ if [[ ! -d $dest ]]; then
     cp -a $BASEDIR/config/sway/ ~/.config/
 fi
 
+dest=~/.config/labwc
+if [[ ! -d $dest ]]; then
+    echo " *** configure labwc"
+    cp -a $BASEDIR/config/labwc/ ~/.config/
+fi
+
 
