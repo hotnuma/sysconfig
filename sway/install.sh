@@ -26,8 +26,6 @@ hotnuma ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# vulkan-broadcom mesa-demos pulseaudio 
-
 dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
     echo "*** install desktop"

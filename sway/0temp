@@ -1,8 +1,4 @@
 
-## swithing branches
-
-https://wiki.manjaro.org/index.php/Switching_Branches
-
 ## etc/fstab - automount usb key
 
 LABEL=KINGSTON /backup ntfs permissions,utf8 0 0
@@ -16,24 +12,6 @@ LABEL=KINGSTON /backup ntfs permissions,utf8 0 0
 ## edit /etc/sudoers
 
 sudo EDITOR=nano visudo 
-
-* autologin
-
-https://forum.manjaro.org/t/raspberry-pi-autologin-in-sway/43039/4
-
-sudo systemctl edit getty@tty1
-
-after line 3 copy/paste, replace ‘user’ with your user name:
-
-[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty --autologin hotnuma --noclear %I $TERM
-
-add to your ~/.bash_profile
-
-if [ -z $DISPLAY ] && [ “$(tty)” = “/dev/tty1” ]; then
-exec sway
-fi
 
 * /etc/sudoers
 

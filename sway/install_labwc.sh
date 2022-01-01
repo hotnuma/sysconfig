@@ -7,6 +7,9 @@ if [[ ! -d $dest ]]; then
     mkdir ~/DevFiles
 fi
 
+# needs these
+# sudo pacman -S wayland-protocols
+
 dest=~/DevFiles/labwc
 if [[ ! -d $dest ]]; then
     cd ~/DevFiles
