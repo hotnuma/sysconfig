@@ -15,8 +15,9 @@ if [[ ! -d $dest ]]; then
     cd ~/DevFiles
 	git clone https://github.com/labwc/labwc.git
 	cd labwc
-	meson build/
-    ninja -C build/
+	meson build
+    ninja -C build
+    sudo ninja -C build install
 fi
 
 
