@@ -2,7 +2,6 @@
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 OUTFILE="$HOME/install.log"
-
 rm -f $OUTFILE
 
 BASE=0

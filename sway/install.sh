@@ -1,16 +1,18 @@
 #!/usr/bin/bash
 
 BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+OUTFILE="$HOME/install.log"
+rm -f $OUTFILE
 
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort."
+    echo "*** must not be run as root: abort." 2>&1 | tee -a $OUTFILE
     exit 1
 else
-    sudo -k # make sure to ask for password on next sudo
+    sudo -k
     if ! sudo true; then
-        echo "*** sudo failed: abort."
+        echo "*** sudo failed: abort." 2>&1 | tee -a $OUTFILE
         exit 1
     fi
 fi
@@ -19,7 +21,7 @@ fi
 
 dest=/etc/sudoers.d/custom
 if [[ ! -f $dest ]]; then
-    echo "*** edit /etc/sudoers"
+    echo "*** edit /etc/sudoers" 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 hotnuma ALL=(ALL) NOPASSWD: ALL
 
@@ -28,19 +30,20 @@ fi
 
 dest=/usr/bin/sway
 if [[ ! -f $dest ]]; then
-    echo "*** install desktop"
-    sudo pacman -Syu
-    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal
-    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa
-    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav gst-plugin-pipewire libva-v4l2-request
-    sudo pacman -S wget htop geany xfce4-taskmanager
-    sudo pacman -S git meson base-devel
-    sudo pacman -S mpv firefox firefox-ublock-origin
+    echo "*** install desktop" 2>&1 | tee -a $OUTFILE
+    sudo pacman -Syu 2>&1 | tee -a $OUTFILE
+    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal 2>&1 | tee -a $OUTFILE
+    sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa 2>&1 | tee -a $OUTFILE
+    sudo pacman -S pipewire-pulse pipewire-zeroconf pulsemixer gst-libav 2>&1 | tee -a $OUTFILE
+    sudo pacman -S gst-plugin-pipewire libva-v4l2-request 2>&1 | tee -a $OUTFILE
+    sudo pacman -S wget htop geany xfce4-taskmanager 2>&1 | tee -a $OUTFILE
+    sudo pacman -S git meson base-devel 2>&1 | tee -a $OUTFILE
+    sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
 fi
 
 dest=/etc/environment
 if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
-    echo "*** edit /etc/environment"
+    echo "*** edit /etc/environment" 2>&1 | tee -a $OUTFILE
     sudo tee -a $dest > /dev/null << 'EOF'
 
 MOZ_ENABLE_WAYLAND=1
@@ -51,8 +54,8 @@ fi
 
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
-    echo "*** edit /boot/config.txt"
-	sudo cp $dest $dest.bak
+    echo "*** edit /boot/config.txt" 2>&1 | tee -a $OUTFILE
+	sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 # See /boot/overlays/README for all available options
 
@@ -87,26 +90,26 @@ fi
 
 dest=~/config
 if [[ ! -d $dest ]]; then
-    echo " *** config link"
-    ln -s ~/.config $dest
+    echo " *** config link" 2>&1 | tee -a $OUTFILE
+    ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
 fi
 
 dest=~/.config/autostart
 if [[ ! -d $dest ]]; then
-    echo " *** create autostart directory"
-    mkdir -p $dest
+    echo " *** create autostart directory" 2>&1 | tee -a $OUTFILE
+    mkdir -p $dest 2>&1 | tee -a $OUTFILE
 fi
 
 dest=~/.config/sway
 if [[ ! -d $dest ]]; then
-    echo " *** configure sway"
-    cp -a $BASEDIR/config/sway/ ~/.config/
+    echo " *** configure sway" 2>&1 | tee -a $OUTFILE
+    cp -a $BASEDIR/config/sway/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
 dest=~/.config/labwc
 if [[ ! -d $dest ]]; then
-    echo " *** configure labwc"
-    cp -a $BASEDIR/config/labwc/ ~/.config/
+    echo " *** configure labwc" 2>&1 | tee -a $OUTFILE
+    cp -a $BASEDIR/config/labwc/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
 
