@@ -8,7 +8,7 @@ if [[ ! -d $dest ]]; then
 fi
 
 # needs these
-# sudo pacman -S wayland-protocols
+sudo pacman -S wayland-protocols
 
 dest=~/DevFiles/labwc
 if [[ ! -d $dest ]]; then
