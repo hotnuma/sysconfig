@@ -38,7 +38,7 @@ if [[ ! -f $dest ]]; then
     sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa 2>&1 | tee -a $OUTFILE
     sudo pacman -S gst-plugin-pipewire libva-v4l2-request 2>&1 | tee -a $OUTFILE
     sudo pacman -S wget htop geany xfce4-taskmanager 2>&1 | tee -a $OUTFILE
-    sudo pacman -S git meson base-devel 2>&1 | tee -a $OUTFILE
+    sudo pacman -S git meson cmake base-devel 2>&1 | tee -a $OUTFILE
     sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
     sudo pacman -S engrampa 2>&1 | tee -a $OUTFILE
 fi
