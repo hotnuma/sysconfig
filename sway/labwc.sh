@@ -7,8 +7,8 @@ if [[ ! -d $dest ]]; then
     mkdir ~/DevFiles
 fi
 
-# needs these
-sudo pacman -S wayland-protocols
+# dependencies
+# meson cairo pango libxml2 glib2 wayland-protocols
 
 dest=~/DevFiles/labwc
 if [[ ! -d $dest ]]; then
