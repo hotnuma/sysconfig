@@ -101,16 +101,22 @@ if [[ ! -d $dest ]]; then
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
 fi
 
+dest=~/.config/labwc
+if [[ ! -d $dest ]]; then
+    echo " *** configure labwc" 2>&1 | tee -a $OUTFILE
+    cp -a $BASEDIR/config/labwc/ ~/.config/ 2>&1 | tee -a $OUTFILE
+fi
+
 dest=~/.config/sway
 if [[ ! -d $dest ]]; then
     echo " *** configure sway" 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/config/sway/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
-dest=~/.config/labwc
+dest=~/.config/waybar
 if [[ ! -d $dest ]]; then
-    echo " *** configure labwc" 2>&1 | tee -a $OUTFILE
-    cp -a $BASEDIR/config/labwc/ ~/.config/ 2>&1 | tee -a $OUTFILE
+    echo " *** configure waybar" 2>&1 | tee -a $OUTFILE
+    cp -a $BASEDIR/config/waybar/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
 
