@@ -40,6 +40,7 @@ if [[ ! -f $dest ]]; then
     sudo pacman -S wget htop geany xfce4-taskmanager 2>&1 | tee -a $OUTFILE
     sudo pacman -S git meson base-devel 2>&1 | tee -a $OUTFILE
     sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
+    sudo pacman -S engrampa 2>&1 | tee -a $OUTFILE
 fi
 
 dest=/etc/environment

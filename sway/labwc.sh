@@ -14,7 +14,11 @@ dest=~/DevFiles/labwc
 if [[ ! -d $dest ]]; then
     cd ~/DevFiles
 	git clone https://github.com/labwc/labwc.git
-	cd labwc
+fi
+
+dest=~/DevFiles/labwc
+if [[ -d $dest ]]; then
+    cd ~/DevFiles/labwc
 	meson build
     ninja -C build
     sudo ninja -C build install
