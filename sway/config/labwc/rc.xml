@@ -21,6 +21,7 @@
     <cornerRadius>8</cornerRadius>
     <font place="ActiveWindow"><name>sans</name><size>10</size></font>
     <font place="MenuItem"><name>sans</name><size>10</size></font>
+    <font place="OSD"><name>sans</name><size>10</size></font>
   </theme>
 
   <focus>
@@ -45,42 +46,14 @@
   <keyboard>
     <repeatRate>25</repeatRate>
     <repeatDelay>600</repeatDelay>
-    <keybind key="W-b">
-      <action name="Execute"><command>firefox</command></action>
-    </keybind>
-    <keybind key="W-e">
-      <action name="Execute"><command>thunar</command></action>
-    </keybind>
-    <keybind key="W-t">
-      <action name="Execute"><command>xfce4-terminal</command></action>
-    </keybind>
-    <keybind key="W-S-q">
-      <action name="Execute"><command>systemctl poweroff</command></action>
-    </keybind>
-    <keybind key="W-S-r">
-      <action name="Execute"><command>systemctl reboot</command></action>
-    </keybind>
-    <keybind key="W-g">
-      <action name="Execute"><command>geany</command></action>
-    </keybind>
-    <keybind key="W-space">
-      <action name="Execute"><command>wofi -S run</command></action>
-    </keybind>
-    <keybind key="A-F4">
-      <action name="Close" />
+    <keybind key="A-Escape">
+      <action name="Exit" />
     </keybind>
     <keybind key="A-Tab">
       <action name="NextWindow" />
     </keybind>
-    
-    <keybind key="A-Escape">
-      <action name="Exit" />
-    </keybind>
-    <keybind key="W-Return">
-      <action name="Execute"><command>alacritty</command></action>
-    </keybind>
-    <keybind key="A-F3">
-      <action name="Execute"><command>bemenu-run</command></action>
+    <keybind key="A-F4">
+      <action name="Close" />
     </keybind>
     <keybind key="W-a">
       <action name="ToggleMaximize" />
@@ -124,35 +97,156 @@
     <keybind key="XF86_MonBrightnessDown">
       <action name="Execute"><command>brightnessctl set 10%-</command></action>
     </keybind>
+    
+    <!-- Custom keys start -->
+
+    <keybind key="W-b">
+      <action name="Execute"><command>firefox</command></action>
+    </keybind>
+    <keybind key="W-e">
+      <action name="Execute"><command>thunar</command></action>
+    </keybind>
+    <keybind key="W-t">
+      <action name="Execute"><command>xfce4-terminal</command></action>
+    </keybind>
+    <keybind key="W-S-q">
+      <action name="Execute"><command>systemctl poweroff</command></action>
+    </keybind>
+    <keybind key="W-S-r">
+      <action name="Execute"><command>systemctl reboot</command></action>
+    </keybind>
+    <keybind key="W-g">
+      <action name="Execute"><command>geany</command></action>
+    </keybind>
+    <keybind key="W-space">
+      <action name="Execute"><command>wofi -S run</command></action>
+    </keybind>
+    
+    <!-- Custom keys end -->
+    
   </keyboard>
 
   <!--
-    <mousebind> buttons/actions have not yet been implemented except for the
-    one below.
+    Multiple <mousebind> can exist within one <context>
+    Multiple <actions> can exist within one <mousebind>
+    The following openbox-actions are not supported: "Unshade" and "Drag"
   -->
   <mouse>
 
     <!-- time is in ms -->
-    <doubleClickTime>800</doubleClickTime>
+    <doubleClickTime>500</doubleClickTime>
+
+    <context name="Frame">
+      <mousebind button="A-Left" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+        <action name="Move"/>
+      </mousebind>
+      <mousebind button="A-Right" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+
+    <context name="Top">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="Left">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="Right">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="Bottom">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="TRCorner">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="BRCorner">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="TLCorner">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
+    <context name="BLCorner">
+      <mousebind button="Left" action="Press">
+        <action name="Resize"/>
+      </mousebind>
+    </context>
 
     <context name="TitleBar">
+      <mousebind button="Left" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+        <action name="Move"/>
+      </mousebind>
       <mousebind button="Left" action="DoubleClick">
+        <action name="Focus"/>
+        <action name="Raise"/>
         <action name="ToggleMaximize"/>
       </mousebind>
     </context>
+
     <context name="Maximize">
       <mousebind button="Left" action="Click">
-	<action name="ToggleMaximize"/>
+        <action name="Focus"/>
+        <action name="Raise"/>
+        <action name="ToggleMaximize"/>
       </mousebind>
     </context>
+
     <context name="Iconify">
       <mousebind button="left" action="Click">
         <action name="Iconify"/>
       </mousebind>
     </context>
+
     <context name="Close">
       <mousebind button="Left" action="Click">
         <action name="Close"/>
+      </mousebind>
+    </context>
+
+    <context name="Client">
+      <mousebind button="Left" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="Focus"/>
+        <action name="Raise"/>
+      </mousebind>
+    </context>
+
+    <context name="Root">
+      <mousebind button="Left" action="Press">
+        <action name="ShowMenu"><menu>root-menu</menu></action>
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu"><menu>root-menu</menu></action>
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="ShowMenu"><menu>root-menu</menu></action>
       </mousebind>
     </context>
 
@@ -169,6 +263,7 @@
     All values are [yes|no] except for:
       - pointerSpeed [-1.0 to 1.0]
       - accelProfile [flat|adaptive]
+      - tapButtonMap [lrm|lmr]
   -->
   <libinput>
     <device category="">
@@ -177,6 +272,7 @@
       <pointerSpeed></pointerSpeed>
       <accelProfile></accelProfile>
       <tap>yes</tap>
+      <tapButtonMap></tapButtonMap>
       <middleEmulation></middleEmulation>
       <disableWhileTyping></disableWhileTyping>
     </device>
