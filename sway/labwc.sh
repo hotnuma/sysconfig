@@ -13,13 +13,13 @@ fi
 dest=~/DevFiles/labwc
 if [[ ! -d $dest ]]; then
     cd ~/DevFiles
-	git clone https://github.com/labwc/labwc.git
+    git clone https://github.com/labwc/labwc.git
 fi
 
 dest=~/DevFiles/labwc
 if [[ -d $dest ]]; then
     cd ~/DevFiles/labwc
-	meson build
+    meson build
     ninja -C build
     sudo ninja -C build install
 fi
