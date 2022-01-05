@@ -17,7 +17,7 @@ else
     fi
 fi
 
-# set no password sudo -------------------------------------------------
+# passwordless sudo -------------------------------------------------
 
 dest=/etc/sudoers.d/custom
 if [[ ! -f $dest ]]; then
@@ -41,17 +41,6 @@ if [[ ! -f $dest ]]; then
     sudo pacman -S git meson cmake base-devel 2>&1 | tee -a $OUTFILE
     sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
     sudo pacman -S engrampa 2>&1 | tee -a $OUTFILE
-fi
-
-dest=/etc/environment
-if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
-    echo "*** edit /etc/environment" 2>&1 | tee -a $OUTFILE
-    sudo tee -a $dest > /dev/null << 'EOF'
-
-MOZ_ENABLE_WAYLAND=1
-MOZ_X11_EGL=1
-
-EOF
 fi
 
 dest=/boot/config.txt
@@ -88,6 +77,17 @@ dtoverlay=disable-bt
 EOF
 fi
 
+dest=/etc/environment
+if ! sudo grep -q "MOZ_ENABLE_WAYLAND" $dest; then
+    echo "*** edit /etc/environment" 2>&1 | tee -a $OUTFILE
+    sudo tee -a $dest > /dev/null << 'EOF'
+
+MOZ_ENABLE_WAYLAND=1
+MOZ_X11_EGL=1
+
+EOF
+fi
+
 # /home settings -------------------------------------------------------
 
 dest=~/config
@@ -118,6 +118,18 @@ dest=~/.config/waybar
 if [[ ! -d $dest ]]; then
     echo " *** configure waybar" 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/config/waybar/ ~/.config/ 2>&1 | tee -a $OUTFILE
+fi
+
+## autologin : https://unix.stackexchange.com/questions/42359/
+dest=~/.bash_profile
+if ! grep -q "exec sway" $dest; then
+    echo "*** autologin" 2>&1 | tee -a $OUTFILE
+    tee -a $dest > /dev/null << 'EOF'
+
+if [ -z $DISPLAY ] && [ “$(tty)” = “/dev/tty1” ]; then
+    exec sway
+fi
+EOF
 fi
 
 
