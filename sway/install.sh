@@ -33,7 +33,7 @@ if [[ ! -f $dest ]]; then
     echo "*** install desktop" 2>&1 | tee -a $OUTFILE
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
     sudo pacman -S mesa ttf-liberation otf-font-awesome 2>&1 | tee -a $OUTFILE
-    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal 2>&1 | tee -a $OUTFILE
+    sudo pacman -S sway swayidle waybar wofi thunar gvfs xfce4-terminal xorg-xeyes 2>&1 | tee -a $OUTFILE
     sudo pacman -S pipewire-media-session pipewire-pulse pipewire-zeroconf pulsemixer gst-libav 2>&1 | tee -a $OUTFILE
     sudo pacman -S pavucontrol pulseaudio-alsa alsa-utils pipewire-alsa 2>&1 | tee -a $OUTFILE
     sudo pacman -S gst-plugin-pipewire libva-v4l2-request 2>&1 | tee -a $OUTFILE
