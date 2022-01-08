@@ -28,16 +28,18 @@ hotnuma ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-dest=/usr/bin/sway
+dest=/usr/bin/openbox
 if [[ ! -f $dest ]]; then
     echo "*** install desktop" 2>&1 | tee -a $OUTFILE
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
     sudo pacman -S lxde 2>&1 | tee -a $OUTFILE
+    sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 2>&1 | tee -a $OUTFILE
     sudo pacman -S thunar gvfs xfce4-terminal xfce4-taskmanager 2>&1 | tee -a $OUTFILE
     sudo pacman -S git meson cmake base-devel 2>&1 | tee -a $OUTFILE
     sudo pacman -S wget htop geany 2>&1 | tee -a $OUTFILE
     sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
     sudo pacman -S engrampa 2>&1 | tee -a $OUTFILE
+    sudo systemctl enable lightdm.service --force 2>&1 | tee -a $OUTFILE
 fi
 
 dest=/boot/config.txt
