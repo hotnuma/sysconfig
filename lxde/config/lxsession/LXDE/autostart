@@ -1,3 +1,4 @@
+@feh --bg-scale /usr/share/lxde/wallpapers/lxde_blue.jpg
 @lxpanel --profile LXDE
-@pcmanfm --desktop --profile LXDE
-@xscreensaver -no-splash
+@Thunar --daemon
+@numlockx on
