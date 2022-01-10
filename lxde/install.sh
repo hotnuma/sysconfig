@@ -32,7 +32,14 @@ dest=/usr/bin/openbox
 if [[ ! -f $dest ]]; then
     echo "*** install desktop" 2>&1 | tee -a $OUTFILE
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
-    sudo pacman -S lxde 2>&1 | tee -a $OUTFILE
+
+    paklist="openbox lxsession-gtk3 pcmanfm-gtk3 lxpanel-gtk3 \
+    lxde-common lxde-icon-theme lxlauncher-gtk3 lxhotkey-gtk3 lxinput-gtk3 \
+    lxrandr-gtk3 lxappearance-gtk3 lxappearance-obconf-gtk3 \
+    lxtask-gtk3"
+	
+	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
+    
     sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 2>&1 | tee -a $OUTFILE
     sudo pacman -S thunar gvfs xfce4-terminal xfce4-taskmanager 2>&1 | tee -a $OUTFILE
     sudo pacman -S git meson cmake base-devel 2>&1 | tee -a $OUTFILE
