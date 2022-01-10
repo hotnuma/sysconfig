@@ -7,12 +7,12 @@ rm -f $OUTFILE
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort." 2>&1 | tee -a $OUTFILE
+    echo " *** must not be run as root: abort." 2>&1 | tee -a $OUTFILE
     exit 1
 else
     sudo -k
     if ! sudo true; then
-        echo "*** sudo failed: abort." 2>&1 | tee -a $OUTFILE
+        echo " *** sudo failed: abort." 2>&1 | tee -a $OUTFILE
         exit 1
     fi
 fi
@@ -21,7 +21,7 @@ fi
 
 dest=/etc/sudoers.d/custom
 if [[ ! -f $dest ]]; then
-    echo "*** edit /etc/sudoers" 2>&1 | tee -a $OUTFILE
+    echo " *** edit /etc/sudoers" 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 hotnuma ALL=(ALL) NOPASSWD: ALL
 
@@ -30,28 +30,32 @@ fi
 
 dest=/usr/bin/openbox
 if [[ ! -f $dest ]]; then
-    echo "*** install desktop" 2>&1 | tee -a $OUTFILE
+    echo " *** install desktop" 2>&1 | tee -a $OUTFILE
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
 
-    paklist="openbox lxsession-gtk3 pcmanfm-gtk3 lxpanel-gtk3 \
-    lxde-common lxde-icon-theme lxlauncher-gtk3 lxhotkey-gtk3 lxinput-gtk3 \
-    lxrandr-gtk3 lxappearance-gtk3 lxappearance-obconf-gtk3 \
-    lxtask-gtk3"
-	
+    paklist="openbox ttf-liberation mesa lxsession-gtk3 lxpanel-gtk3 pcmanfm-gtk3 \
+    lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings lxde-common \
+    lxde-icon-theme lxlauncher-gtk3 lxhotkey-gtk3 lxinput-gtk3 lxrandr-gtk3 \
+    lxappearance-gtk3 lxappearance-obconf-gtk3 lxtask-gtk3"
 	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
     
-    sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 2>&1 | tee -a $OUTFILE
-    sudo pacman -S thunar gvfs xfce4-terminal xfce4-taskmanager 2>&1 | tee -a $OUTFILE
-    sudo pacman -S git meson cmake base-devel 2>&1 | tee -a $OUTFILE
-    sudo pacman -S wget htop geany 2>&1 | tee -a $OUTFILE
-    sudo pacman -S mpv firefox firefox-ublock-origin 2>&1 | tee -a $OUTFILE
-    sudo pacman -S engrampa 2>&1 | tee -a $OUTFILE
+    paklist="thunar gvfs xfce4-terminal xfce4-taskmanager wget htop geany \
+    mpv firefox firefox-ublock-origin engrampa meson cmake base-devel"
+	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
+    
     sudo systemctl enable lightdm.service --force 2>&1 | tee -a $OUTFILE
+fi
+
+dest=/usr/bin/git
+if [[ ! -f $dest ]]; then
+    echo " *** install git" 2>&1 | tee -a $OUTFILE
+    paklist="git"
+	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
 fi
 
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
-    echo "*** edit /boot/config.txt" 2>&1 | tee -a $OUTFILE
+    echo " *** edit config.txt" 2>&1 | tee -a $OUTFILE
 	sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 # See /boot/overlays/README for all available options
