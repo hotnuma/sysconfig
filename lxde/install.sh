@@ -37,11 +37,11 @@ if [[ ! -f $dest ]]; then
     lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings lxde-common \
     lxde-icon-theme lxlauncher-gtk3 lxhotkey-gtk3 lxinput-gtk3 lxrandr-gtk3 \
     lxappearance-gtk3 lxappearance-obconf-gtk3 lxtask-gtk3"
-	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
+    sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
     
     paklist="thunar gvfs xfce4-terminal xfce4-taskmanager wget htop geany \
     mpv firefox firefox-ublock-origin engrampa meson cmake base-devel"
-	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
+    sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
     
     sudo systemctl enable lightdm.service --force 2>&1 | tee -a $OUTFILE
 fi
@@ -50,13 +50,13 @@ dest=/usr/bin/git
 if [[ ! -f $dest ]]; then
     echo " *** install git" 2>&1 | tee -a $OUTFILE
     paklist="git"
-	sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
+    sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
 fi
 
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
     echo " *** edit config.txt" 2>&1 | tee -a $OUTFILE
-	sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
+    sudo cp $dest $dest.bak 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 # See /boot/overlays/README for all available options
 
