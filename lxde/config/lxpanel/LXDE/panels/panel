@@ -59,7 +59,7 @@ Plugin {
 Plugin {
   type=space
   Config {
-    Size=32
+    Size=14
   }
 }
 Plugin {

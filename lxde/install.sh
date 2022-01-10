@@ -33,10 +33,10 @@ if [[ ! -f $dest ]]; then
     echo " *** install desktop" 2>&1 | tee -a $OUTFILE
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
 
-    paklist="openbox ttf-liberation mesa lxsession-gtk3 lxpanel-gtk3 pcmanfm-gtk3 \
-    lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings lxde-common \
-    lxde-icon-theme lxlauncher-gtk3 lxhotkey-gtk3 lxinput-gtk3 lxrandr-gtk3 \
-    lxappearance-gtk3 lxappearance-obconf-gtk3 lxtask-gtk3"
+    paklist="xorg ttf-liberation mesa openbox lxsession-gtk3 lxpanel-gtk3 \
+    pcmanfm-gtk3 lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings \
+    lxde-common lxde-icon-theme lxlauncher-gtk3 lxinput-gtk3 lxhotkey-gtk3 \
+    lxrandr-gtk3 lxappearance-gtk3 lxappearance-obconf-gtk3 lxtask-gtk3"
     sudo pacman -S $paklist 2>&1 | tee -a $OUTFILE
     
     paklist="thunar gvfs xfce4-terminal xfce4-taskmanager wget htop geany \
