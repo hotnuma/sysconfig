@@ -1,4 +1,0 @@
-@feh --bg-scale /usr/share/lxde/wallpapers/lxde_blue.jpg
-@lxpanel --profile LXDE
-@Thunar --daemon
-@numlockx on

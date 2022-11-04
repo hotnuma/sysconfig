@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # test if sudo is succesfull -------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -24,6 +26,15 @@ hotnuma ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
+# startup.sh --------- -------------------------------------------------
+
+dest=/usr/local/bin/startup.sh
+if [[ ! -f $dest ]]; then
+    echo "*** autostart"
+    sudo cp $BASEDIR/local/bin/startup.sh $dest
+    cp -r $BASEDIR/home/config/autostart/* $HOME/.config/autostart/ 
+fi
+
 # install / remove -----------------------------------------------------
 
 dest=/usr/bin/mpv
@@ -36,10 +47,11 @@ if [[ ! -f $dest ]]; then
     rm -rf ~/snap
     
     # install base
-    sudo apt -y install htop geany rofi gimp xfce4-taskmanager net-tools
-    sudo apt -y install p7zip-full engrampa lm-sensors hardinfo gparted
+    sudo apt -y install htop hsetroot net-tools rofi xfce4-taskmanager
+    sudo apt -y install lm-sensors hardinfo p7zip-full engrampa geany
     sudo apt -y install mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui
     sudo apt -y install build-essential git meson ninja-build dos2unix
+    sudo apt -y install gimp
     sudo apt -y install --no-install-recommends smartmontools
     
     # uninstall

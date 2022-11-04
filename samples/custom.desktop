@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=LXDE
-Comment=LXDE - Lightweight X11 desktop environment
-Exec=/usr/bin/startmod
-Type=Application

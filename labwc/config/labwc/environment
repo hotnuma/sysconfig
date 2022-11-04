@@ -1,9 +1,0 @@
-# Example environment file
-
-# Set keyboard layout to Swedish
-XKB_DEFAULT_LAYOUT=fr
-
-# Force firefox to use wayland backend
-MOZ_ENABLE_WAYLAND=1
-
-
