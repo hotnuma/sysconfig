@@ -47,7 +47,7 @@ if [[ ! -f $dest ]]; then
     rm -rf ~/snap
     
     # install base
-    sudo apt -y install htop hsetroot net-tools rofi xfce4-taskmanager
+    sudo apt -y install hsetroot htop net-tools rofi xfce4-taskmanager
     sudo apt -y install lm-sensors hardinfo p7zip-full engrampa geany
     sudo apt -y install mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui
     sudo apt -y install build-essential git meson ninja-build dos2unix
