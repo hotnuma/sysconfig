@@ -4,16 +4,12 @@ BASEDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 OUTFILE="$HOME/install.log"
 rm -f $OUTFILE
 
-BASE=0
+BASE=1
 DEV=0
 
 while [[ $# > 0 ]]; do
     key="$1"
     case $key in
-        base)
-        BASE=1
-        shift
-        ;;
         dev)
         DEV=1
         shift
@@ -23,17 +19,6 @@ while [[ $# > 0 ]]; do
         ;;
     esac
 done
-
-ALL=$(( $BASE + $DEV ))
-
-if [[ $ALL < 1 ]]; then
-    echo "This scrip is not meant to be run as is, it will setup" 2>&1 | tee -a $OUTFILE
-    echo "overclocking, remove some programs, install others," 2>&1 | tee -a $OUTFILE
-    echo "disable bluetooth, wifi, etc... so it needs to be" 2>&1 | tee -a $OUTFILE
-    echo "studied and tweaked to perticuliar needs." 2>&1 | tee -a $OUTFILE
-    echo "abort..." 2>&1 | tee -a $OUTFILE
-    exit 1
-fi
 
 # test if sudo is succesfull -------------------------------------------------------------
 

@@ -1,0 +1,4 @@
+
+alias ls='ls -la --color=auto'
+alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
+
