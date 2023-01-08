@@ -1,9 +1,5 @@
-# Installation
+#### Readme
 
-System post-install scripts.
-
-```
-git clone https://github.com/hotnuma/sysconfig.git
-```
+post-install scripts.
 
 
