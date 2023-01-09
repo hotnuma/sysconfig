@@ -44,18 +44,13 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp $BASEDIR/root/lightdm.conf $dest 2>&1 | tee -a $OUTFILE
 fi
 
-# Custom Session --------- -----------------------------------------------------
+# Startup Patch --------- ------------------------------------------------------
 
-dest=/usr/share/xsessions/custom.desktop
-if [[ ! -f $dest ]]; then
-    echo "*** custom.desktop" 2>&1 | tee -a $OUTFILE
-    sudo cp $BASEDIR/root/custom.desktop $dest 2>&1 | tee -a $OUTFILE
-fi
-
-dest=/usr/bin/startcustom
-if [[ ! -f $dest ]]; then
-    echo "*** startcustom" 2>&1 | tee -a $OUTFILE
-    sudo cp $BASEDIR/root/startcustom $dest 2>&1 | tee -a $OUTFILE
+dest=/usr/bin/startxfce4
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** startxfce4" 2>&1 | tee -a $OUTFILE
+    sudo mv $dest ${dest}.bak 2>&1 | tee -a $OUTFILE
+    sudo cp $BASEDIR/root/startxfce4 $dest 2>&1 | tee -a $OUTFILE
 fi
 
 # install / remove -------------------------------------------------------------
