@@ -71,12 +71,6 @@ then
   else
     XDG_DATA_DIRS="/usr/share:/usr/local/share:/usr/share"
   fi
-else
-  # avoid duplicating @_datadir_@ if $XDG_DATA_DIRS already contains it
-  case "$XDG_DATA_DIRS" in
-    *:/usr/share | /usr/share ) : ;;
-    * ) XDG_DATA_DIRS="$XDG_DATA_DIRS:/usr/share" ;;
-  esac
 fi
 export XDG_DATA_DIRS
 
@@ -87,12 +81,6 @@ then
   else
     XDG_CONFIG_DIRS="/etc/xdg:/etc/xdg"
   fi
-else
-  # avoid duplicating @_sysconfdir_@/xdg if $XDG_CONFIG_DIRS already contains it
-  case "$XDG_CONFIG_DIRS" in
-    *:/etc/xdg | /etc/xdg ) : ;;
-    * ) XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:/etc/xdg" ;;
-  esac
 fi
 export XDG_CONFIG_DIRS
 
