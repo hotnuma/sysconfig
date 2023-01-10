@@ -1,10 +1,12 @@
 #!/usr/bin/bash
 
-case "$XDG_DATA_DIRS" in
-    *:/usr/share | /usr/share ) : ;;
-    * ) XDG_DATA_DIRS="$XDG_DATA_DIRS:/usr/share" ;;
-esac
-
-echo $XDG_DATA_DIRS
+dest=$HOME/custom.txt
+CURRENT_USER=$USER
+if [[ ! -f $dest ]]; then
+    echo "*** sudoers"
+    sudo tee $dest > /dev/null << EOF
+$CURRENT_USER ALL=(ALL) NOPASSWD: ALL
+EOF
+fi
 
 

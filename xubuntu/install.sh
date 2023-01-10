@@ -4,7 +4,7 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 OUTFILE="$HOME/install.log"
 rm -f $OUTFILE
 
-# test if sudo is succesfull -------------------------------------------
+# test if sudo is succesfull ---------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root: abort."
@@ -17,18 +17,27 @@ else
     fi
 fi
 
-# set no password sudo -------------------------------------------------
+# sudoers ----------------------------------------------------------------------
 
+CURRENT_USER=$USER
 dest=/etc/sudoers.d/custom
 if [[ ! -f $dest ]]; then
-    echo "*** edit /etc/sudoers"
-    sudo tee $dest > /dev/null << 'EOF'
-hotnuma ALL=(ALL) NOPASSWD: ALL
-
+    echo "*** sudoers" 2>&1 | tee -a $OUTFILE
+    sudo tee $dest > /dev/null << EOF
+$CURRENT_USER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# startup.sh --------- -------------------------------------------------
+# environment ------------------------------------------------------------------
+
+dest=/etc/environment
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** environment" 2>&1 | tee -a $OUTFILE
+    sudo cp $dest ${dest}.bak 2>&1 | tee -a $OUTFILE
+    sudo cp $BASEDIR/root/environment $dest 2>&1 | tee -a $OUTFILE
+fi
+
+# autostart --------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
 if [[ ! -f $dest ]]; then
@@ -37,14 +46,16 @@ if [[ ! -f $dest ]]; then
     cp -r $BASEDIR/home/config/autostart/* $HOME/.config/autostart/ 2>&1 | tee -a $OUTFILE
 fi
 
+# autologin --------------------------------------------------------------------
+
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** lightdm" 2>&1 | tee -a $OUTFILE
+    echo "*** autologin" 2>&1 | tee -a $OUTFILE
     sudo cp $dest ${dest}.bak 2>&1 | tee -a $OUTFILE
     sudo cp $BASEDIR/root/lightdm.conf $dest 2>&1 | tee -a $OUTFILE
 fi
 
-# Startup Patch --------- ------------------------------------------------------
+# startxfce4 -------------------------------------------------------------------
 
 dest=/usr/bin/startxfce4
 if [[ ! -f ${dest}.bak ]]; then
@@ -85,7 +96,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
 fi
 
-# install dev apps -----------------------------------------------------
+# install dev apps -------------------------------------------------------------
 
 dest=/usr/bin/qtcreator
 if [[ ! -f $dest ]]; then
