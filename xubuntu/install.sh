@@ -76,8 +76,9 @@ if [[ ! -f $dest ]]; then
     rm -rf ~/snap 2>&1 | tee -a $OUTFILE
     
     # install base
-    APPLIST="htop geany hardinfo lm-sensors net-tools xfce4-taskmanager hsetroot rofi"
-    APPLIST+=" p7zip-full engrampa gimp mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
+    APPLIST="htop hsetroot geany hardinfo lm-sensors net-tools xfce4-taskmanager"
+    APPLIST+=" p7zip-full engrampa mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
+    APPLIST+=" gimp evince rofi"
     APPLIST+=" build-essential git meson ninja-build dos2unix"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
     
@@ -107,6 +108,22 @@ if [[ ! -f $dest ]]; then
     APPLIST="qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools"
     APPLIST+=" libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
+fi
+
+# Hide menu items --------------------------------------------------------------
+
+# .local/share/applications/
+dest=$HOME/.local/share/applications/
+if [[ ! -d $dest ]]; then
+    echo "*** create .local/share/applications/" 2>&1 | tee -a $OUTFILE
+    mkdir -p $dest 2>&1 | tee -a $OUTFILE
+fi
+
+# hplj1020.desktop
+dest=$HOME/.local/share/applications/hplj1020.desktop
+if [[ ! -f $dest ]]; then
+    echo "*** hide hplj1020.desktop" 2>&1 | tee -a $OUTFILE
+    echo "NoDisplay=true" > $dest
 fi
 
 
