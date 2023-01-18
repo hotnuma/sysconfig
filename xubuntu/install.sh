@@ -110,11 +110,22 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
+# Hide Launchers ---------------------------------------------------------------
+
+# software-properties-gtk: /usr/share/applications/software-properties-livepatch.desktop
+
 # .local/share/applications/
 dest=$HOME/.local/share/applications/
 if [[ ! -d $dest ]]; then
     echo "*** create .local/share/applications/" 2>&1 | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
+fi
+
+# xfce4-mail.reader.desktop
+dest=$HOME/.local/share/applications/xfce4-mail-reader.desktop
+if [[ ! -f $dest ]]; then
+    echo "*** hide xfce4-mail-reader" 2>&1 | tee -a $OUTFILE
+    echo "NoDisplay=true" > $dest
 fi
 
 
