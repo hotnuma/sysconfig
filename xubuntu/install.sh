@@ -87,7 +87,7 @@ if [[ ! -f $dest ]]; then
     
     # uninstall
     APPLIST="thunderbird synaptic xfce4-power-manager xfce4-screensaver tumbler"
-    APPLIST+=" at-spi2-core fwupd thermald"
+    APPLIST+=" at-spi2-core fwupd thermald geoclue-2.0 printer-driver-foo2zjs-common"
     sudo apt -y purge $APPLIST 2>&1 | tee -a $OUTFILE
     
     # services
@@ -110,20 +110,11 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
-# Hide menu items --------------------------------------------------------------
-
 # .local/share/applications/
 dest=$HOME/.local/share/applications/
 if [[ ! -d $dest ]]; then
     echo "*** create .local/share/applications/" 2>&1 | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
-fi
-
-# hplj1020.desktop
-dest=$HOME/.local/share/applications/hplj1020.desktop
-if [[ ! -f $dest ]]; then
-    echo "*** hide hplj1020.desktop" 2>&1 | tee -a $OUTFILE
-    echo "NoDisplay=true" > $dest
 fi
 
 
