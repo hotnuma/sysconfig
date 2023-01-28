@@ -120,13 +120,19 @@ fi
 
 dest=/usr/local/bin/appinfo
 if [[ -f $dest ]]; then
-    
-    dest="xfce4-mail-reader"
-    if [[ ! -f $HOME/.local/share/applications/${dest}.desktop ]]; then
-        echo "*** hide ${dest}" 2>&1 | tee -a $OUTFILE
-        appinfo -h $dest
+    dest=$HOME/.local/share/applications/xfce4-appfinder.desktop
+    if [[ ! -f $dest ]]; then
+        echo "*** hide launchers" 2>&1 | tee -a $OUTFILE
+        appinfo -h "debian-uxterm" 2>&1 | tee -a $OUTFILE
+        appinfo -h "debian-xterm" 2>&1 | tee -a $OUTFILE
+        appinfo -h "org.gnome.Evince-previewer" 2>&1 | tee -a $OUTFILE
+        appinfo -h "RealTimeSync" 2>&1 | tee -a $OUTFILE
+        appinfo -h "xfce4-appfinder" 2>&1 | tee -a $OUTFILE
+        appinfo -h "xfce4-file-manager" 2>&1 | tee -a $OUTFILE
+        appinfo -h "xfce4-mail-reader" 2>&1 | tee -a $OUTFILE
+        appinfo -h "xfce4-run" 2>&1 | tee -a $OUTFILE
+        appinfo -h "xfce-backdrop-settings" 2>&1 | tee -a $OUTFILE
     fi
-
 fi
 
 
