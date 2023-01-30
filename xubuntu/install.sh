@@ -4,6 +4,27 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 OUTFILE="$HOME/install.log"
 rm -f $OUTFILE
 
+# Functions --------------------------------------------------------------------
+
+app_show()
+{
+    userpath=$(appinfo -u $1)
+    if [[ $userpath != "" ]]; then
+        return
+    fi
+    
+    syspath=$(appinfo -f $1)
+    if [[ $syspath == "" ]]; then
+        return
+    fi
+    
+    if [[ $2 == "true" ]]; then
+        appinfo -s "$1" 2>&1 | tee -a $OUTFILE
+    else
+        appinfo -h "$1" 2>&1 | tee -a $OUTFILE
+    fi
+}
+
 # test if sudo is succesfull ---------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -118,23 +139,20 @@ if [[ ! -d $dest ]]; then
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
 fi
 
-dest=/usr/local/bin/appinfo
-if [[ -f $dest ]]; then
-    dest=$HOME/.local/share/applications/xfce4-appfinder.desktop
-    if [[ ! -f $dest ]]; then
-        echo "*** hide launchers" 2>&1 | tee -a $OUTFILE
-        appinfo -h "debian-uxterm" 2>&1 | tee -a $OUTFILE
-        appinfo -h "debian-xterm" 2>&1 | tee -a $OUTFILE
-        appinfo -h "gcr-prompter" 2>&1 | tee -a $OUTFILE
-        appinfo -h "gcr-viewer" 2>&1 | tee -a $OUTFILE
-        appinfo -h "org.gnome.Evince-previewer" 2>&1 | tee -a $OUTFILE
-        appinfo -h "RealTimeSync" 2>&1 | tee -a $OUTFILE
-        appinfo -h "xfce4-appfinder" 2>&1 | tee -a $OUTFILE
-        appinfo -h "xfce4-file-manager" 2>&1 | tee -a $OUTFILE
-        appinfo -h "xfce4-mail-reader" 2>&1 | tee -a $OUTFILE
-        appinfo -h "xfce4-run" 2>&1 | tee -a $OUTFILE
-        appinfo -h "xfce-backdrop-settings" 2>&1 | tee -a $OUTFILE
-    fi
+if command -v appinfo &> /dev/null; then
+    app_show "debian-uxterm"                "false" 2>&1 | tee -a $OUTFILE
+    app_show "debian-xterm"                 "false" 2>&1 | tee -a $OUTFILE
+    app_show "gcr-prompter"                 "false" 2>&1 | tee -a $OUTFILE
+    app_show "gcr-viewer"                   "false" 2>&1 | tee -a $OUTFILE
+    app_show "gtk3-demo"                    "true"  2>&1 | tee -a $OUTFILE
+    app_show "org.gnome.Evince-previewer"   "false" 2>&1 | tee -a $OUTFILE
+    app_show "RealTimeSync"                 "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce4-appfinder"              "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce4-file-manager"           "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce4-run"                    "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce4-web-browser"            "false" 2>&1 | tee -a $OUTFILE
+    app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a $OUTFILE
 fi
 
 
