@@ -125,6 +125,8 @@ if [[ -f $dest ]]; then
         echo "*** hide launchers" 2>&1 | tee -a $OUTFILE
         appinfo -h "debian-uxterm" 2>&1 | tee -a $OUTFILE
         appinfo -h "debian-xterm" 2>&1 | tee -a $OUTFILE
+        appinfo -h "gcr-prompter" 2>&1 | tee -a $OUTFILE
+        appinfo -h "gcr-viewer" 2>&1 | tee -a $OUTFILE
         appinfo -h "org.gnome.Evince-previewer" 2>&1 | tee -a $OUTFILE
         appinfo -h "RealTimeSync" 2>&1 | tee -a $OUTFILE
         appinfo -h "xfce4-appfinder" 2>&1 | tee -a $OUTFILE
