@@ -128,6 +128,7 @@ if [[ ! -f $dest ]]; then
     # install dev
     APPLIST="qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools"
     APPLIST+=" libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev"
+    APPLIST+=" gettext"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
