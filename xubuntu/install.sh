@@ -121,14 +121,16 @@ fi
 
 # install dev apps -------------------------------------------------------------
 
+#
+
 dest=/usr/bin/qtcreator
 if [[ ! -f $dest ]]; then
     echo "*** install dev softwares" 2>&1 | tee -a $OUTFILE
     
     # install dev
     APPLIST="qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools"
-    APPLIST+=" libgtk-3-dev gtk-3-examples libmediainfo-dev libprocps-dev"
-    APPLIST+=" gettext"
+    APPLIST+=" libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
+    APPLIST+=" gettext libmediainfo-dev libprocps-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
