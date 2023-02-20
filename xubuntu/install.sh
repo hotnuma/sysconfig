@@ -99,7 +99,7 @@ if [[ ! -f $dest ]]; then
     # install base
     APPLIST="htop hsetroot geany hardinfo lm-sensors net-tools xfce4-taskmanager"
     APPLIST+=" p7zip-full engrampa mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
-    APPLIST+=" gimp evince rofi"
+    APPLIST+=" gimp evince rofi uchardet"
     APPLIST+=" build-essential git meson ninja-build dos2unix"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
     
