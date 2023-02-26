@@ -115,6 +115,11 @@ if [[ ! -f $dest ]]; then
     APPLIST="cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
+    
+    # sudo systemctl disable kerneloops
+    # sudo systemctl disable rsyslog.service
+    # sudo systemctl disable motd-news.timer
+    # sudo systemctl disable logrotate.timer
 
     sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
 fi
