@@ -6,7 +6,7 @@ ColorBackground=#000000
 #            #000000;#aa0000;#44aa44;#aa5500;#0039aa;#aa22aa;#1a92aa;#aaaaaa;#777777;#ff8787;#4ce64c;#ded82c;#295fcc;#cc58cc;#4ccce6;#ffffff
 ColorPalette=rgb(0,0,0);rgb(255,85,85);rgb(69,255,69);rgb(255,128,0);rgb(64,127,255);rgb(255,38,255);rgb(39,219,255);rgb(170,170,170);rgb(119,119,119);rgb(255,143,143);rgb(97,255,97);rgb(222,216,44);rgb(91,146,255);rgb(255,120,255);rgb(115,231,255);rgb(255,255,255)
 ColorSelection=#163b59
-ColorSelectionUseDefault=FALSE
+ColorSelectionUseDefault=TRUE
 ColorCursor=#0f4999
 ColorBold=#ffffff
 ColorBoldUseDefault=FALSE

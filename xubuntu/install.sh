@@ -110,23 +110,22 @@ if [[ ! -f $dest ]]; then
     APPLIST="thunderbird synaptic xfce4-power-manager xfce4-screensaver tumbler"
     APPLIST+=" at-spi2-core fwupd thermald geoclue-2.0 printer-driver-foo2zjs-common"
     sudo apt -y purge $APPLIST 2>&1 | tee -a $OUTFILE
+    sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
     
-    # services
-    APPLIST="cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
+    # timers
+    APPLIST="anacron.timer logrotate.timer motd-news.timer ua-timer.timer"
+    APPLIST+=" ua-license-check.timer ua-license-check.path"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     
-    # sudo systemctl disable kerneloops
-    # sudo systemctl disable rsyslog.service
-    # sudo systemctl disable motd-news.timer
-    # sudo systemctl disable logrotate.timer
-
-    sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
+    # services
+    APPLIST="anacron cron cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
+    APPLIST+=" kerneloops rsyslog"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
+    sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
 # install dev apps -------------------------------------------------------------
-
-#
 
 dest=/usr/bin/qtcreator
 if [[ ! -f $dest ]]; then
