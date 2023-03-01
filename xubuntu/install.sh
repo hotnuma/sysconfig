@@ -41,10 +41,11 @@ fi
 # sudoers ----------------------------------------------------------------------
 
 CURRENTUSER=$USER
-dest=/etc/sudoers.d/custom
+dest=/etc/sudoers.d/10_custom
 if [[ ! -f $dest ]]; then
     echo "*** sudoers" 2>&1 | tee -a $OUTFILE
     sudo tee $dest > /dev/null << EOF
+Defaults:$CURRENTUSER !logfile, !syslog
 $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
@@ -113,16 +114,21 @@ if [[ ! -f $dest ]]; then
     sudo apt -y autoremove 2>&1 | tee -a $OUTFILE
     
     # timers
-    APPLIST="anacron.timer logrotate.timer motd-news.timer ua-timer.timer"
-    APPLIST+=" ua-license-check.timer ua-license-check.path"
+    APPLIST="anacron.timer motd-news.timer"
+    APPLIST+=" ua-timer.timer ua-license-check.timer ua-license-check.path"
+    APPLIST+=" apt-daily.timer apt-daily-upgrade.timer man-db.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     
     # services
-    APPLIST="anacron cron cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
+    APPLIST="avahi-daemon anacron cron cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
     APPLIST+=" kerneloops rsyslog"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
+    
+    # sudo systemctl stop avahi-daemon
+    # sudo systemctl disable avahi-daemon
+    
 fi
 
 # install dev apps -------------------------------------------------------------
