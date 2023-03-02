@@ -121,14 +121,11 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     
     # services
-    APPLIST="avahi-daemon anacron cron cups cups-browsed bluetooth wpa_supplicant unattended-upgrades"
+    APPLIST="accounts-daemon avahi-daemon anacron cron cups cups-browsed"
+    APPLIST+=" bluetooth wpa_supplicant unattended-upgrades"
     APPLIST+=" kerneloops rsyslog"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
-    
-    # sudo systemctl stop avahi-daemon
-    # sudo systemctl disable avahi-daemon
-    
 fi
 
 # install dev apps -------------------------------------------------------------

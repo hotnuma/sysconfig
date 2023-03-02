@@ -158,7 +158,8 @@ https://github.com/librerpi/rpi-open-firmware
 
 #### System informations
 
-* Read kernel and firmware version : 
+* Read kernel and firmware version :
+
     ```
     uname -a && vcgencmd version
     ```
@@ -174,6 +175,7 @@ https://github.com/librerpi/rpi-open-firmware
     https://downloads.raspberrypi.org/raspios_armhf/release_notes.txt
 
 #### Startup Sequence
+
 ```
 /sbin/ini
 
@@ -186,11 +188,13 @@ https://github.com/librerpi/rpi-open-firmware
     
     systemd/systemd --user
 ```
+
 #### LightDM
 
 `lightdm --show-config`
 
 lightdm : /etc/lightdm/lightdm.conf
+
 ```ini
 [LightDM]
 
@@ -207,11 +211,14 @@ autologin-user=pi
 default session : 
 
 ~/.dmrc
+
 ```ini
 [Desktop]
 Session=lightdm-xsession
 ```
+
 /usr/share/xsessions/lightdm-xsession.desktop
+
 ```ini
 [Desktop Entry]
 Version=1.0
@@ -220,6 +227,7 @@ Exec=default
 Icon=
 Type=Application
 ```
+
 default session :
 
 https://askubuntu.com/questions/77191/how-can-i-use-lightdm-for-user-defined-sessions
@@ -232,7 +240,7 @@ startup script : /usr/bin/startlxde-pi
 
 #### Application menu
 
-```/etc/xdg/menus/lxde-pi-applications.menu```
+`/etc/xdg/menus/lxde-pi-applications.menu`
 
 #### Openbox
 
@@ -242,33 +250,43 @@ openbox is set in `~/config/lxsession/LXDE-pi/desktop.conf` using a wrapper scri
 #!/bin/sh
 exec openbox --config-file $XDG_CONFIG_HOME/openbox/lxde-pi-rc.xml $@
 ```
+
 The default config file should be `/home/pi/.config/openbox/lxde-pi-rc.xml` but it's possible to set openbox in `desktop.conf` and use `/home/pi/.config/openbox/rc.xml`
 
 ```ini
 [Session]
 window_manager=openbox
 ```
-* Reload openbox config : 
+
+* Reload openbox config :
+
     ```
     openbox --reconfigure
     ```
+    
 #### Raspi configuration
 
 https://www.raspberrypi.com/documentation/computers/os.html
 
 * Change hostname, disable xcompmgr
+
 ```
 sudo raspi-config
 ```
+
 * Revert to specific firmware using git commit hash
+
 ```
 sudo rpi-update 6e61ab523f0a9d2fbb4319f6f6430d4c13203c0e
 ```
+
 * Revert to stable firmware
+
 ```
 sudo apt update
 sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-bootloader raspberrypi-kernel
 ```
+
 #### Other
 
 * Firefox
@@ -292,6 +310,5 @@ sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspbe
     version 65aff9e0bea5b64c530db52aa4497e809fdf22c8 (clean) (release) (start)
     Linux raspberrypi 5.10.44-v8+ #1429 SMP PREEMPT Fri Jun 25 10:03:37 BST 2021 aarch64 GNU/Linux
     ```
-
 
 
