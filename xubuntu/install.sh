@@ -4,7 +4,7 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 OUTFILE="$HOME/install.log"
 rm -f $OUTFILE
 
-# Functions --------------------------------------------------------------------
+# Functions -------------------------------------------------------------------
 
 app_show()
 {
@@ -25,7 +25,7 @@ app_show()
     fi
 }
 
-# test if sudo is succesfull ---------------------------------------------------
+# test if sudo is succesfull --------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root: abort."
@@ -38,7 +38,7 @@ else
     fi
 fi
 
-# sudoers ----------------------------------------------------------------------
+# sudoers ---------------------------------------------------------------------
 
 CURRENTUSER=$USER
 dest=/etc/sudoers.d/10_custom
@@ -50,7 +50,7 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# environment ------------------------------------------------------------------
+# environment -----------------------------------------------------------------
 
 dest=/etc/environment
 if [[ ! -f ${dest}.bak ]]; then
@@ -59,7 +59,7 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp $BASEDIR/root/environment $dest 2>&1 | tee -a $OUTFILE
 fi
 
-# autostart --------------------------------------------------------------------
+# autostart -------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
 if [[ ! -f $dest ]]; then
@@ -68,7 +68,7 @@ if [[ ! -f $dest ]]; then
     cp -r $BASEDIR/home/config/autostart/* $HOME/.config/autostart/ 2>&1 | tee -a $OUTFILE
 fi
 
-# autologin --------------------------------------------------------------------
+# autologin -------------------------------------------------------------------
 
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
@@ -77,7 +77,7 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp $BASEDIR/root/lightdm.conf $dest 2>&1 | tee -a $OUTFILE
 fi
 
-# startxfce4 -------------------------------------------------------------------
+# startxfce4 ------------------------------------------------------------------
 
 dest=/usr/bin/startxfce4
 if [[ ! -f ${dest}.bak ]]; then
@@ -86,7 +86,7 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp $BASEDIR/root/startxfce4 $dest 2>&1 | tee -a $OUTFILE
 fi
 
-# install / remove -------------------------------------------------------------
+# install / remove ------------------------------------------------------------
 
 dest=/usr/bin/htop
 if [[ ! -f $dest ]]; then
@@ -128,7 +128,7 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
-# install dev apps -------------------------------------------------------------
+# install dev apps ------------------------------------------------------------
 
 dest=/usr/bin/qtcreator
 if [[ ! -f $dest ]]; then
@@ -141,7 +141,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
-# Hide Launchers ---------------------------------------------------------------
+# Hide Launchers --------------------------------------------------------------
 
 dest=$HOME/.local/share/applications/
 if [[ ! -d $dest ]]; then
