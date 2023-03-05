@@ -50,6 +50,22 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
+# backups ---------------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" 2>&1 | tee -a $OUTFILE
+    sudo cp $dest ${dest}.bak 2>&1 | tee -a $OUTFILE
+fi
+
+# aliases ---------------------------------------------------------------------
+
+dest=$HOME/.bash_aliases
+if [[ ! -f $dest ]]; then
+    echo "*** aliases" 2>&1 | tee -a $OUTFILE
+    sudo cp $BASEDIR/home/bash_aliases $dest 2>&1 | tee -a $OUTFILE
+fi
+
 # environment -----------------------------------------------------------------
 
 dest=/etc/environment
@@ -104,6 +120,8 @@ if [[ ! -f $dest ]]; then
     APPLIST+=" build-essential git meson ninja-build dos2unix"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
     
+    # libsecret-tools
+    
     APPLIST="--no-install-recommends smartmontools"
     sudo apt -y install $APPLIST 2>&1 | tee -a $OUTFILE
     
@@ -121,7 +139,7 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     
     # services
-    APPLIST="avahi-daemon anacron cron cups cups-browsed"
+    APPLIST="apparmor avahi-daemon anacron cron cups cups-browsed"
     APPLIST+=" bluetooth wpa_supplicant unattended-upgrades"
     APPLIST+=" kerneloops rsyslog"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE

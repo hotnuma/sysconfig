@@ -1,4 +1,4 @@
-
 alias ls='ls -la --color=auto'
+alias hgrep='grep -rin --include=*.h'
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
-
+alias cstyle='astyle -n --style=allman'
