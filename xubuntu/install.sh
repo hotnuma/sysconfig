@@ -117,7 +117,7 @@ if [[ ! -f "$dest" ]]; then
     APPLIST="htop hsetroot geany hardinfo lm-sensors net-tools xfce4-taskmanager"
     APPLIST+=" p7zip-full engrampa mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
     APPLIST+=" gimp evince rofi uchardet"
-    APPLIST+=" build-essential git meson ninja-build dos2unix"
+    APPLIST+=" build-essential git meson ninja-build curl clang-format dos2unix"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # libsecret-tools
@@ -155,9 +155,12 @@ if [[ ! -f "$dest" ]]; then
     # install dev
     APPLIST="qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools"
     APPLIST+=" libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
-    APPLIST+=" gettext clang-format libmediainfo-dev libprocps-dev"
+    APPLIST+=" gettext libmediainfo-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
+
+# other
+# libprocps-dev
 
 # Hide Launchers --------------------------------------------------------------
 
