@@ -43,7 +43,7 @@ fi
 CURRENTUSER=$USER
 dest=/etc/sudoers.d/10_custom
 if [[ ! -f "$dest" ]]; then
-    echo "*** sudoers" 2>&1 | tee -a "$OUTFILE"
+    echo "*** sudoers" | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << EOF
 Defaults:$CURRENTUSER !logfile, !syslog
 $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
@@ -54,7 +54,7 @@ fi
 
 dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" 2>&1 | tee -a "$OUTFILE"
+    echo "*** grub config backup" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
@@ -62,7 +62,7 @@ fi
 
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" 2>&1 | tee -a "$OUTFILE"
+    echo "*** aliases" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
@@ -70,7 +70,7 @@ fi
 
 dest=/etc/environment
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** environment" 2>&1 | tee -a "$OUTFILE"
+    echo "*** environment" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/environment "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
@@ -79,7 +79,7 @@ fi
 
 dest=/usr/local/bin/startup.sh
 if [[ ! -f "$dest" ]]; then
-    echo "*** autostart" 2>&1 | tee -a "$OUTFILE"
+    echo "*** autostart" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     cp -r "$BASEDIR"/home/config/autostart/* "$HOME"/.config/autostart/ 2>&1 | tee -a "$OUTFILE"
 fi
@@ -88,7 +88,7 @@ fi
 
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** autologin" 2>&1 | tee -a "$OUTFILE"
+    echo "*** autologin" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/lightdm.conf "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
@@ -97,7 +97,7 @@ fi
 
 dest=/usr/bin/startxfce4
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** startxfce4" 2>&1 | tee -a "$OUTFILE"
+    echo "*** startxfce4" | tee -a "$OUTFILE"
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startxfce4 "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
@@ -106,7 +106,7 @@ fi
 
 dest=/usr/bin/htop
 if [[ ! -f "$dest" ]]; then
-    echo "*** install softwares" 2>&1 | tee -a "$OUTFILE"
+    echo "*** install softwares" | tee -a "$OUTFILE"
     
     # uninstall snaps
     sudo rm -rf /var/cache/snapd/ 2>&1 | tee -a "$OUTFILE"
@@ -150,7 +150,7 @@ fi
 
 dest=/usr/bin/qtcreator
 if [[ ! -f "$dest" ]]; then
-    echo "*** install dev softwares" 2>&1 | tee -a "$OUTFILE"
+    echo "*** install dev softwares" | tee -a "$OUTFILE"
     
     # install dev
     APPLIST="qtcreator qtchooser qtbase5-dev qt5-qmake qtbase5-dev-tools"
@@ -166,7 +166,7 @@ fi
 
 dest="$HOME"/.local/share/applications/
 if [[ ! -d "$dest" ]]; then
-    echo "*** create .local/share/applications/" 2>&1 | tee -a "$OUTFILE"
+    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
     mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
