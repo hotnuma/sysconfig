@@ -159,9 +159,6 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
-# other
-# libprocps-dev
-
 # Hide Launchers --------------------------------------------------------------
 
 dest="$HOME"/.local/share/applications/
