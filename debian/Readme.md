@@ -1,6 +1,7 @@
 - configure thunar
 - configure panel
 - install ublock origin
+- restore bookmarks
 - configure hotkeys
 - download and run install script
 - configure startup programs

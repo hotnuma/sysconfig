@@ -4,6 +4,8 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
+echo "Debian install..."
+
 # Functions -------------------------------------------------------------------
 
 app_show()
@@ -72,12 +74,12 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$OUTFILE"
     
     # install base
-    APPLIST="geany build-essential git meson ninja-build clang-format"
-    APPLIST+=" rofi"
+    APPLIST="geany build-essential git meson ninja-build pkg-config"
+    APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="htop hardinfo net-tools hsetroot uchardet"
+    APPLIST="rofi htop hardinfo net-tools hsetroot uchardet"
     APPLIST+=" curl dos2unix"
     APPLIST+=" gimp evince engrampa p7zip-full"
     APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
@@ -103,5 +105,7 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
+
+echo "done"
 
 
