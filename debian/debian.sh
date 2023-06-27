@@ -54,6 +54,7 @@ fi
 
 # autologin -------------------------------------------------------------------
 
+CURRENTUSER=$USER
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
     echo "*** autologin" | tee -a "$OUTFILE"
@@ -101,11 +102,11 @@ if [[ ! -f "$dest" ]]; then
     
     # services
     APPLIST="apparmor avahi-daemon cron anacron cups cups-browsed"
-    APPLIST+=" bluetooth wpa_supplicant rsyslog"
+    APPLIST+=" bluetooth wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
-
+    
 echo "done"
 
 
