@@ -1,19 +1,9 @@
-- config thunar
-- config panel
+- configure thunar
+- configure panel
 - install ublock origin
-- config hotkeys
+- configure hotkeys
 - download and run install script
-
----------------------------------------------------------
-https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
-
-/etc/X11/xorg.conf.d/20-intel.conf
-
-Section "Device"
-    Identifier "Intel Graphics"
-    Driver "intel"
-    Option "TearFree"    "true"
-EndSection
+- configure startup programs
 
 ---------------------------------------------------------
 
@@ -27,16 +17,28 @@ Save the file and quit the text editor.
 Run: sudo update-grub
 Reboot.
 
+---------------------------------------------------------
+https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
 
+/etc/X11/xorg.conf.d/20-intel.conf
 
-error 
+Section "Device"
+    Identifier "Intel Graphics"
+    Driver "intel"
+    Option "TearFree"    "true"
+EndSection
+
+-------------------------------------------------------------------------------
+
+Error message
 
 platform MSFT0101:00: failed to claim resource 1
 acpi MSFT0101:00: platform device creation failed: -16
 
 disable TPM ?
 
----------------------------------------------------------
+-------------------------------------------------------------------------------
+
 Drivers infos
 
 glxinfo|egrep "OpenGL vendor|OpenGL renderer"
@@ -53,4 +55,5 @@ sudo lspci -k | grep -EA3 'VGA|3D|Display'
         Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940MX]
         Kernel driver in use: nouveau
         Kernel modules: nouveau
+
 
