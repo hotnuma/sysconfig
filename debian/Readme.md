@@ -20,20 +20,24 @@ Reboot.
 ---------------------------------------------------------
 https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
 
-/etc/X11/xorg.conf.d/20-intel.conf
+`/etc/X11/xorg.conf.d/20-intel.conf`
 
+```
 Section "Device"
     Identifier "Intel Graphics"
     Driver "intel"
     Option "TearFree"    "true"
 EndSection
+```
 
 -------------------------------------------------------------------------------
 
 Error message
 
+```
 platform MSFT0101:00: failed to claim resource 1
 acpi MSFT0101:00: platform device creation failed: -16
+```
 
 disable TPM ?
 
@@ -41,10 +45,13 @@ disable TPM ?
 
 Drivers infos
 
+```
 glxinfo|egrep "OpenGL vendor|OpenGL renderer"
 OpenGL vendor string: Intel
 OpenGL renderer string: Mesa Intel(R) HD Graphics 520 (SKL GT2)
+```
 
+```
 sudo lspci -k | grep -EA3 'VGA|3D|Display'
 00:02.0 VGA compatible controller: Intel Corporation Skylake GT2 [HD Graphics 520] (rev 07)
         Subsystem: Acer Incorporated [ALI] Skylake GT2 [HD Graphics 520]
@@ -55,5 +62,6 @@ sudo lspci -k | grep -EA3 'VGA|3D|Display'
         Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940MX]
         Kernel driver in use: nouveau
         Kernel modules: nouveau
+```
 
 
