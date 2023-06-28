@@ -75,15 +75,6 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp "$BASEDIR"/root/environment "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# autostart -------------------------------------------------------------------
-
-dest=/usr/local/bin/startup.sh
-if [[ ! -f "$dest" ]]; then
-    echo "*** autostart" | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
-    cp -r "$BASEDIR"/home/config/autostart/* "$HOME"/.config/autostart/ 2>&1 | tee -a "$OUTFILE"
-fi
-
 # autologin -------------------------------------------------------------------
 
 dest=/etc/lightdm/lightdm.conf
@@ -157,6 +148,15 @@ if [[ ! -f "$dest" ]]; then
     APPLIST+=" libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
     APPLIST+=" gettext libmediainfo-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
+# autostart -------------------------------------------------------------------
+
+dest=/usr/local/bin/startup.sh
+if [[ ! -f "$dest" ]]; then
+    echo "*** autostart" | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp -r "$BASEDIR"/home/config/autostart/* "$HOME"/.config/autostart/ 2>&1 | tee -a "$OUTFILE"
 fi
 
 # Hide Launchers --------------------------------------------------------------

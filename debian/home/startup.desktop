@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0.0
+Type=Application
+Name=Startup script
+Comment=
+Exec=/usr/local/bin/startup.sh
+OnlyShowIn=XFCE;
+StartupNotify=false
+Terminal=false
+Hidden=false
+
+

@@ -70,18 +70,17 @@ fi
 
 # install / remove ------------------------------------------------------------
 
-dest=/usr/bin/geany
+dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$OUTFILE"
     
     # install base
-    APPLIST="geany build-essential git meson ninja-build pkg-config"
+    APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
     APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="rofi htop hardinfo net-tools hsetroot uchardet"
-    APPLIST+=" curl dos2unix"
+    APPLIST="rofi htop hardinfo net-tools uchardet curl dos2unix"
     APPLIST+=" gimp evince engrampa p7zip-full"
     APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
@@ -107,6 +106,23 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
+# autostart -------------------------------------------------------------------
+
+#~ dest="$HOME"/.config/xfce4/xfconf
+#~ if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
+    #~ echo "*** copy xfconf" | tee -a "$OUTFILE"
+    #~ cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
+    
+#~ fi
+
+#~ dest=/usr/local/bin/startup.sh
+#~ if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
+    #~ echo "*** autostart" | tee -a "$OUTFILE"
+    #~ sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+	#~ dest="$HOME"/.config/autostart/startup.desktop
+    #~ cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+#~ fi
+
 echo "done"
 
 
