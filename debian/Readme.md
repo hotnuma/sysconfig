@@ -4,6 +4,7 @@
 - restore bookmarks
 - configure hotkeys
 - download and run install script
+- don't save session, delete saved sessions
 - configure startup programs
 
 ---------------------------------------------------------

@@ -52,22 +52,6 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# autologin -------------------------------------------------------------------
-
-CURRENTUSER=$USER
-dest=/etc/lightdm/lightdm.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** autologin" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo tee "$dest" > /dev/null << EOF
-[Seat:*]
-autologin-guest=false
-autologin-user=$CURRENTUSER
-autologin-user-timeout=0
-autologin-session=lightdm-xsession
-EOF
-fi
-
 # install / remove ------------------------------------------------------------
 
 dest=/usr/bin/hsetroot
@@ -106,22 +90,41 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
-# autostart -------------------------------------------------------------------
+# autologin -------------------------------------------------------------------
 
-#~ dest="$HOME"/.config/xfce4/xfconf
-#~ if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
-    #~ echo "*** copy xfconf" | tee -a "$OUTFILE"
-    #~ cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
+CURRENTUSER=$USER
+dest=/etc/lightdm/lightdm.conf
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** autologin" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << EOF
+[Seat:*]
+autologin-guest=false
+autologin-user=$CURRENTUSER
+autologin-user-timeout=0
+autologin-session=lightdm-xsession
+EOF
+fi
+
+# xfce4 session ---------------------------------------------------------------
+
+dest=/etc/xdg/xfce4
+if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
+    echo "*** copy xdg xfce4" | tee -a "$OUTFILE"
+    sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
+	dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+    sudo cp "$BASEDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
     
-#~ fi
+# startup ---------------------------------------------------------------------
 
-#~ dest=/usr/local/bin/startup.sh
-#~ if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
-    #~ echo "*** autostart" | tee -a "$OUTFILE"
-    #~ sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
-	#~ dest="$HOME"/.config/autostart/startup.desktop
-    #~ cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
-#~ fi
+dest=/usr/local/bin/startup.sh
+if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
+    echo "*** startup script" | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+	dest="$HOME"/.config/autostart/startup.desktop
+    cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
 
 echo "done"
 
