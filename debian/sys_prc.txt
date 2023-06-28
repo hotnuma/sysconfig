@@ -1,0 +1,36 @@
+xfwm4                         709 hotnuma            45446
+Xorg                          571 root               45072
+x-terminal-emulator           805 hotnuma            43000
+xfce4-session                 629 hotnuma            33495
+systemd-journald              260 root               31649
+pulseaudio                    628 hotnuma            18291
+xfce4-panel                   745 hotnuma            14036
+NetworkManager                532 root               13141
+wrapper-2.0                   761 hotnuma            11267
+xfsettingsd                   736 hotnuma            10581
+udisksd                       530 root                8123
+xfce4-notifyd                 773 hotnuma             6321
+gvfsd                         712 hotnuma             6125
+polkit-gnome-authenti+        752 hotnuma             5897
+xfconfd                       695 hotnuma             5398
+systemd-udevd                 286 root                4110
+systemd                       612 hotnuma             3683
+init                            1 root                3662
+upowerd                       740 root                3537
+lightdm                 2     557 root                3499
+polkitd                       540 polkitd             3343
+nm-dispatcher                 577 root                3024
+bash                          816 hotnuma             2863
+systemd-logind                529 root                2468
+dbus-daemon             2     526 messagebus          2426
+(sd-pam)                      613 hotnuma             2284
+sudo                    2     818 root                1849
+systemd-timesyncd             499 systemd-timesync    1641
+systemd-hostnamed             554 root                1564
+systemd-fsckd                 336 root                1368
+gpg-agent                     707 hotnuma             1193
+ssh-agent                     678 hotnuma             1123
+rtkit-daemon                  641 rtkit                504
+agetty                        572 root                 364
+sysquery                      820 root                 233
+total : 342580

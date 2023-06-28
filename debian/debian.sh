@@ -85,7 +85,7 @@ if [[ ! -f "$dest" ]]; then
     
     # services
     APPLIST="apparmor avahi-daemon cron anacron cups cups-browsed"
-    APPLIST+=" bluetooth wpa_supplicant"
+    APPLIST+=" bluetooth ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
@@ -136,6 +136,14 @@ alias ls='ls -la --color=auto'
 alias hgrep='grep -rin --include=*.h'
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
 EOF
+fi
+
+# smartd ----------------------------------------------------------------------
+
+if [ "$(pidof smartd)" > 0 ]; then
+    echo "*** smartd" | tee -a "$OUTFILE"
+    sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
 
 echo "done"
