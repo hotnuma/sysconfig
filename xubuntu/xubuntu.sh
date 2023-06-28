@@ -50,49 +50,6 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# backups ---------------------------------------------------------------------
-
-dest=/etc/default/grub
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-fi
-
-# aliases ---------------------------------------------------------------------
-
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# environment -----------------------------------------------------------------
-
-dest=/etc/environment
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** environment" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/environment "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# autologin -------------------------------------------------------------------
-
-dest=/etc/lightdm/lightdm.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** autologin" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/lightdm.conf "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# startxfce4 ------------------------------------------------------------------
-
-dest=/usr/bin/startxfce4
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** startxfce4" | tee -a "$OUTFILE"
-    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/startxfce4 "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
 # install / remove ------------------------------------------------------------
 
 dest=/usr/bin/htop
@@ -148,6 +105,49 @@ if [[ ! -f "$dest" ]]; then
     APPLIST+=" libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
     APPLIST+=" gettext libmediainfo-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
+# autologin -------------------------------------------------------------------
+
+dest=/etc/lightdm/lightdm.conf
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** autologin" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/lightdm.conf "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# backups ---------------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+fi
+
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# environment -----------------------------------------------------------------
+
+dest=/etc/environment
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** environment" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/environment "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# startxfce4 ------------------------------------------------------------------
+
+dest=/usr/bin/startxfce4
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** startxfce4" | tee -a "$OUTFILE"
+    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/startxfce4 "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # autostart -------------------------------------------------------------------

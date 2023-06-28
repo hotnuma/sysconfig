@@ -1,5 +1,5 @@
 #### Readme
 
-post-install scripts.
+My experimental post-install scripts.
 
 

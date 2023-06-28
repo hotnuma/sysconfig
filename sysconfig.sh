@@ -27,6 +27,17 @@ if [[ ! -f "$dest" ]]; then
     popd
 fi
 
+# sysquery --------------------------------------------------------------------
+
+dest="/usr/local/bin/sysquery"
+if [[ ! -f "$dest" ]]; then
+    echo "*** sysquery"
+    git clone https://github.com/hotnuma/sysquery.git
+    pushd sysquery
+    ./install.sh
+    popd
+fi
+
 popd
 
 

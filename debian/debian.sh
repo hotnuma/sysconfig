@@ -126,6 +126,18 @@ if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << EOF
+alias ls='ls -la --color=auto'
+alias hgrep='grep -rin --include=*.h'
+alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
+EOF
+fi
+
 echo "done"
 
 
