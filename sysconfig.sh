@@ -5,14 +5,18 @@ BUILDDIR="$HOME/DevFiles"
 
 # install ---------------------------------------------------------------------
 
-if [ -f /etc/lsb-release ]; then
+if [[ -f /etc/lsb-release ]]; then
     . /etc/lsb-release
     DISTNAME=$DISTRIB_ID
     DISTVER=$DISTRIB_RELEASE
+elif [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    DISTNAME=$ID
+    DISTVER=$VERSION_ID
 fi
 
 case $DISTNAME in
-Debian)
+debian)
     $BASEDIR/debian/debian.sh
     ;;
 Raspbian)
