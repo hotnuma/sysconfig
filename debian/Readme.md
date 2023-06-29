@@ -1,15 +1,36 @@
 
 -------------------------------------------------------------------------------
 
+- configure hotkeys
+
+	```
+	firefox				Super+B
+	rofi -show run		Super+Space
+	systemctl poweroff	Maj+Super+Q
+	systemctl reboot	Maj+Super+R
+	thunar				Super+E
+	xfce4-taskmanager	Super+S
+	xfce4-terminal		Super+T	
+	```
+
 - configure thunar
 - configure panel
-- configure hotkeys
 - use xfce4-terminal instead of x-terminal-emulator
 - install ublock origin
 - restore bookmarks
 - disable startup programs
 - don't save session, delete saved sessions
 - download and run install script
+
+- session
+	
+	https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
+
+-------------------------------------------------------------------------------
+
+https://wiki.debian.org/HardwareVideoAcceleration  
+
+i965-va-driver
 
 - Firefox config
 
