@@ -114,7 +114,7 @@ dest=/etc/xdg/xfce4
 if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     echo "*** copy xdg xfce4" | tee -a "$OUTFILE"
     sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
-	dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+    dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
     sudo cp "$BASEDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
     
@@ -124,7 +124,7 @@ dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     echo "*** startup script" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
-	dest="$HOME"/.config/autostart/startup.desktop
+    dest="$HOME"/.config/autostart/startup.desktop
     cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 

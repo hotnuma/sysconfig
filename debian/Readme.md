@@ -3,15 +3,15 @@
 
 - configure hotkeys
 
-	```
-	firefox				Super+B
-	rofi -show run		Super+Space
-	systemctl poweroff	Maj+Super+Q
-	systemctl reboot	Maj+Super+R
-	thunar				Super+E
-	xfce4-taskmanager	Super+S
-	xfce4-terminal		Super+T	
-	```
+    ```
+    firefox             Super+B
+    rofi -show run      Super+Space
+    systemctl poweroff  Maj+Super+Q
+    systemctl reboot    Maj+Super+R
+    thunar              Super+E
+    xfce4-taskmanager   Super+S
+    xfce4-terminal      Super+T 
+    ```
 
 - use xfce4-terminal instead of x-terminal-emulator
 - configure thunar
@@ -23,8 +23,8 @@
 - download and run install script
 
 - session
-	
-	https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
+    
+    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
 
 -------------------------------------------------------------------------------
 
@@ -63,6 +63,10 @@
 -------------------------------------------------------------------------------
 #### Firefox
 
+try in terminal :
+
+MOZ_X11_EGL=1 /home/user/firefox/firefox
+
 https://wiki.debian.org/Firefox#Hardware_Video_Acceleration  
 https://wiki.debian.org/HardwareVideoAcceleration  
 
@@ -76,15 +80,15 @@ Intel -- Mesa Intel(R) HD Graphics 520 (SKL GT2)
 
 - Firefox config
 
-	`about:config`
+    `about:config`
 
-	```
-	browser.sessionstore.resume_from_crash false
-	layers.acceleration.force-enabled true
-	layers.gpu-process.enabled true
-	media.gpu-process-decoder true
-	```
-	
+    ```
+    browser.sessionstore.resume_from_crash false
+    layers.acceleration.force-enabled true
+    layers.gpu-process.enabled true
+    media.gpu-process-decoder true
+    ```
+    
 user_pref("gfx.blacklist.webrender", 4);
 user_pref("gfx.blacklist.webrender.failureid", "FEATURE_FAILURE_DDX_INTEL");
 
