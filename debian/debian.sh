@@ -90,11 +90,13 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
-# autologin -------------------------------------------------------------------
+# autologin/numlock -----------------------------------------------------------
 
 CURRENTUSER=$USER
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
+    echo "*** numlock on" | tee -a "$OUTFILE"
+    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true
     echo "*** autologin" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << EOF
