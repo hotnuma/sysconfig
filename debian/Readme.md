@@ -30,7 +30,13 @@
 
 https://wiki.debian.org/HardwareVideoAcceleration  
 
-i965-va-driver
+i965-va-driver already installed
+
+Intel -- Mesa Intel(R) HD Graphics 520 (SKL GT2)
+
+    gfx.webrender.all
+    gfx.webrender.enabled
+
 
 - Firefox config
 
@@ -42,6 +48,9 @@ i965-va-driver
 	layers.gpu-process.enabled true
 	media.gpu-process-decoder true
 	```
+	
+user_pref("gfx.blacklist.webrender", 4);
+user_pref("gfx.blacklist.webrender.failureid", "FEATURE_FAILURE_DDX_INTEL");
 
 -------------------------------------------------------------------------------
 
