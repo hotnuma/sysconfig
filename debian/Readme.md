@@ -105,7 +105,38 @@ disable TPM ?
 
 -------------------------------------------------------------------------------
 
-Drivers infos
+#### Drivers infos
+
+`inxi -b`
+
+```
+System:
+  Host: acer Kernel: 6.1.0-9-amd64 arch: x86_64 bits: 64 Desktop: N/A
+    Distro: Debian GNU/Linux 12 (bookworm)
+Machine:
+  Type: Laptop System: Acer product: Aspire E5-774G v: V1.25
+    serial: <superuser required>
+  Mobo: Acer model: Hulk_SK v: V1.25 serial: <superuser required>
+    UEFI: Insyde v: 1.25 date: 03/03/2017
+CPU:
+  Info: dual core Intel Core i3-6006U [MT MCP] speed (MHz): avg: 1625
+    min/max: 400/2000
+Graphics:
+  Device-1: Intel Skylake GT2 [HD Graphics 520] driver: i915 v: kernel
+  Device-2: NVIDIA GM108M [GeForce 940MX] driver: nouveau v: kernel
+  Display: x11 server: X.Org v: 1.21.1.7 driver: X: loaded: intel dri: iris
+    gpu: i915 resolution: 1280x1024~60Hz
+  API: OpenGL v: 4.6 Mesa 22.3.6 renderer: Mesa Intel HD Graphics 520 (SKL
+    GT2)
+Network:
+  Device-1: Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet
+    driver: r8169
+Drives:
+  Local Storage: total: 111.79 GiB used: 5.1 GiB (4.6%)
+Info:
+  Processes: 146 Uptime: 20m Memory: 7.63 GiB used: 1.39 GiB (18.2%)
+  Shell: Bash inxi: 3.3.26
+```
 
 ```
 glxinfo|egrep "OpenGL vendor|OpenGL renderer"
