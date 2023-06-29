@@ -5,7 +5,29 @@ BUILDDIR="$HOME/DevFiles"
 
 # install ---------------------------------------------------------------------
 
-$BASEDIR/debian/debian.sh
+if [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+    DISTNAME=$DISTRIB_ID
+    DISTVER=$DISTRIB_RELEASE
+fi
+
+case $DISTNAME in
+Debian)
+    $BASEDIR/debian/debian.sh
+    ;;
+Raspbian)
+    echo "Unknown system"
+    exit 1
+    ;;
+Ubuntu)
+    echo "Unknown system"
+    exit 1
+    ;;
+*)
+    echo "Unknown system"
+    exit 1
+    ;;
+esac
 
 # build directory -------------------------------------------------------------
 
@@ -19,10 +41,11 @@ pushd "$BUILDDIR"
 # libtinyc --------------------------------------------------------------------
 
 dest="/usr/local/include/tinyc/cstring.h"
+pack="libtinyc"
 if [[ ! -f "$dest" ]]; then
-    echo "*** libtinyc"
-    git clone https://github.com/hotnuma/libtinyc.git
-    pushd libtinyc
+    echo "*** ${pack}"
+    git clone https://github.com/hotnuma/${pack}.git
+    pushd ${pack}
     ./install.sh
     popd
 fi
@@ -30,13 +53,16 @@ fi
 # sysquery --------------------------------------------------------------------
 
 dest="/usr/local/bin/sysquery"
+pack="sysquery"
 if [[ ! -f "$dest" ]]; then
-    echo "*** sysquery"
-    git clone https://github.com/hotnuma/sysquery.git
-    pushd sysquery
+    echo "*** ${pack}"
+    git clone https://github.com/hotnuma/${pack}.git
+    pushd ${pack}
     ./install.sh
     popd
 fi
+
+# pop dir ---------------------------------------------------------------------
 
 popd
 
