@@ -22,6 +22,13 @@
 - don't save session, delete saved sessions
 - download and run install script
 
+- numlock
+
+	Pour XFCE (que tu sembles utiliser, d’après ta signature) :
+
+	Menu - Paramètres - Éditeur de paramètres
+	Canal Keybords - Numlock, et tu coches la case “Valeur”.
+
 - session
 	
 	https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
