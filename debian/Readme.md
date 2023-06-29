@@ -46,7 +46,10 @@
 
 - Intel GPU
     
+    https://wiki.debian.org/Firefox  
+    https://wiki.debian.org/HardwareVideoAcceleration  
     https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
+    https://christitus.com/fix-screen-tearing-linux/  
     
     `sudo apt remove xserver-xorg-video-intel`
 
@@ -60,6 +63,10 @@
     browser.sessionstore.resume_from_crash false
     ```
 
+
+
+
+
 -------------------------------------------------------------------------------
 
 - Error message
@@ -68,16 +75,6 @@
     platform MSFT0101:00: failed to claim resource 1
     acpi MSFT0101:00: platform device creation failed: -16
     ```
-
-
-
-
-
-
--------------------------------------------------------------------------------
-
-https://wiki.debian.org/Firefox#Hardware_Video_Acceleration  
-https://wiki.debian.org/HardwareVideoAcceleration  
 
 -------------------------------------------------------------------------------
 
