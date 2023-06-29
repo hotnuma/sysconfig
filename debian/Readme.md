@@ -1,13 +1,17 @@
+
+-------------------------------------------------------------------------------
+
 - configure thunar
 - configure panel
+- configure hotkeys
+- use xfce4-terminal instead of x-terminal-emulator
 - install ublock origin
 - restore bookmarks
-- configure hotkeys
-- download and run install script
+- disable startup programs
 - don't save session, delete saved sessions
-- configure startup programs
+- download and run install script
 
----------------------------------------------------------
+-------------------------------------------------------------------------------
 
 Hide grub menu
 
@@ -19,7 +23,8 @@ Save the file and quit the text editor.
 Run: sudo update-grub
 Reboot.
 
----------------------------------------------------------
+-------------------------------------------------------------------------------
+
 https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
 
 `/etc/X11/xorg.conf.d/20-intel.conf`
