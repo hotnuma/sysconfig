@@ -140,7 +140,7 @@ fi
 
 # smartd ----------------------------------------------------------------------
 
-if [ "$(pidof smartd)" > 0 ]; then
+if [ "$(pidof smartd)" ]; then
     echo "*** smartd" | tee -a "$OUTFILE"
     sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
