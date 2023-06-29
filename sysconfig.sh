@@ -5,17 +5,17 @@ BUILDDIR="$HOME/DevFiles"
 
 # install ---------------------------------------------------------------------
 
-if [[ -f /etc/lsb-release ]]; then
-    . /etc/lsb-release
-    DISTNAME=$DISTRIB_ID
-    DISTVER=$DISTRIB_RELEASE
-elif [[ -f /etc/os-release ]]; then
+if [[ -f /etc/os-release ]]; then
     . /etc/os-release
-    DISTNAME=$ID
+    DISTID=$ID
     DISTVER=$VERSION_ID
+elif [[ -f /etc/lsb-release ]]; then
+    . /etc/lsb-release
+    DISTID=$DISTRIB_ID
+    DISTVER=$DISTRIB_RELEASE
 fi
 
-case $DISTNAME in
+case $DISTID in
 debian)
     $BASEDIR/debian/debian.sh
     ;;
@@ -23,8 +23,8 @@ Raspbian)
     echo "Unknown system"
     exit 1
     ;;
-Ubuntu)
-    echo "Unknown system"
+ubuntu)
+    $BASEDIR/xubuntu/xubuntu.sh
     exit 1
     ;;
 *)
