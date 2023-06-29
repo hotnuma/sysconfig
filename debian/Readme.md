@@ -13,21 +13,14 @@
 	xfce4-terminal		Super+T	
 	```
 
+- use xfce4-terminal instead of x-terminal-emulator
 - configure thunar
 - configure panel
-- use xfce4-terminal instead of x-terminal-emulator
-- install ublock origin
-- restore bookmarks
 - disable startup programs
 - don't save session, delete saved sessions
+- install ublock origin
+- restore bookmarks
 - download and run install script
-
-- numlock
-
-	Pour XFCE (que tu sembles utiliser, d’après ta signature) :
-
-	Menu - Paramètres - Éditeur de paramètres
-	Canal Keybords - Numlock, et tu coches la case “Valeur”.
 
 - session
 	
@@ -35,29 +28,37 @@
 
 -------------------------------------------------------------------------------
 
-Hide grub menu
+- Hide grub menu
 
-https://askubuntu.com/questions/18775/
+    https://askubuntu.com/questions/18775/
 
-Open the /etc/default/grub file
-Change GRUB_TIMEOUT=10 to GRUB_TIMEOUT=0
-Save the file and quit the text editor.
-Run: sudo update-grub
-Reboot.
+    Open the /etc/default/grub file
+    Change GRUB_TIMEOUT=10 to GRUB_TIMEOUT=0
+    Save the file and quit the text editor.
+    Run: sudo update-grub
+    Reboot.
 
 -------------------------------------------------------------------------------
 
-https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
+- Intel
 
-`/etc/X11/xorg.conf.d/20-intel.conf`
+    https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
 
-```
-Section "Device"
-    Identifier "Intel Graphics"
-    Driver "intel"
-    Option "TearFree"    "true"
-EndSection
-```
+    `/etc/X11/xorg.conf.d/20-intel.conf`
+
+    ```
+    Section "Device"
+        Identifier "Intel Graphics"
+        Driver "intel"
+        Option "TearFree"    "true"
+    EndSection
+    ```
+
+- Terminal colors
+    
+    https://forum.xfce.org/viewtopic.php?id=14432  
+
+
 
 -------------------------------------------------------------------------------
 #### Firefox
