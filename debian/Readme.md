@@ -11,6 +11,17 @@
 - don't save session, delete saved sessions
 - download and run install script
 
+- Firefox config
+
+	`about:config`
+
+	```
+	browser.sessionstore.resume_from_crash false
+	layers.acceleration.force-enabled true
+	layers.gpu-process.enabled true
+	media.gpu-process-decoder true
+	```
+
 -------------------------------------------------------------------------------
 
 Hide grub menu

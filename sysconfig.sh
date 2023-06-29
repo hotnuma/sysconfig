@@ -66,6 +66,37 @@ if [[ ! -f "$dest" ]]; then
     popd
 fi
 
+# systools --------------------------------------------------------------------
+
+dest="/usr/local/bin/colortest"
+pack="systools"
+if [[ ! -f "$dest" ]]; then
+    echo "*** ${pack}"
+    git clone https://github.com/hotnuma/${pack}.git
+    pushd ${pack}
+    ./install.sh
+    popd
+fi
+
+#~ fileman
+#~ volman
+#~ taskman
+#~ firebook
+#~ sfind
+#~ powerctl
+#~ docdev
+#~ doclinux
+#~ docfileman
+
+#~ Adwaita-xfwm4
+#~ testcmd
+#~ testgtk
+#~ prgen
+#~ libtinycpp
+#~ mpvcmd
+#~ applist
+#~ appinfo
+
 # pop dir ---------------------------------------------------------------------
 
 popd
