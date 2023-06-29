@@ -26,6 +26,10 @@
     
     https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
 
+- Terminal colors
+    
+    https://forum.xfce.org/viewtopic.php?id=14432  
+
 -------------------------------------------------------------------------------
 
 - Hide grub menu
@@ -40,68 +44,40 @@
 
 -------------------------------------------------------------------------------
 
-- Intel
-
-    https://www.dedoimedo.com/computers/linux-intel-graphics-video-tearing.html
-
-    `/etc/X11/xorg.conf.d/20-intel.conf`
-
-    ```
-    Section "Device"
-        Identifier "Intel Graphics"
-        Driver "intel"
-        Option "TearFree"    "true"
-    EndSection
-    ```
-
-- Terminal colors
+- Intel GPU
     
-    https://forum.xfce.org/viewtopic.php?id=14432  
+    https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
+    
+    `sudo apt remove xserver-xorg-video-intel`
 
+- Firefox
+    
+    check webrender : type `about:support` in the address bar.
 
-
--------------------------------------------------------------------------------
-#### Firefox
-
-try in terminal :
-
-MOZ_X11_EGL=1 /home/user/firefox/firefox
-
-https://wiki.debian.org/Firefox#Hardware_Video_Acceleration  
-https://wiki.debian.org/HardwareVideoAcceleration  
-
-i965-va-driver already installed
-
-Intel -- Mesa Intel(R) HD Graphics 520 (SKL GT2)
-
-    gfx.webrender.all
-    gfx.webrender.enabled
-
-
-- Firefox config
-
-    `about:config`
+    In `about:config` :
 
     ```
     browser.sessionstore.resume_from_crash false
-    layers.acceleration.force-enabled true
-    layers.gpu-process.enabled true
-    media.gpu-process-decoder true
     ```
-    
-user_pref("gfx.blacklist.webrender", 4);
-user_pref("gfx.blacklist.webrender.failureid", "FEATURE_FAILURE_DDX_INTEL");
 
 -------------------------------------------------------------------------------
 
-Error message
+- Error message
 
-```
-platform MSFT0101:00: failed to claim resource 1
-acpi MSFT0101:00: platform device creation failed: -16
-```
+    ```
+    platform MSFT0101:00: failed to claim resource 1
+    acpi MSFT0101:00: platform device creation failed: -16
+    ```
 
-disable TPM ?
+
+
+
+
+
+-------------------------------------------------------------------------------
+
+https://wiki.debian.org/Firefox#Hardware_Video_Acceleration  
+https://wiki.debian.org/HardwareVideoAcceleration  
 
 -------------------------------------------------------------------------------
 
