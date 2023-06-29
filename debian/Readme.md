@@ -35,32 +35,6 @@
 
 -------------------------------------------------------------------------------
 
-https://wiki.debian.org/HardwareVideoAcceleration  
-
-i965-va-driver already installed
-
-Intel -- Mesa Intel(R) HD Graphics 520 (SKL GT2)
-
-    gfx.webrender.all
-    gfx.webrender.enabled
-
-
-- Firefox config
-
-	`about:config`
-
-	```
-	browser.sessionstore.resume_from_crash false
-	layers.acceleration.force-enabled true
-	layers.gpu-process.enabled true
-	media.gpu-process-decoder true
-	```
-	
-user_pref("gfx.blacklist.webrender", 4);
-user_pref("gfx.blacklist.webrender.failureid", "FEATURE_FAILURE_DDX_INTEL");
-
--------------------------------------------------------------------------------
-
 Hide grub menu
 
 https://askubuntu.com/questions/18775/
@@ -84,6 +58,34 @@ Section "Device"
     Option "TearFree"    "true"
 EndSection
 ```
+
+-------------------------------------------------------------------------------
+#### Firefox
+
+https://wiki.debian.org/Firefox#Hardware_Video_Acceleration  
+https://wiki.debian.org/HardwareVideoAcceleration  
+
+i965-va-driver already installed
+
+Intel -- Mesa Intel(R) HD Graphics 520 (SKL GT2)
+
+    gfx.webrender.all
+    gfx.webrender.enabled
+
+
+- Firefox config
+
+	`about:config`
+
+	```
+	browser.sessionstore.resume_from_crash false
+	layers.acceleration.force-enabled true
+	layers.gpu-process.enabled true
+	media.gpu-process-decoder true
+	```
+	
+user_pref("gfx.blacklist.webrender", 4);
+user_pref("gfx.blacklist.webrender.failureid", "FEATURE_FAILURE_DDX_INTEL");
 
 -------------------------------------------------------------------------------
 
