@@ -155,9 +155,10 @@ fi
 
 # colorsheme ---------------------------------------------------------------------
 
-dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
-if [[ ! -f "$dest" ]]; then
+dest="$HOME"/.local/share/xfce4/terminal/colorschemes
+if [[ ! -f "$dest"/custom.theme ]]; then
     echo "*** terminal colors" | tee -a "$OUTFILE"
+    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
     cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
