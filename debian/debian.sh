@@ -126,14 +126,22 @@ if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     sudo cp "$BASEDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
     
-# startup ---------------------------------------------------------------------
+# startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
-    echo "*** startup script" | tee -a "$OUTFILE"
+    echo "*** startup.sh" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     dest="$HOME"/.config/autostart/startup.desktop
     sudo cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# powerctl -------------------------------------------------------------------
+
+dest="$HOME"/.config/autostart/powerctl.desktop
+if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
+    echo "*** powerctl" | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # smartd ----------------------------------------------------------------------

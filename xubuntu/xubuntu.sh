@@ -143,13 +143,22 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp "$BASEDIR"/root/startxfce4 "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# autostart -------------------------------------------------------------------
+# startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
-if [[ ! -f "$dest" ]]; then
-    echo "*** autostart" | tee -a "$OUTFILE"
+if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
+    echo "*** startup.sh" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
-    cp -r "$BASEDIR"/home/config/autostart/* "$HOME"/.config/autostart/ 2>&1 | tee -a "$OUTFILE"
+    dest="$HOME"/.config/autostart/startup.desktop
+    sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# autostart -------------------------------------------------------------------
+
+dest="$HOME"/.config/autostart/powerctl.desktop
+if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
+    echo "*** powerctl" | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # aliases ---------------------------------------------------------------------
