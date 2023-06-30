@@ -161,7 +161,7 @@ if [[ ! -f "$dest" ]]; then
     cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# colorsheme ---------------------------------------------------------------------
+# colorsheme ------------------------------------------------------------------
 
 dest="$HOME"/.local/share/xfce4/terminal/colorschemes
 if [[ ! -f "$dest"/custom.theme ]]; then
@@ -170,7 +170,16 @@ if [[ ! -f "$dest"/custom.theme ]]; then
     cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# powerctl -------------------------------------------------------------------
+# thunar terminal -------------------------------------------------------------
+
+dest="$HOME"/.config/Thunar/uca.xml
+if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
+    echo "*** thunar terminal" | tee -a "$OUTFILE"
+    mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# powerctl --------------------------------------------------------------------
 
 dest="$HOME"/.config/autostart/powerctl.desktop
 if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
