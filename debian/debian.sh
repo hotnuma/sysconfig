@@ -133,10 +133,13 @@ fi
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$OUTFILE"
-    sudo tee "$dest" > /dev/null << EOF
+    tee "$dest" > /dev/null << "EOF"
 alias ls='ls -la --color=auto'
-alias hgrep='grep -rin --include=*.h'
+alias free='LANG=C free'
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
+alias hgrep='grep -rin --include=*.{h,hc,hpp,hxx}'
+alias sysprc='sudo sysquery -prc'
+alias syslog='journalctl -b -f --lines=300'
 EOF
 fi
 
