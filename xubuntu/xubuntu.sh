@@ -107,16 +107,7 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
-# autologin -------------------------------------------------------------------
-
-dest=/etc/lightdm/lightdm.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** autologin" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/lightdm.conf "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# backups ---------------------------------------------------------------------
+# backup ----------------------------------------------------------------------
 
 dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
@@ -124,12 +115,13 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
-# aliases ---------------------------------------------------------------------
+# autologin -------------------------------------------------------------------
 
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+dest=/etc/lightdm/lightdm.conf
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** autologin" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$BASEDIR"/root/lightdm.conf "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # environment -----------------------------------------------------------------
@@ -157,6 +149,14 @@ if [[ ! -f "$dest" ]]; then
     echo "*** autostart" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     cp -r "$BASEDIR"/home/config/autostart/* "$HOME"/.config/autostart/ 2>&1 | tee -a "$OUTFILE"
+fi
+
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # Hide Launchers --------------------------------------------------------------

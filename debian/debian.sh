@@ -90,7 +90,15 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
-# autologin/numlock -----------------------------------------------------------
+# backup ----------------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+fi
+
+# numlock/autologin -----------------------------------------------------------
 
 CURRENTUSER=$USER
 dest=/etc/lightdm/lightdm.conf
@@ -125,22 +133,7 @@ if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     echo "*** startup script" | tee -a "$OUTFILE"
     sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     dest="$HOME"/.config/autostart/startup.desktop
-    cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# aliases ---------------------------------------------------------------------
-
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    tee "$dest" > /dev/null << "EOF"
-alias ls='ls -la --color=auto'
-alias free='LANG=C free'
-alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
-alias hgrep='grep -rin --include=*.{h,hc,hpp,hxx}'
-alias sysprc='sudo sysquery -prc'
-alias syslog='journalctl -b -f --lines=300'
-EOF
+    sudo cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # smartd ----------------------------------------------------------------------
@@ -150,6 +143,15 @@ if [ "$(pidof smartd)" ]; then
     sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
+
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 
 echo "done"
 
