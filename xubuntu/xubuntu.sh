@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
+DEBDIR="$BASEDIR/../debian"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
@@ -156,7 +157,7 @@ fi
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # Hide Launchers --------------------------------------------------------------

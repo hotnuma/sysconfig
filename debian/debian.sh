@@ -152,6 +152,14 @@ if [[ ! -f "$dest" ]]; then
     cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# colorsheme ---------------------------------------------------------------------
+
+dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
+if [[ ! -f "$dest" ]]; then
+    echo "*** terminal colors" | tee -a "$OUTFILE"
+    cp "$BASEDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 
 echo "done"
 
