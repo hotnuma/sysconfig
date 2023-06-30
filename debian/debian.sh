@@ -145,6 +145,14 @@ if [ "$(pidof smartd)" ]; then
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
 
+# config ----------------------------------------------------------------------
+
+dest="$HOME"/config
+if [[ ! -L "$dest" ]]; then
+    echo "*** config link" | tee -a "$OUTFILE"
+    ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # aliases ---------------------------------------------------------------------
 
 dest="$HOME"/.bash_aliases
