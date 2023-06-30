@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
+DEBDIR="$BASEDIR"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
@@ -123,7 +124,7 @@ if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     echo "*** copy xdg xfce4" | tee -a "$OUTFILE"
     sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
     dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
-    sudo cp "$BASEDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
     
 # startup.sh ------------------------------------------------------------------
@@ -131,17 +132,9 @@ fi
 dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     dest="$HOME"/.config/autostart/startup.desktop
-    sudo cp "$BASEDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# powerctl -------------------------------------------------------------------
-
-dest="$HOME"/.config/autostart/powerctl.desktop
-if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
-    echo "*** powerctl" | tee -a "$OUTFILE"
-    sudo cp "$BASEDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # smartd ----------------------------------------------------------------------
@@ -157,7 +150,7 @@ fi
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$BASEDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # colorsheme ---------------------------------------------------------------------
@@ -165,9 +158,16 @@ fi
 dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
 if [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$OUTFILE"
-    cp "$BASEDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# powerctl -------------------------------------------------------------------
+
+dest="$HOME"/.config/autostart/powerctl.desktop
+if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
+    echo "*** powerctl" | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
 
 echo "done"
 
