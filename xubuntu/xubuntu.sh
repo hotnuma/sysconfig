@@ -5,27 +5,6 @@ DEBDIR="$BASEDIR/../debian"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
-# Functions -------------------------------------------------------------------
-
-app_show()
-{
-    userpath=$(appinfo -u "$1")
-    if [[ $userpath != "" ]]; then
-        return
-    fi
-    
-    syspath=$(appinfo -f "$1")
-    if [[ $syspath == "" ]]; then
-        return
-    fi
-    
-    if [[ $2 == "true" ]]; then
-        appinfo -s "$1" 2>&1 | tee -a "$OUTFILE"
-    else
-        appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
-    fi
-}
-
 # test if sudo is succesfull --------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -170,6 +149,25 @@ if [[ ! -f "$dest" ]]; then
 fi
 
 # Hide Launchers --------------------------------------------------------------
+
+app_show()
+{
+    userpath=$(appinfo -u "$1")
+    if [[ $userpath != "" ]]; then
+        return
+    fi
+    
+    syspath=$(appinfo -f "$1")
+    if [[ $syspath == "" ]]; then
+        return
+    fi
+    
+    if [[ $2 == "true" ]]; then
+        appinfo -s "$1" 2>&1 | tee -a "$OUTFILE"
+    else
+        appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
+    fi
+}
 
 dest="$HOME"/.local/share/applications/
 if [[ ! -d "$dest" ]]; then

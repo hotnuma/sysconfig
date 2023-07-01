@@ -44,10 +44,15 @@ pushd "$BUILDDIR"
 
 # install dev packages --------------------------------------------------------
 
-#~ echo "*** install dev packages"
-#~ APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
-#~ APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libwnck-3-dev libxmu-dev"
-#~ sudo apt -y install $APPLIST
+dest=/usr/include/gumbo.h
+if [[ ! -f "$dest" ]]; then
+    echo "*** install dev packages"
+    APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
+    APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libwnck-3-dev libxmu-dev"
+    APPLIST+=" libgumbo-dev"
+    sudo apt -y install $APPLIST
+fi
+
 
 #~ libdbus-1-dev 	dbus-1
 #~ libexiv2-dev 	exiv2
@@ -56,7 +61,6 @@ pushd "$BUILDDIR"
 #~ libgdk-pixbuf-2.0-dev 	gdk-pixbuf-2.0
 #~ libglib2.0-dev 	glib-2.0
 #~ libgudev-1.0-dev 	gudev-1.0
-#~ libgumbo-dev 	gumbo
 #~ libmount-dev 	mount
 #~ libnotify-dev 	libnotify
 #~ libpng-dev 	libpng
@@ -88,21 +92,19 @@ build_src()
 }
 
 build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
+build_src "appinfo" "/usr/local/bin/appinfo"
+build_src "firebook" "/usr/local/bin/firebook"
+build_src "sfind" "/usr/local/bin/sfind"
 build_src "sysquery" "/usr/local/bin/sysquery"
 build_src "systools" "/usr/local/bin/colortest"
 build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
 
-#~ build_src "sfind" "/usr/local/bin/colortest"
-#~ build_src "prgen" "/usr/local/bin/colortest"
-#~ build_src "mpvcmd" "/usr/local/bin/colortest"
-#~ build_src "appinfo" "/usr/local/bin/colortest"
-
-#~ build_src "fileman" "/usr/local/bin/colortest"
-#~ build_src "volman" "/usr/local/bin/colortest"
-
-#~ build_src "firebook" "/usr/local/bin/colortest"
-#~ build_src "powerctl" "/usr/local/bin/colortest"
-#~ build_src "applist" "/usr/local/bin/colortest"
+#~ build_src "prgen" "/usr/local/bin/prgen"
+#~ build_src "mpvcmd" "/usr/local/bin/mpvcmd"
+#~ build_src "fileman" "/usr/local/bin/fileman"
+#~ build_src "volman" "/usr/local/bin/volman"
+#~ build_src "powerctl" "/usr/local/bin/powerctl"
+#~ build_src "applist" "/usr/local/bin/applist"
 
 # pop dir ---------------------------------------------------------------------
 

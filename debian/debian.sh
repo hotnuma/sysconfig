@@ -7,27 +7,6 @@ rm -f "$OUTFILE"
 
 echo "Debian install..."
 
-# Functions -------------------------------------------------------------------
-
-app_show()
-{
-    userpath=$(appinfo -u "$1")
-    if [[ $userpath != "" ]]; then
-        return
-    fi
-    
-    syspath=$(appinfo -f "$1")
-    if [[ $syspath == "" ]]; then
-        return
-    fi
-    
-    if [[ $2 == "true" ]]; then
-        appinfo -s "$1" 2>&1 | tee -a "$OUTFILE"
-    else
-        appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
-    fi
-}
-
 # test if sudo is succesfull --------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -199,6 +178,50 @@ if [[ ! -f ${dest}.bak ]]; then
     nmcli con down "$cname" 2>&1 | tee -a "$OUTFILE"
     nmcli con up "$cname" 2>&1 | tee -a "$OUTFILE"
 fi
+
+# Hide Launchers --------------------------------------------------------------
+
+app_show()
+{
+    userpath=$(appinfo -u "$1")
+    if [[ $userpath != "" ]]; then
+        return
+    fi
+    
+    syspath=$(appinfo -f "$1")
+    if [[ $syspath == "" ]]; then
+        return
+    fi
+    
+    if [[ $2 == "true" ]]; then
+        appinfo -s "$1" 2>&1 | tee -a "$OUTFILE"
+    else
+        appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
+    fi
+}
+
+dest="$HOME"/.local/share/applications/
+if [[ ! -d "$dest" ]]; then
+    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
+    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+#~ if command -v appinfo &> /dev/null; then
+    #~ app_show "debian-uxterm"                "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "debian-xterm"                 "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "gtk3-demo"                    "true"  2>&1 | tee -a "$OUTFILE"
+    #~ app_show "org.gnome.Evince-previewer"   "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "RealTimeSync"                 "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
+#~ fi
+
 
 echo "done"
 
