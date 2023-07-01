@@ -150,15 +150,6 @@ if [[ ! -f "$dest" ]]; then
     cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# application menu ------------------------------------------------------------
-
-dest=$HOME/.config/menus/xfce-applications.menu
-if [[ ! -f "$dest" ]]; then
-    echo "*** application menu" | tee -a "$OUTFILE"
-    mkdir -p "$HOME/.config/menus"
-    cp "$DEBDIR/home/xfce-applications.menu" "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
 # Hide Launchers --------------------------------------------------------------
 
 app_show()
@@ -194,6 +185,7 @@ if command -v appinfo &> /dev/null; then
     app_show "gtk3-demo"                    "true"  2>&1 | tee -a "$OUTFILE"
     app_show "org.gnome.Evince-previewer"   "false" 2>&1 | tee -a "$OUTFILE"
     app_show "RealTimeSync"                 "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "thunar-bulk-rename"           "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"

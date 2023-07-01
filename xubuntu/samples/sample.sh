@@ -14,6 +14,15 @@ if [[ ! -f $dest ]]; then
     sudo cp $BASEDIR/root/startcustom $dest 2>&1 | tee -a $OUTFILE
 fi
 
+# application menu ------------------------------------------------------------
+
+dest=$HOME/.config/menus/xfce-applications.menu
+if [[ ! -f "$dest" ]]; then
+    echo "*** application menu" | tee -a "$OUTFILE"
+    mkdir -p "$HOME/.config/menus"
+    cp "$DEBDIR/home/xfce-applications.menu" "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 
 
 # hplj1020.desktop (printer-driver-foo2zjs-common)
