@@ -72,6 +72,17 @@ fi
     
 # backup ----------------------------------------------------------------------
 
+dest=/etc/environment.d/20_custom.conf
+if [[ ! -f "$dest" ]]; then
+    echo "*** environment" | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << "EOF"
+GTK_OVERLAY_SCROLLING=0
+NO_AT_BRIDGE=1
+EOF
+fi
+
+# backup ----------------------------------------------------------------------
+
 dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
     echo "*** grub config backup" | tee -a "$OUTFILE"
