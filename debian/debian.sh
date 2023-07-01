@@ -54,7 +54,8 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # uninstall
-    APPLIST="synaptic mousepad xfce4-power-manager tumbler at-spi2-core"
+    APPLIST="at-spi2-core mousepad synaptic tumbler xfce4-power-manager"
+    APPLIST+=" xfburn xsane"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
@@ -218,21 +219,11 @@ if [[ ! -d "$dest" ]]; then
     mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-#~ if command -v appinfo &> /dev/null; then
-    #~ app_show "debian-uxterm"                "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "debian-xterm"                 "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "gtk3-demo"                    "true"  2>&1 | tee -a "$OUTFILE"
-    #~ app_show "org.gnome.Evince-previewer"   "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "RealTimeSync"                 "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
-#~ fi
+if command -v appinfo &> /dev/null; then
+    app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "system-config-printer"        "false" 2>&1 | tee -a "$OUTFILE"
+fi
 
 
 echo "done"

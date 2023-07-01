@@ -87,17 +87,19 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
     
     https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
 
-
-
+- installed apps
+    
+    ex falso
+    parole
+    quod libet
+    zutty
+    
+    
 
 
 
 
 -------------------------------------------------------------------------------
-
-- Terminal colors
-    
-    https://forum.xfce.org/viewtopic.php?id=14432  
 
 - Use xfce4-terminal instead of x-terminal-emulator
 
