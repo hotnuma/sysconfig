@@ -5,6 +5,8 @@ DEBDIR="$BASEDIR/../debian"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
+echo "Ubuntu install..."
+
 # test if sudo is succesfull --------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
@@ -148,6 +150,15 @@ if [[ ! -f "$dest" ]]; then
     cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# application menu ------------------------------------------------------------
+
+dest=$HOME/.config/menus/xfce-applications.menu
+if [[ ! -f "$dest" ]]; then
+    echo "*** application menu" | tee -a "$OUTFILE"
+    mkdir -p "$HOME/.config/menus"
+    cp "$DEBDIR/home/xfce-applications.menu" "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # Hide Launchers --------------------------------------------------------------
 
 app_show()
@@ -190,5 +201,8 @@ if command -v appinfo &> /dev/null; then
     app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
 fi
+
+
+echo "done"
 
 
