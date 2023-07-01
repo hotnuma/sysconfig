@@ -42,60 +42,67 @@ if [[ ! -d "$dest" ]]; then
 fi
 pushd "$BUILDDIR"
 
-# libtinyc --------------------------------------------------------------------
+# install dev packages --------------------------------------------------------
 
-dest="/usr/local/include/tinyc/cstring.h"
-pack="libtinyc"
-if [[ ! -f "$dest" ]]; then
-    echo "*** ${pack}"
-    git clone https://github.com/hotnuma/${pack}.git
-    pushd ${pack}
-    ./install.sh
-    popd
-fi
+#~ echo "*** install dev packages"
+#~ APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
+#~ APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libwnck-3-dev libxmu-dev"
+#~ sudo apt -y install $APPLIST
 
-# sysquery --------------------------------------------------------------------
+#~ libdbus-1-dev 	dbus-1
+#~ libexiv2-dev 	exiv2
+#~ libexo-2-dev 	exo-2
+#~ libexpat1-dev 	expat
+#~ libgdk-pixbuf-2.0-dev 	gdk-pixbuf-2.0
+#~ libglib2.0-dev 	glib-2.0
+#~ libgudev-1.0-dev 	gudev-1.0
+#~ libgumbo-dev 	gumbo
+#~ libmount-dev 	mount
+#~ libnotify-dev 	libnotify
+#~ libpng-dev 	libpng
+#~ libpolkit-gobject-1-dev 	polkit-gobject-1
+#~ libprocps-dev 	libprocps
+#~ libsm-dev 	sm
+#~ libthunarx-3-dev 	thunarx-3
+#~ libtinyxml-dev 	tinyxml
+#~ libusb-dev 	libusb
+#~ libx11-dev 	x11
+#~ libxfce4util-dev 	libxfce4util-1.0
+#~ libxml2-dev 	libxml-2.0
+#~ libz3-dev 	z3
+#~ libzen-dev 	libzen
 
-dest="/usr/local/bin/sysquery"
-pack="sysquery"
-if [[ ! -f "$dest" ]]; then
-    echo "*** ${pack}"
-    git clone https://github.com/hotnuma/${pack}.git
-    pushd ${pack}
-    ./install.sh
-    popd
-fi
+# build from git --------------------------------------------------------------
 
-# systools --------------------------------------------------------------------
+build_src()
+{
+    local pack="$1"
+    local dest="$2"
+    if [[ ! -f "$dest" ]]; then
+        echo "*** ${pack}"
+        git clone https://github.com/hotnuma/${pack}.git
+        pushd ${pack}
+        ./install.sh
+        popd
+    fi
+}
 
-dest="/usr/local/bin/colortest"
-pack="systools"
-if [[ ! -f "$dest" ]]; then
-    echo "*** ${pack}"
-    git clone https://github.com/hotnuma/${pack}.git
-    pushd ${pack}
-    ./install.sh
-    popd
-fi
+build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
+build_src "sysquery" "/usr/local/bin/sysquery"
+build_src "systools" "/usr/local/bin/colortest"
+build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
 
-#~ fileman
-#~ volman
-#~ taskman
-#~ firebook
-#~ sfind
-#~ powerctl
-#~ docdev
-#~ doclinux
-#~ docfileman
+#~ build_src "sfind" "/usr/local/bin/colortest"
+#~ build_src "prgen" "/usr/local/bin/colortest"
+#~ build_src "mpvcmd" "/usr/local/bin/colortest"
+#~ build_src "appinfo" "/usr/local/bin/colortest"
 
-#~ Adwaita-xfwm4
-#~ testcmd
-#~ testgtk
-#~ prgen
-#~ libtinycpp
-#~ mpvcmd
-#~ applist
-#~ appinfo
+#~ build_src "fileman" "/usr/local/bin/colortest"
+#~ build_src "volman" "/usr/local/bin/colortest"
+
+#~ build_src "firebook" "/usr/local/bin/colortest"
+#~ build_src "powerctl" "/usr/local/bin/colortest"
+#~ build_src "applist" "/usr/local/bin/colortest"
 
 # pop dir ---------------------------------------------------------------------
 

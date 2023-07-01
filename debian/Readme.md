@@ -83,7 +83,7 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
 
     systemd[622]: /usr/lib/environment.d/99-environment.conf:2: invalid variable name "export NO_AT_BRIDGE", ignoring.
 
-
+https://wiki.debian.org/EnvironmentVariables
 
 
 
