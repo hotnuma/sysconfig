@@ -78,15 +78,11 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
       Users in groups 'adm', 'systemd-journal' can see all messages.
       Pass -q to turn off this notice.
     ```
-
-- environment
-
-    systemd[622]: /usr/lib/environment.d/99-environment.conf:2: invalid variable name "export NO_AT_BRIDGE", ignoring.
-
-https://wiki.debian.org/EnvironmentVariables
-
-
-
+    
+    Add user to adm group :
+    
+    `sudo usermod -a -G usergroup username`
+    
 - disable ssh agent and pgp agent
     
     https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
