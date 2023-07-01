@@ -55,7 +55,7 @@ if [[ ! -f "$dest" ]]; then
     
     # uninstall
     APPLIST="at-spi2-core mousepad synaptic tumbler xfce4-power-manager"
-    APPLIST+=" xfburn xsane"
+    APPLIST+=" xfburn xsane zutty"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
