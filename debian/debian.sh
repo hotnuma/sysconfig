@@ -99,17 +99,6 @@ if [[ ! -f ${dest}.bak ]]; then
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
-# environment -----------------------------------------------------------------
-
-dest=/etc/environment
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** environment" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo tee "$dest" > /dev/null << EOF
-export NO_AT_BRIDGE=1
-EOF
-fi
-
 # numlock/autologin -----------------------------------------------------------
 
 CURRENTUSER=$USER

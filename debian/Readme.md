@@ -1,5 +1,7 @@
 
--------------------------------------------------------------------------------
+#### Download and run install script
+
+#### Manual configuration
 
 - configure hotkeys
 
@@ -13,24 +15,12 @@
     xfce4-terminal      Super+T 
     ```
 
-- use xfce4-terminal instead of x-terminal-emulator
 - configure thunar
 - configure panel
 - disable startup programs
 - don't save session, delete saved sessions
 - install ublock origin
 - restore bookmarks
-- download and run install script
-
-- session
-    
-    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
-
-- Terminal colors
-    
-    https://forum.xfce.org/viewtopic.php?id=14432  
-
--------------------------------------------------------------------------------
 
 - Hide grub menu
 
@@ -42,14 +32,12 @@
     Run: sudo update-grub
     Reboot.
 
--------------------------------------------------------------------------------
-
 - Intel GPU
     
+    https://christitus.com/fix-screen-tearing-linux/  
+    https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
     https://wiki.debian.org/Firefox  
     https://wiki.debian.org/HardwareVideoAcceleration  
-    https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
-    https://christitus.com/fix-screen-tearing-linux/  
     
     `sudo apt remove xserver-xorg-video-intel`
 
@@ -63,8 +51,7 @@
     browser.sessionstore.resume_from_crash false
     ```
 
-
-- log messages
+- Disable log messages
 
 https://unix.stackexchange.com/questions/224370/  
 
@@ -84,7 +71,39 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
 @include common-session-noninteractive
 ```
 
+- Log warning
+    
+    ```
+    Hint: You are currently not seeing messages from other users and the system.
+      Users in groups 'adm', 'systemd-journal' can see all messages.
+      Pass -q to turn off this notice.
+    ```
+
+- environment
+
+    systemd[622]: /usr/lib/environment.d/99-environment.conf:2: invalid variable name "export NO_AT_BRIDGE", ignoring.
+
+
+
+
+
+- disable ssh agent and pgp agent
+    
+    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
+
+
+
+
+
+
+
 -------------------------------------------------------------------------------
+
+- Terminal colors
+    
+    https://forum.xfce.org/viewtopic.php?id=14432  
+
+- Use xfce4-terminal instead of x-terminal-emulator
 
 - Error message
 
@@ -93,9 +112,7 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
     acpi MSFT0101:00: platform device creation failed: -16
     ```
 
--------------------------------------------------------------------------------
-
-#### Drivers infos
+- Drivers infos
 
 `inxi -b`
 
