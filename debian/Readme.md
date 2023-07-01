@@ -64,8 +64,25 @@
     ```
 
 
+- log messages
 
+https://unix.stackexchange.com/questions/224370/  
 
+`/etc/pam.d/sudo`
+
+session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnuma
+
+```
+#%PAM-1.0
+
+# Set up user limits from /etc/security/limits.conf.
+session    required   pam_limits.so
+session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnuma
+
+@include common-auth
+@include common-account
+@include common-session-noninteractive
+```
 
 -------------------------------------------------------------------------------
 
