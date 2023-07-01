@@ -70,11 +70,12 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
-# backup ----------------------------------------------------------------------
+# environment -----------------------------------------------------------------
 
-dest=/etc/environment.d/20_custom.conf
-if [[ ! -f "$dest" ]]; then
+dest=/etc/environment
+if [[ ! -f ${dest}.bak ]]; then
     echo "*** environment" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << "EOF"
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
