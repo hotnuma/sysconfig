@@ -70,6 +70,14 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
+# backup files ----------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+fi
+
 # environment -----------------------------------------------------------------
 
 dest=/etc/environment
@@ -80,14 +88,6 @@ if [[ ! -f ${dest}.bak ]]; then
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
 EOF
-fi
-
-# backup ----------------------------------------------------------------------
-
-dest=/etc/default/grub
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
 # numlock/autologin -----------------------------------------------------------
