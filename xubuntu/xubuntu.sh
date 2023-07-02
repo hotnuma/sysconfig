@@ -150,6 +150,15 @@ if [[ ! -f "$dest" ]]; then
     cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# application menu ------------------------------------------------------------
+
+dest=$HOME/.config/menus/xfce-applications.menu
+if [[ ! -f "$dest" ]]; then
+    echo "*** application menu" | tee -a "$OUTFILE"
+    mkdir -p "$HOME/.config/menus"
+    cp "$DEBDIR/home/xfce-applications.menu" "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # Hide Launchers --------------------------------------------------------------
 
 app_show()

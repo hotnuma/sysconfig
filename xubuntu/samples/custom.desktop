@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Custom Session
-Comment=Use this session to run Xubuntu as your desktop environment
-Exec=startcustom
-Icon=
-Type=Application
-DesktopNames=XFCE
