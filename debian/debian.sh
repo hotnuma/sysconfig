@@ -55,7 +55,7 @@ if [[ ! -f "$dest" ]]; then
     
     # uninstall
     APPLIST="at-spi2-core mousepad synaptic tumbler xfce4-power-manager"
-    APPLIST+=" xfburn xsane zutty"
+    APPLIST+=" exfalso xfburn xsane zutty"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
@@ -223,8 +223,14 @@ if command -v appinfo &> /dev/null; then
     app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
     app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
     app_show "system-config-printer"        "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "thunar-bulk-rename"           "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
 fi
-
 
 echo "done"
 
