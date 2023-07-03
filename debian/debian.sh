@@ -7,7 +7,7 @@ rm -f "$OUTFILE"
 
 echo "Debian install..."
 
-# test if sudo is succesfull --------------------------------------------------
+# test if sudo is succesfull ==================================================
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root: abort."
@@ -32,7 +32,7 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
-# install / remove ------------------------------------------------------------
+# install / remove ============================================================
 
 dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
@@ -71,7 +71,7 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
     
-# backup files ----------------------------------------------------------------
+# backup files ================================================================
 
 dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
@@ -137,20 +137,22 @@ if [ "$(pidof smartd)" ]; then
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
 
+# user settings ===============================================================
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** appfinder" | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
+fi
+
 # config ----------------------------------------------------------------------
 
 dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# aliases ---------------------------------------------------------------------
-
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # colorsheme ------------------------------------------------------------------
@@ -224,12 +226,12 @@ if command -v appinfo &> /dev/null; then
     app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
     app_show "system-config-printer"        "false" 2>&1 | tee -a "$OUTFILE"
     app_show "thunar-bulk-rename"           "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
+    #~ app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
 fi
 
 echo "done"
