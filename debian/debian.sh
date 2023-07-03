@@ -2,6 +2,7 @@
 
 BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR"
+CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
 rm -f "$OUTFILE"
 
@@ -22,7 +23,6 @@ fi
 
 # sudoers ---------------------------------------------------------------------
 
-CURRENTUSER=$USER
 dest=/etc/sudoers.d/10_custom
 if [[ ! -f "$dest" ]]; then
     echo "*** sudoers" | tee -a "$OUTFILE"
@@ -93,7 +93,6 @@ fi
 
 # numlock/autologin -----------------------------------------------------------
 
-CURRENTUSER=$USER
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
     echo "*** numlock on" | tee -a "$OUTFILE"

@@ -3,7 +3,17 @@
 
 #### Manual configuration
 
-- configure hotkeys
+- Hide grub menu
+
+    https://askubuntu.com/questions/18775/
+
+    Open the /etc/default/grub file
+    Change GRUB_TIMEOUT=10 to GRUB_TIMEOUT=0
+    Save the file and quit the text editor.
+    Run: sudo update-grub
+    Reboot.
+
+- Configure hotkeys
 
     ```
     firefox             Super+B
@@ -15,22 +25,23 @@
     xfce4-terminal      Super+T 
     ```
 
-- configure thunar
-- configure panel
-- disable startup programs
-- don't save session, delete saved sessions
-- install ublock origin
-- restore bookmarks
+- Configure thunar
+- Configure panel
+- Disable startup programs
+- Don't save session, delete saved sessions
 
-- Hide grub menu
+- Firefox
+    
+    - install ublock origin
+    - restore bookmarks
+    
+    check webrender : type `about:support` in the address bar.
 
-    https://askubuntu.com/questions/18775/
+    In `about:config` :
 
-    Open the /etc/default/grub file
-    Change GRUB_TIMEOUT=10 to GRUB_TIMEOUT=0
-    Save the file and quit the text editor.
-    Run: sudo update-grub
-    Reboot.
+    ```
+    browser.sessionstore.resume_from_crash false
+    ```
 
 - Intel GPU
     
@@ -41,15 +52,9 @@
     
     `sudo apt remove xserver-xorg-video-intel`
 
-- Firefox
+- Add user to adm group
     
-    check webrender : type `about:support` in the address bar.
-
-    In `about:config` :
-
-    ```
-    browser.sessionstore.resume_from_crash false
-    ```
+    `sudo usermod -a -G adm username`
 
 - Disable log messages
 
@@ -71,6 +76,13 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
 @include common-session-noninteractive
 ```
 
+    
+
+
+
+
+-------------------------------------------------------------------------------
+
 - Log warning
     
     ```
@@ -79,29 +91,12 @@ session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnu
       Pass -q to turn off this notice.
     ```
     
-    Add user to adm group :
     
-    `sudo usermod -a -G usergroup username`
-    
-- disable ssh agent and pgp agent
+- Use xfce4-terminal instead of x-terminal-emulator
+
+- Disable ssh agent and pgp agent
     
     https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
-
-- installed apps
-    
-    ex falso
-    parole
-    quod libet
-    zutty
-    
-    
-
-
-
-
--------------------------------------------------------------------------------
-
-- Use xfce4-terminal instead of x-terminal-emulator
 
 - Error message
 
