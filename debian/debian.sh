@@ -4,9 +4,10 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
-rm -f "$OUTFILE"
 
-echo "Debian install..."
+echo "===============================================================================" | tee -a $OUTFILE
+echo " Debian install..." | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $OUTFILE
 
 # test if sudo is succesfull ==================================================
 
@@ -233,6 +234,6 @@ if command -v appinfo &> /dev/null; then
     #~ app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
 fi
 
-echo "done"
+echo "done" | tee -a $OUTFILE
 
 

@@ -118,7 +118,7 @@ if [[ ! -f $dest ]]; then
     #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
 fi
 
-# /etc settings ---------------------------------------------------------------
+# cpu governor ----------------------------------------------------------------
 
 dest=/etc/default/cpufrequtils
 if [[ ! -f $dest ]]; then
@@ -129,7 +129,7 @@ GOVERNOR="performance"
 EOF
 fi
 
-# /home settings ==============================================================
+# home config =================================================================
 
 dest=~/config
 if [[ ! -d $dest ]]; then
@@ -165,6 +165,16 @@ if [[ ! -d $dest ]]; then
     cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
+dest=~/.profile
+if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
+    echo " *** disable overlay scrolling" | tee -a $OUTFILE
+    tee -a $dest > /dev/null << 'EOF'
+export GTK_OVERLAY_SCROLLING=0
+EOF
+fi
+
+# clean directories -----------------------------------------------------------
+
 dest=~/Images
 if [[ -d $dest ]]; then
     echo " *** clean home dir" | tee -a $OUTFILE
@@ -174,16 +184,6 @@ if [[ -d $dest ]]; then
     rm -rf ~/Public 2>&1 | tee -a $OUTFILE
     rm -rf ~/Téléchargements 2>&1 | tee -a $OUTFILE
     rm -rf ~/Vidéos 2>&1 | tee -a $OUTFILE
-fi
-
-dest=~/.profile
-if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
-    echo " *** disable overlay scrolling" | tee -a $OUTFILE
-    tee -a $dest > /dev/null << 'EOF'
-
-export GTK_OVERLAY_SCROLLING=0
-
-EOF
 fi
 
 # install dev =================================================================

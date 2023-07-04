@@ -4,9 +4,10 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR/../debian"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
-rm -f "$OUTFILE"
 
-echo "Ubuntu install..."
+echo "===============================================================================" | tee -a $OUTFILE
+echo " Ubuntu install..." | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $OUTFILE
 
 # test if sudo is succesfull ==================================================
 

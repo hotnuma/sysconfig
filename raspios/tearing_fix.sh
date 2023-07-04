@@ -1,4 +1,11 @@
-# custom session ==============================================================
+#!/usr/bin/bash
+
+BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
+OUTFILE="$HOME/install.log"
+
+echo "===============================================================================" | tee -a $OUTFILE
+echo " Screen tearing fix..." | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $OUTFILE
 
 dest=/usr/bin/startmod
 if [[ ! -f $dest ]]; then
@@ -26,5 +33,7 @@ if [[ ! -f $dest ]]; then
 Session=custom
 EOF
 fi
+
+echo "done" | tee -a $OUTFILE
 
 
