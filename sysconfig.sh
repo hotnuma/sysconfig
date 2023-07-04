@@ -5,27 +5,24 @@ BUILDDIR="$HOME/DevFiles"
 
 # install ---------------------------------------------------------------------
 
+if [[ -f /boot/config.txt ]]; then
+    $BASEDIR/raspios/raspios.sh
+    exit 0
+fi
+
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     DISTID=$ID
     DISTVER=$VERSION_ID
-elif [[ -f /etc/lsb-release ]]; then
-    . /etc/lsb-release
-    DISTID=$DISTRIB_ID
-    DISTVER=$DISTRIB_RELEASE
 fi
 
 case $DISTID in
 debian)
     $BASEDIR/debian/debian.sh
     ;;
-Raspbian)
-    echo "Unknown system"
-    exit 1
-    ;;
 ubuntu)
     $BASEDIR/xubuntu/xubuntu.sh
-    exit 1
+    exit 0
     ;;
 *)
     echo "Unknown system"

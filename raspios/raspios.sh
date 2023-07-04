@@ -4,9 +4,10 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR/../debian"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
-rm -f "$OUTFILE"
 
-echo "Raspi install..."
+echo "===============================================================================" | tee -a $OUTFILE
+echo " Raspi install..." | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $OUTFILE
 
 DEV=0
 
@@ -197,6 +198,6 @@ if [[ $DEV == 1 ]]; then
     fi
 fi
 
-echo "done"
+echo "done" | tee -a $OUTFILE
 
 
