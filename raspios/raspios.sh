@@ -117,16 +117,6 @@ if [[ ! -f $dest ]]; then
     #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
 fi
 
-
-
-
-echo "done"
-exit 0
-
-
-
-
-
 # /etc settings ---------------------------------------------------------------
 
 dest=/etc/default/cpufrequtils
@@ -200,35 +190,6 @@ export GTK_OVERLAY_SCROLLING=0
 EOF
 fi
 
-# custom session ==============================================================
-
-dest=/usr/bin/startmod
-if [[ ! -f $dest ]]; then
-    echo " *** startmod script" | tee -a $OUTFILE
-    sudo cp $BASEDIR/config/startmod $dest 2>&1 | tee -a $OUTFILE
-fi
-
-dest=/usr/share/xsessions/custom.desktop
-if [[ ! -f $dest ]]; then
-    echo " *** custom session" | tee -a $OUTFILE
-    sudo tee $dest > /dev/null << 'EOF'
-[Desktop Entry]
-Name=LXDE
-Comment=LXDE - Lightweight X11 desktop environment
-Exec=/usr/bin/startmod
-Type=Application
-EOF
-fi
-
-dest=~/.dmrc
-if [[ ! -f $dest ]]; then
-    echo " *** dmrc" | tee -a $OUTFILE
-    tee $dest > /dev/null << 'EOF'
-[Desktop]
-Session=custom
-EOF
-fi
-
 # install dev =================================================================
 
 if [[ $DEV == 1 ]]; then
@@ -241,5 +202,7 @@ if [[ $DEV == 1 ]]; then
         sudo apt -y install libprocps-dev libmediainfo-dev 2>&1 | tee -a $OUTFILE
     fi
 fi
+
+echo "done"
 
 
