@@ -3,6 +3,11 @@
 
 #### Manual configuration
 
+- Git
+    
+    git config --global user.name "John Doe"
+    git config --global user.email johndoe@example.com
+
 - Hide grub menu
 
     https://askubuntu.com/questions/18775/

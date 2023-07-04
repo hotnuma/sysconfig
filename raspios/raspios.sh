@@ -59,7 +59,7 @@ dtparam=audio=on
 dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 arm_64bit=1
-gpu_mem=256
+#gpu_mem=256
 disable_splash=1
 
 # disable unneeded
@@ -89,7 +89,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install softwares
-    APPLIST="rofi thunar xfce4-terminal xfce4-taskmanager mpv numlockx feh"
+    APPLIST="thunar rofi xfce4-terminal xfce4-taskmanager mpv numlockx feh"
     APPLIST+=" engrampa p7zip-full dos2unix cpufrequtils"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
@@ -162,12 +162,6 @@ if [[ ! -d $dest ]]; then
     echo " *** configure openbox" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
-fi
-
-dest=~/.config/compton.conf
-if [[ ! -f $dest ]]; then
-    echo " *** configure compton" | tee -a $OUTFILE
-    cp $BASEDIR/config/compton.conf $dest 2>&1 | tee -a $OUTFILE
 fi
 
 dest=~/Music
