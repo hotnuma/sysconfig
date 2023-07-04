@@ -50,8 +50,8 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
-    APPLIST="--no-install-recommends smartmontools"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    APPLIST="smartmontools"
+    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # uninstall
     APPLIST="at-spi2-core mousepad synaptic tumbler xfce4-power-manager"
