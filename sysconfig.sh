@@ -6,11 +6,9 @@ BUILDDIR="$HOME/DevFiles"
 # install ---------------------------------------------------------------------
 
 if [[ -f /boot/config.txt ]]; then
-    $BASEDIR/raspios/raspios.sh
-    exit 0
-fi
-
-if [[ -f /etc/os-release ]]; then
+    DISTID="raspios"
+    DISTVER="11"
+elif [[ -f /etc/os-release ]]; then
     . /etc/os-release
     DISTID=$ID
     DISTVER=$VERSION_ID
@@ -19,6 +17,9 @@ fi
 case $DISTID in
 debian)
     $BASEDIR/debian/debian.sh
+    ;;
+raspios)
+    $BASEDIR/raspios/raspios.sh
     ;;
 ubuntu)
     $BASEDIR/xubuntu/xubuntu.sh

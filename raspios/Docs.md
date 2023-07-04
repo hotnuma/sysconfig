@@ -2,17 +2,22 @@
 
 #### References
 
-https://forums.raspberrypi.com/search.php?search_id=newposts \
-https://www.raspberrypi.com/documentation/ \
-https://github.com/orgs/raspberrypi/repositories \
-https://github.com/orgs/raspberrypi-ui/repositories \
-https://github.com/orgs/RPi-Distro/repositories \
-https://downloads.raspberrypi.org/raspios_arm64/images/ \
-https://forums.raspberrypi.com/viewtopic.php?t=327539 \
-https://github.com/WiringPi \
-https://wiki.debian.org/RaspberryPi/ \
-https://www.fsf.org/resources/hw/single-board-computers \
-https://github.com/librerpi/rpi-open-firmware
+https://forums.raspberrypi.com/search.php?search_id=newposts  
+https://www.raspberrypi.com/documentation/  
+https://github.com/orgs/raspberrypi/repositories  
+https://github.com/orgs/raspberrypi-ui/repositories  
+https://github.com/orgs/RPi-Distro/repositories  
+https://downloads.raspberrypi.org/raspios_arm64/images/  
+https://forums.raspberrypi.com/viewtopic.php?t=327539  
+https://github.com/WiringPi  
+https://wiki.debian.org/RaspberryPi/  
+https://www.fsf.org/resources/hw/single-board-computers  
+https://github.com/librerpi/rpi-open-firmware  
+
+* Install XFCE
+    
+    https://raspberrytips.fr/meilleurs-logiciels-raspberry-pi/  
+
 
 #### System informations
 
@@ -32,6 +37,7 @@ https://github.com/librerpi/rpi-open-firmware
     
     https://downloads.raspberrypi.org/raspios_armhf/release_notes.txt
 
+
 #### Startup Sequence
 
 ```
@@ -46,6 +52,7 @@ https://github.com/librerpi/rpi-open-firmware
     
     systemd/systemd --user
 ```
+
 
 #### LightDM
 
@@ -96,9 +103,11 @@ DESKTOP_SESSION=LXDE-pi
 
 startup script : /usr/bin/startlxde-pi
 
+
 #### Application menu
 
 `/etc/xdg/menus/lxde-pi-applications.menu`
+
 
 #### Openbox
 
@@ -121,7 +130,8 @@ window_manager=openbox
     ```
     openbox --reconfigure
     ```
-    
+
+
 #### Raspi configuration
 
 https://www.raspberrypi.com/documentation/computers/os.html
@@ -144,6 +154,7 @@ sudo rpi-update 6e61ab523f0a9d2fbb4319f6f6430d4c13203c0e
 sudo apt update
 sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-bootloader raspberrypi-kernel
 ```
+
 
 #### Other
 
@@ -169,11 +180,8 @@ sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspbe
     Linux raspberrypi 5.10.44-v8+ #1429 SMP PREEMPT Fri Jun 25 10:03:37 BST 2021 aarch64 GNU/Linux
     ```
 
-#### Raspberry Pi
 
-* Install XFCE
-    
-    https://raspberrytips.fr/meilleurs-logiciels-raspberry-pi/  
+#### Raspberry Pi
 
 * glamor
     
