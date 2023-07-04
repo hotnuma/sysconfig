@@ -129,7 +129,15 @@ GOVERNOR="performance"
 EOF
 fi
 
-# home config =================================================================
+# smartd ----------------------------------------------------------------------
+
+if [ "$(pidof smartd)" ]; then
+    echo "*** smartd" | tee -a "$OUTFILE"
+    sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
+fi
+
+# user settings ===============================================================
 
 dest=~/config
 if [[ ! -d $dest ]]; then
