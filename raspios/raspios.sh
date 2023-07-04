@@ -165,14 +165,15 @@ if [[ ! -d $dest ]]; then
     cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
-dest=~/Music
+dest=~/Images
 if [[ -d $dest ]]; then
     echo " *** clean home dir" | tee -a $OUTFILE
-    rm -rf ~/Music 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Pictures 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Images 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Modèles 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Musique 2>&1 | tee -a $OUTFILE
     rm -rf ~/Public 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Templates 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Videos 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Téléchargements 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Vidéos 2>&1 | tee -a $OUTFILE
 fi
 
 dest=~/.profile
