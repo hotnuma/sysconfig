@@ -98,6 +98,15 @@ build_src "sysquery" "/usr/local/bin/sysquery"
 build_src "systools" "/usr/local/bin/colortest"
 build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
 
+dest=/usr/local/bin/hoedown
+if [[ ! -f "$dest" ]]; then
+    echo "*** hoedown"
+    git clone https://github.com/hoedown/hoedown.git
+    pushd hoedown
+    ./install.sh
+    popd
+fi
+
 #~ build_src "prgen" "/usr/local/bin/prgen"
 #~ build_src "mpvcmd" "/usr/local/bin/mpvcmd"
 #~ build_src "fileman" "/usr/local/bin/fileman"
