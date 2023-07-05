@@ -139,17 +139,31 @@ fi
 
 # user settings ===============================================================
 
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** appfinder" | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
+fi
+
+# config ----------------------------------------------------------------------
+
 dest=~/config
 if [[ ! -d $dest ]]; then
     echo " *** config link" | tee -a $OUTFILE
     ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
 fi
 
+# autostart directory ---------------------------------------------------------
+
 dest="$XDG_CONFIG_HOME/autostart"
 if [[ ! -d $dest ]]; then
     echo " *** create autostart directory" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
 fi
+
+# lxpanel ---------------------------------------------------------------------
 
 dest=~/.config/lxpanel
 if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
@@ -159,6 +173,8 @@ if [[ -d $dest ]] && [[ ! -d $dest.bak ]]; then
     cp -a $BASEDIR/config/lxpanel/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
+# lxsession -------------------------------------------------------------------
+
 dest=~/.config/lxsession
 if [[ ! -d $dest ]]; then
     echo " *** configure session" | tee -a $OUTFILE
@@ -166,12 +182,16 @@ if [[ ! -d $dest ]]; then
     cp -a $BASEDIR/config/lxsession/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
 
+# openbox ---------------------------------------------------------------------
+
 dest=~/.config/openbox
 if [[ ! -d $dest ]]; then
     echo " *** configure openbox" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/config/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
 fi
+
+# profile ---------------------------------------------------------------------
 
 dest=~/.profile
 if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
