@@ -1,4 +1,3 @@
 @feh --bg-scale /usr/share/rpd-wallpaper/clouds.jpg
 @lxpanel --profile LXDE-pi
-@Thunar --daemon
 @numlockx on

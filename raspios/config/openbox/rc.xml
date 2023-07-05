@@ -319,7 +319,6 @@
         <direction>down</direction>
       </action>
     </keybind>
-    
     <!--             Keybindings for running applications            -->
     <keybind key="W-b">
       <action name="Execute">
@@ -334,9 +333,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Thunar</name>
+          <name>Fileman</name>
         </startupnotify>
-        <command>thunar</command>
+        <command>fileman</command>
       </action>
     </keybind>
     <keybind key="W-g">
@@ -386,7 +385,6 @@
       </action>
     </keybind>
   </keyboard>
-  
   <mouse>
     <dragThreshold>1</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->
