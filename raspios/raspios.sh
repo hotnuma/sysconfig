@@ -122,7 +122,7 @@ fi
 
 dest=/usr/bin/startlxde-pi
 if [[ ! -f ${dest}.bak ]]; then
-    echo " *** startlxde-pi" | tee -a $OUTFILE
+    echo " *** startlxde-pi.bak" | tee -a $OUTFILE
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a $OUTFILE
     sudo cp $BASEDIR/root/startlxde-pi "$dest" 2>&1 | tee -a $OUTFILE
 fi
