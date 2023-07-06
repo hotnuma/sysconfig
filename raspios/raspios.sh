@@ -182,19 +182,6 @@ if [[ ! -f "$dest" ]]; then
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
 
-# clean directories -----------------------------------------------------------
-
-dest=~/Images
-if [[ -d $dest ]]; then
-    echo " *** clean home dir" | tee -a $OUTFILE
-    rm -rf ~/Images 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Modèles 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Musique 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Public 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Téléchargements 2>&1 | tee -a $OUTFILE
-    rm -rf ~/Vidéos 2>&1 | tee -a $OUTFILE
-fi
-
 # lxpanel ---------------------------------------------------------------------
 
 dest=~/.config/lxpanel
@@ -221,6 +208,18 @@ if [[ ! -d $dest ]]; then
     echo " *** configure openbox" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/home/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
+fi
+
+# clean directories -----------------------------------------------------------
+
+dest=~/Images
+if [[ -d $dest ]]; then
+    echo " *** clean home dir" | tee -a $OUTFILE
+    rm -rf ~/Images 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Modèles 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Musique 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Public 2>&1 | tee -a $OUTFILE
+    rm -rf ~/Vidéos 2>&1 | tee -a $OUTFILE
 fi
 
 # install dev =================================================================
