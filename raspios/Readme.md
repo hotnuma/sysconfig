@@ -14,4 +14,18 @@
     
     Set Google search engine
 
+- Change desktop session
+
+    `~/.dmrc`
+    
+    ```
+    [Desktop]
+    Session=lightdm-xsession
+    ```
+    
+    ```
+    [Desktop]
+    Session=xfce
+    ```
+
 
