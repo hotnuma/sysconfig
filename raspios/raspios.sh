@@ -111,6 +111,8 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     APPLIST="raspi-config"
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
+    APPLIST="colord"
+    sudo systemctl mask $APPLIST 2>&1 | tee -a $OUTFILE
 
     # user services
     APPLIST="gvfs-afc-volume-monitor.service"
