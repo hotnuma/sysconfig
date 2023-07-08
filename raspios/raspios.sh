@@ -112,10 +112,10 @@ if [[ ! -f $dest ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
 
     # services used by thunar
-    #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    #~ sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service 2>&1 | tee -a $OUTFILE
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service 2>&1 | tee -a $OUTFILE
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service 2>&1 | tee -a $OUTFILE
+    sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
 fi
 
 # startup script ==============================================================
