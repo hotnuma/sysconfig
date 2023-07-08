@@ -105,17 +105,20 @@ if [[ ! -f $dest ]]; then
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
     # services
-    APPLIST="cups cups-browsed triggerhappy ModemManager wpa_supplicant"
+    APPLIST="avahi-daemon cups cups-browsed triggerhappy"
+    APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
     APPLIST="raspi-config"
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
 
-    # services used by thunar
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-afc-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-goa-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-gphoto2-volume-monitor.service 2>&1 | tee -a $OUTFILE
-    sudo chmod 0000 /usr/lib/systemd/user/gvfs-mtp-volume-monitor.service 2>&1 | tee -a $OUTFILE
+    # user services
+    APPLIST="gvfs-afc-volume-monitor.service"
+    APPLIST+=" gvfs-goa-volume-monitor.service"
+    APPLIST+=" gvfs-gphoto2-volume-monitor.service"
+    APPLIST+=" gvfs-mtp-volume-monitor.service"
+    systemctl --user stop $APPLIST 2>&1 | tee -a $OUTFILE
+    systemctl --user disable $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
 # startup script ==============================================================
