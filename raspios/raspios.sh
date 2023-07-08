@@ -162,6 +162,17 @@ if [[ ! -d $dest ]]; then
     ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
 fi
 
+# /usr/share/xsessions/ -------------------------------------------------------
+
+dest=~/.dmrc
+if [[ ! -f $dest ]]; then
+    echo " *** xsessions" 2>&1 | tee -a $OUTFILE
+    tee $dest > /dev/null << 'EOF'
+[Desktop]
+Session=lightdm-xsession
+EOF
+fi
+
 # profile ---------------------------------------------------------------------
 
 dest=~/.profile
