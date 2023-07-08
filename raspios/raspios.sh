@@ -119,6 +119,7 @@ if [[ ! -f $dest ]]; then
     APPLIST+=" gvfs-mtp-volume-monitor.service"
     systemctl --user stop $APPLIST 2>&1 | tee -a $OUTFILE
     systemctl --user disable $APPLIST 2>&1 | tee -a $OUTFILE
+    systemctl --user mask $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
 # startup script ==============================================================
