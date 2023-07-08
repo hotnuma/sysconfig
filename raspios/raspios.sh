@@ -146,6 +146,14 @@ if [ "$(pidof smartd)" ]; then
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
 
+# light-locker ----------------------------------------------------------------
+
+if [ "$(pidof light-locker)" ]; then
+    echo "*** light-locker" | tee -a "$OUTFILE"
+    sudo apt purge light-locker 2>&1 | tee -a "$OUTFILE"
+    killall light-locker 2>&1 | tee -a "$OUTFILE"
+fi
+
 # user settings ===============================================================
 
 dest="$XDG_CONFIG_HOME/autostart"
