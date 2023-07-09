@@ -16,12 +16,11 @@ while [[ $# > 0 ]]; do
     case $key in
         dev)
         DEV=1
-        shift
         ;;
         *)
-        shift
         ;;
     esac
+    shift
 done
 
 # test if sudo is succesfull ==================================================
@@ -90,8 +89,8 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install softwares
-    APPLIST="thunar rofi xfce4-terminal xfce4-taskmanager mpv numlockx feh"
-    APPLIST+=" engrampa p7zip-full dos2unix cpufrequtils"
+    APPLIST="thunar rofi xfce4-terminal xfce4-taskmanager picom mpv feh"
+    APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
