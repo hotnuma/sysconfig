@@ -89,8 +89,8 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install softwares
-    APPLIST="thunar rofi xfce4-terminal xfce4-taskmanager picom mpv feh"
-    APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils"
+    APPLIST="hsetroot picom rofi thunar xfce4-terminal xfce4-taskmanager mpv"
+    APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils feh"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
