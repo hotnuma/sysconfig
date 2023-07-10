@@ -139,7 +139,6 @@ if [[ ! -f $dest ]]; then
     echo " *** set governor to performance" | tee -a $OUTFILE
     sudo tee $dest > /dev/null << 'EOF'
 GOVERNOR="performance"
-
 EOF
 fi
 
@@ -183,6 +182,7 @@ if [[ ! -f $dest ]]; then
     tee $dest > /dev/null << 'EOF'
 [Desktop]
 Session=lightdm-xsession
+#Session=xfce
 EOF
 fi
 

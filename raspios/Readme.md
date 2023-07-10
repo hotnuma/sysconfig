@@ -1,6 +1,4 @@
 
-#### Download and run install script
-
 #### Manual configuration
 
 - Git
@@ -47,5 +45,12 @@
     xfce4-taskmanager   Super+S
     xfce4-terminal      Super+T 
     ```
+
+#### Other
+
+- Upgrade
+    
+    https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
+    https://raspberrytips.com/update-raspberry-pi-latest-version/  
 
 
