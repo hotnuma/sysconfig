@@ -123,16 +123,7 @@ if [[ ! -f $dest ]]; then
     systemctl --user mask $APPLIST 2>&1 | tee -a $OUTFILE
 fi
 
-# startup script ==============================================================
-
-dest=/usr/bin/startlxde-pi
-if [[ ! -f ${dest}.bak ]]; then
-    echo " *** startlxde-pi.bak" | tee -a $OUTFILE
-    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a $OUTFILE
-    sudo cp $BASEDIR/root/startlxde-pi "$dest" 2>&1 | tee -a $OUTFILE
-fi
-
-# cpu governor ----------------------------------------------------------------
+# cpu governor ================================================================
 
 dest=/etc/default/cpufrequtils
 if [[ ! -f $dest ]]; then
@@ -160,7 +151,7 @@ fi
 
 # user settings ===============================================================
 
-dest="$XDG_CONFIG_HOME/autostart"
+dest="$HOME/.config/autostart"
 if [[ ! -d $dest ]]; then
     echo " *** create autostart directory" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
@@ -172,18 +163,6 @@ dest=~/config
 if [[ ! -d $dest ]]; then
     echo " *** config link" | tee -a $OUTFILE
     ln -s ~/.config $dest 2>&1 | tee -a $OUTFILE
-fi
-
-# /usr/share/xsessions/ -------------------------------------------------------
-
-dest=~/.dmrc
-if [[ ! -f $dest ]]; then
-    echo " *** xsessions" 2>&1 | tee -a $OUTFILE
-    tee $dest > /dev/null << 'EOF'
-[Desktop]
-Session=lightdm-xsession
-#Session=xfce
-EOF
 fi
 
 # profile ---------------------------------------------------------------------
@@ -253,6 +232,37 @@ if [[ -d $dest ]]; then
     rm -rf ~/Musique 2>&1 | tee -a $OUTFILE
     rm -rf ~/Public 2>&1 | tee -a $OUTFILE
     rm -rf ~/Vidéos 2>&1 | tee -a $OUTFILE
+fi
+
+# custom session ==============================================================
+
+dest=/usr/bin/startmod
+if [[ ! -f $dest ]]; then
+    echo " *** startmod script" 2>&1 | tee -a $OUTFILE
+    sudo cp $BASEDIR/root/startmod $dest 2>&1 | tee -a $OUTFILE
+fi
+
+dest=/usr/share/xsessions/custom.desktop
+if [[ ! -f $dest ]]; then
+    echo " *** custom session" 2>&1 | tee -a $OUTFILE
+    sudo tee $dest > /dev/null << 'EOF'
+[Desktop Entry]
+Name=LXDE
+Comment=LXDE - Lightweight X11 desktop environment
+Exec=/usr/bin/startmod
+Type=Application
+EOF
+fi
+
+dest=~/.dmrc
+if [[ ! -f $dest ]]; then
+    echo " *** dmrc" 2>&1 | tee -a $OUTFILE
+    tee $dest > /dev/null << 'EOF'
+[Desktop]
+Session=custom
+#Session=xfce
+#Session=lightdm-xsession
+EOF
 fi
 
 # install dev =================================================================
