@@ -13,19 +13,39 @@
 - Chromium
     
     Set Google search engine
-
+    
 - Change desktop session
 
-    `~/.dmrc`
+    `geany ~/.dmrc`
     
     ```
     [Desktop]
     Session=lightdm-xsession
+    #Session=xfce
     ```
     
+#### Xfce Configuration
+
+- Avoid keyring password
+    
+    https://unix.stackexchange.com/questions/324843/  
+    
+    `mv ~/.local/share/keyrings ~/.local/share/keyrings.bak`
+    
+    Restart Chrome
+    
+    When prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
+
+- Configure hotkeys
+
     ```
-    [Desktop]
-    Session=xfce
+    chromium-browser    Super+B
+    fileman             Super+E
+    rofi -show run      Super+Space
+    systemctl poweroff  Maj+Super+Q
+    systemctl reboot    Maj+Super+R
+    xfce4-taskmanager   Super+S
+    xfce4-terminal      Super+T 
     ```
 
 
