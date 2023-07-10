@@ -99,7 +99,7 @@ if [[ ! -f $dest ]]; then
     
     # uninstall
     APPLIST="bluez dillo lxtask mousepad thonny vim-tiny xarchiver xcompmgr"
-    APPLIST+=" system-config-printer tumbler"
+    APPLIST+=" system-config-printer tumbler vlc"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
@@ -232,6 +232,15 @@ if [[ ! -d $dest ]]; then
     echo " *** configure openbox" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/home/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
+fi
+
+# picom -----------------------------------------------------------------------
+
+dest=~/.config/picom
+if [[ ! -d $dest ]]; then
+    echo " *** configure picom" | tee -a $OUTFILE
+    mkdir -p $dest 2>&1 | tee -a $OUTFILE
+    cp $BASEDIR/home/picom.conf "$dest/picom.conf" 2>&1 | tee -a $OUTFILE
 fi
 
 # clean directories -----------------------------------------------------------
