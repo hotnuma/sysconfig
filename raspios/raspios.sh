@@ -145,7 +145,7 @@ fi
 
 if [ "$(pidof light-locker)" ]; then
     echo "*** light-locker" | tee -a "$OUTFILE"
-    sudo apt purge light-locker 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y purge light-locker 2>&1 | tee -a "$OUTFILE"
     killall light-locker 2>&1 | tee -a "$OUTFILE"
 fi
 

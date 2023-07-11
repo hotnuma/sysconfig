@@ -22,6 +22,20 @@ else
     fi
 fi
 
+# install / remove ============================================================
+
+dest=/usr/bin/xfce4-panel
+if [[ ! -f $dest ]]; then
+    echo "*** install softwares" | tee -a "$OUTFILE"
+    
+    # update
+    sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
+    
+    # install xfce desktop
+    APPLIST="xfce4"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
 # xfce4 session ---------------------------------------------------------------
 
 dest=/etc/xdg/xfce4
@@ -31,7 +45,7 @@ if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
     sudo cp "$DEBDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
-    
+
 # startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
