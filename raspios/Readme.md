@@ -18,10 +18,12 @@
     
     ```
     [Desktop]
-    Session=lightdm-xsession
+    Session=custom
     #Session=xfce
+    #Session=lightdm-xsession
     ```
-    
+
+
 #### Xfce Configuration
 
 - Avoid keyring password
@@ -33,6 +35,12 @@
     Restart Chrome
     
     When prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
+
+- Screen tearing
+    
+    https://wiki.archlinux.org/title/Xfwm  
+    
+    `xfconf-query -c xfwm4 -p /general/vblank_mode -s glx`
 
 - Configure hotkeys
 
