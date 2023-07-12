@@ -240,6 +240,17 @@ if [[ ! -d $dest ]]; then
     cp $BASEDIR/home/picom.conf "$dest/picom.conf" 2>&1 | tee -a $OUTFILE
 fi
 
+# xfwm4 -----------------------------------------------------------------------
+
+if [[ $(pidof xfconfd) ]]; then
+    VAL=$(xfconf-query -c xfwm4 -p /general/vblank_mode)
+    if [[ $VAL == "auto" ]]; then
+        echo " *** set vblank_mode=glx" | tee -a "$OUTFILE"
+        xfconf-query -c xfwm4 -p /general/vblank_mode -s "glx" 2>&1 | tee -a "$OUTFILE"
+        xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
+    fi
+fi
+
 # clean directories -----------------------------------------------------------
 
 dest=~/Images
