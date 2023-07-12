@@ -18,13 +18,13 @@ if [[ ! -f ${dest}.bak ]]; then
 	sudo apt upgrade | tee -a $OUTFILE
 fi
 
+#~ sudo apt list ~c
+#~ sudo apt purge ~c
+
 #sudo sed -i -e 's/bullseye/bookworm/g' /etc/apt/sources.list.d/raspi.list
 #~ sudo apt -y full-upgrade
 #~ sudo apt -y autoremove
 #~ sudo apt -y clean
 #~ sudo reboot
-
-# remove old config files after doing sanity checks
-#sudo apt purge ?config-files
 
 
