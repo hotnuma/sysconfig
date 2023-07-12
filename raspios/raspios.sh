@@ -79,7 +79,7 @@ fi
 
 dest=/usr/bin/mpv
 if [[ ! -f $dest ]]; then
-    echo "*** install softwares" | tee -a "$OUTFILE"
+    echo " *** install softwares" | tee -a "$OUTFILE"
     
     # update
     sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
@@ -136,7 +136,7 @@ fi
 # smartd ----------------------------------------------------------------------
 
 if [ "$(pidof smartd)" ]; then
-    echo "*** smartd" | tee -a "$OUTFILE"
+    echo " *** smartd" | tee -a "$OUTFILE"
     sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
 fi
@@ -144,18 +144,36 @@ fi
 # light-locker ----------------------------------------------------------------
 
 if [ "$(pidof light-locker)" ]; then
-    echo "*** light-locker" | tee -a "$OUTFILE"
+    echo " *** light-locker" | tee -a "$OUTFILE"
     sudo apt -y purge light-locker 2>&1 | tee -a "$OUTFILE"
     killall light-locker 2>&1 | tee -a "$OUTFILE"
 fi
 
 # user settings ===============================================================
 
+desktop_hide()
+{
+    local filepath="$HOME/.config/autostart/$1.desktop"
+    if [[ ! -f "$filepath" ]]; then
+        echo " *** hide $1" | tee -a $OUTFILE
+        tee "$filepath" > /dev/null << 'EOF'
+[Desktop Entry]
+Hidden=true
+EOF
+    fi
+}
+
 dest="$HOME/.config/autostart"
 if [[ ! -d $dest ]]; then
     echo " *** create autostart directory" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
 fi
+
+desktop_hide "xcompmgr"
+desktop_hide "xdg-user-dirs"
+desktop_hide "xdg-user-dirs-kde"
+desktop_hide "xfce4-notifyd"
+desktop_hide "xiccd"
 
 # config ----------------------------------------------------------------------
 
@@ -179,9 +197,9 @@ fi
 
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
+    echo " *** aliases" | tee -a "$OUTFILE"
     cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
-    echo "*** appfinder" | tee -a "$OUTFILE"
+    echo " *** appfinder" | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
 

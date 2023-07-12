@@ -35,7 +35,7 @@ esac
 
 dest="$BUILDDIR"
 if [[ ! -d "$dest" ]]; then
-    echo "*** create build dir"
+    echo " *** create build dir"
     mkdir "$BUILDDIR"
 fi
 pushd "$BUILDDIR"
@@ -44,7 +44,7 @@ pushd "$BUILDDIR"
 
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
-    echo "*** install dev packages"
+    echo " *** install dev packages"
     APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
     APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libnotify-dev"
     APPLIST+=" libgumbo-dev libwnck-3-dev libxmu-dev"
@@ -79,7 +79,7 @@ build_src()
     local pack="$1"
     local dest="$2"
     if [[ ! -f "$dest" ]]; then
-        echo "*** ${pack}"
+        echo " *** ${pack}"
         git clone https://github.com/hotnuma/${pack}.git
         pushd ${pack}
         ./install.sh
@@ -105,7 +105,7 @@ build_src "sfind" "/usr/local/bin/sfind"
 
 dest=/usr/local/bin/hoedown
 if [[ ! -f "$dest" ]]; then
-    echo "*** hoedown"
+    echo " *** hoedown"
     git clone https://github.com/hoedown/hoedown.git
     pushd hoedown
     make && sudo make install

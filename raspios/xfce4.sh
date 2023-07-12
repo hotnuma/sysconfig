@@ -12,12 +12,12 @@ echo "==========================================================================
 # test if sudo is succesfull ==================================================
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort."
+    echo " *** must not be run as root: abort."
     exit 1
 else
     sudo -k # make sure to ask for password on next sudo
     if ! sudo true; then
-        echo "*** sudo failed: abort."
+        echo " *** sudo failed: abort."
         exit 1
     fi
 fi
@@ -26,7 +26,7 @@ fi
 
 systemctl -q is-enabled NetworkManager
 if [ $? != 0 ]; then
-    echo "*** enable NetworkManager" | tee -a "$OUTFILE"
+    echo " *** enable NetworkManager" | tee -a "$OUTFILE"
     sudo systemctl stop dhcpcd 2>&1 | tee -a $OUTFILE
     sudo systemctl disable dhcpcd 2>&1 | tee -a $OUTFILE
     sudo systemctl enable NetworkManager 2>&1 | tee -a $OUTFILE
@@ -37,7 +37,7 @@ fi
 
 dest=/usr/bin/xfce4-panel
 if [[ ! -f $dest ]]; then
-    echo "*** install xfce4" | tee -a "$OUTFILE"
+    echo " *** install xfce4" | tee -a "$OUTFILE"
     
     # install xfce desktop
     APPLIST="xfce4"
@@ -48,7 +48,7 @@ fi
 
 dest=/etc/xdg/xfce4
 if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
-    echo "*** copy xdg xfce4" | tee -a "$OUTFILE"
+    echo " *** copy xdg xfce4" | tee -a "$OUTFILE"
     sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
     dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
     sudo cp "$DEBDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
@@ -58,7 +58,7 @@ fi
 
 dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
-    echo "*** startup.sh" | tee -a "$OUTFILE"
+    echo " *** startup.sh" | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
     dest="$HOME"/.config/autostart/startup.desktop
     sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
