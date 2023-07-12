@@ -27,10 +27,10 @@ fi
 systemctl -q is-enabled NetworkManager
 if [ $? != 0 ]; then
     echo "*** enable NetworkManager" | tee -a "$OUTFILE"
-    systemctl stop dhcpcd 2>&1 | tee -a $OUTFILE
-    systemctl disable dhcpcd 2>&1 | tee -a $OUTFILE
-    systemctl enable NetworkManager 2>&1 | tee -a $OUTFILE
-    systemctl start NetworkManager 2>&1 | tee -a $OUTFILE
+    sudo systemctl stop dhcpcd 2>&1 | tee -a $OUTFILE
+    sudo systemctl disable dhcpcd 2>&1 | tee -a $OUTFILE
+    sudo systemctl enable NetworkManager 2>&1 | tee -a $OUTFILE
+    sudo systemctl start NetworkManager 2>&1 | tee -a $OUTFILE
 fi
 
 # install xfce4 ---------------------------------------------------------------
@@ -38,9 +38,6 @@ fi
 dest=/usr/bin/xfce4-panel
 if [[ ! -f $dest ]]; then
     echo "*** install xfce4" | tee -a "$OUTFILE"
-    
-    # update
-    sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
     
     # install xfce desktop
     APPLIST="xfce4"
