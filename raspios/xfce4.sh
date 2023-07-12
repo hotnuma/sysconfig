@@ -22,11 +22,22 @@ else
     fi
 fi
 
-# install / remove ============================================================
+# enable NetworkManager =======================================================
+
+systemctl -q is-enabled NetworkManager
+if [ $? != 0 ]; then
+    echo "*** enable NetworkManager" | tee -a "$OUTFILE"
+    systemctl stop dhcpcd 2>&1 | tee -a $OUTFILE
+    systemctl disable dhcpcd 2>&1 | tee -a $OUTFILE
+    systemctl enable NetworkManager 2>&1 | tee -a $OUTFILE
+    systemctl start NetworkManager 2>&1 | tee -a $OUTFILE
+fi
+
+# install xfce4 ---------------------------------------------------------------
 
 dest=/usr/bin/xfce4-panel
 if [[ ! -f $dest ]]; then
-    echo "*** install softwares" | tee -a "$OUTFILE"
+    echo "*** install xfce4" | tee -a "$OUTFILE"
     
     # update
     sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
