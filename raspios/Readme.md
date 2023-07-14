@@ -61,4 +61,10 @@
     https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
     https://raspberrytips.com/update-raspberry-pi-latest-version/  
 
+- Install previous version
+    
+    https://unix.stackexchange.com/questions/242014/  
+    
+    `sudo apt install openbox=3.6.1-9+rpt1+deb11u1`
+
 
