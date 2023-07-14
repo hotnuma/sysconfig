@@ -14,7 +14,7 @@ echo "==========================================================================
 
 # purge libcamera-tools
 
-dest=/usr/bin/always
+dest=/usr/bin/lxpanel
 if [[ ! -f $dest ]]; then
     echo " *** install softwares" | tee -a "$OUTFILE"
     
@@ -26,6 +26,27 @@ if [[ ! -f $dest ]]; then
     APPLIST+=" xserver-xorg x11-xserver-utils policykit-1 lightdm"
     APPLIST+=" raspberrypi-sys-mods zenity libglib2.0-bin desktop-file-utils"
     APPLIST+=" lxsession adduser mutter xdg-user-dirs raspi-config"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
+dest=/usr/bin/always
+if [[ ! -f $dest ]]; then
+    echo " *** install softwares" | tee -a "$OUTFILE"
+    
+    # update
+    #sudo apt update && sudo apt full-upgrade 2>&1 | tee -a $OUTFILE
+    
+    # install depends
+    APPLIST="fonts-piboto pipanel lxinput"
+    APPLIST+=" pi-greeter rpd-plym-splash rpd-wallpaper pishutdown scrot"
+    APPLIST+=" gtk2-engines-pixbuf gtk2-engines-clearlookspix"
+    APPLIST+=" gnome-icon-theme pixflat-icons lxplug-volumepulse"
+    APPLIST+=" lxplug-network lxplug-ejecter lxplug-ptbatt"
+    APPLIST+=" rc-gui gtk2-engines-pixflat lxplug-cputemp lxplug-magnifier"
+    APPLIST+=" agnostics gui-pkinst"
+    
+    #xserver-xorg-video-fbturbo rp-bookshelf lxplug-bluetooth cups system-config-printer pi-printer-support lxplug-updater lxplug-netman lxplug-menu
+    
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
