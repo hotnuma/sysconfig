@@ -1,21 +1,34 @@
 
-- Crucial BX500 120 GB CT120BX500SSD1-Up to 540 MB/s
+#### SanDisk 32GB HC Class 10 A1 UHS-1 up to 98 MB/s Read Speed
 
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,84982 s, 377 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202222 s, 5,3 GB/s
+- Rpi4
 
-- SanDisk 32GB HC Class 10 A1 UHS-1 up to 98 MB/s Read Speed
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 51,9498 s, 20,7 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 25,2873 s, 42,5 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,795709 s, 1,3 GB/s
 
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 51,9498 s, 20,7 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 25,2873 s, 42,5 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,795709 s, 1,3 GB/s
+    Bookworm Xfce startup time 34s 59
 
-Bookworm Xfce startup time 34s 59
+#### Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
 
-- Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
+- Rpi4
 
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 40,668 s, 26,4 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 29,3268 s, 36,6 MB/s
-1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,802347 s, 1,3 GB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 40,668 s, 26,4 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 29,3268 s, 36,6 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,802347 s, 1,3 GB/s
+
+- Athlon/Msi USB
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 18,5889 s, 57,8 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 11,2849 s, 95,1 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,226026 s, 4,8 GB/s
+
+#### Crucial BX500 120 GB CT120BX500SSD1-Up to 540 MB/s
+
+- Athlon/Msi Sata
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,84982 s, 377 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202222 s, 5,3 GB/s
+
 
