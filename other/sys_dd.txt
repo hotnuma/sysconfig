@@ -1,0 +1,7 @@
+
+- Crucial BX500 120 GB CT120BX500SSD1-Up to 540 MB/s
+
+1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,84982 s, 377 MB/s
+1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
+1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202222 s, 5,3 GB/s
+
