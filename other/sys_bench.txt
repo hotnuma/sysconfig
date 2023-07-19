@@ -31,4 +31,12 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202222 s, 5,3 GB/s
 
+#### Toshiba 3
+
+- Athlon USB
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 13,2022 s, 81,3 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 10,1372 s, 106 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202504 s, 5,3 GB/s
+
 
