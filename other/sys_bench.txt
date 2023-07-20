@@ -8,6 +8,7 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,795709 s, 1,3 GB/s
 
     Bookworm Xfce startup time 34s 59
+    Sid Xfce startup time 34s 40
 
 #### Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
 
