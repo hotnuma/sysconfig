@@ -36,6 +36,17 @@ else
     fi
 fi
 
+# sudoers ---------------------------------------------------------------------
+
+dest=/etc/sudoers.d/010_pi-nopasswd
+if ! sudo grep -q "!logfile" $dest; then
+    echo "*** sudoers" | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << EOF
+Defaults:$CURRENTUSER !logfile, !syslog
+$CURRENTUSER ALL=(ALL) NOPASSWD: ALL
+EOF
+fi
+
 # rpi configuration ===========================================================
 
 dest=/boot/config.txt
