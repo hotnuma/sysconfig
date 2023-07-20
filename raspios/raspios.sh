@@ -104,7 +104,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
     # services
-    APPLIST="avahi-daemon colord cups cups-browsed triggerhappy"
+    APPLIST="avahi-daemon colord cups cups-browsed rsyslog triggerhappy"
     APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a $OUTFILE
     sudo systemctl disable $APPLIST 2>&1 | tee -a $OUTFILE
