@@ -23,6 +23,10 @@
     #Session=lightdm-xsession
     ```
 
+- Terminal
+    
+    Increase line history to 2000  
+    Incease syslog alias lines to 1000
 
 #### Xfce Configuration
 
