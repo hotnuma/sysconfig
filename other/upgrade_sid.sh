@@ -18,4 +18,7 @@ if [[ ! -f ${dest}.bookworm ]]; then
 	sudo apt upgrade | tee -a $OUTFILE
 fi
 
+# sources.list
+#deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware
+#deb-src http://deb.debian.org/debian sid main contrib non-free
 
