@@ -9,6 +9,7 @@
 
     Bookworm Xfce startup time 34s 59
     Sid Xfce startup time 34s 40
+    Sid LXDE startup time 33s 55
 
 #### Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
 
