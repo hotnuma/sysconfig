@@ -13,7 +13,7 @@ dest=/etc/apt/sources.list
 if [[ ! -f ${dest}.bookworm ]]; then
     echo " *** upgrade" | tee -a $OUTFILE
 	sudo cp "$dest" ${dest}.bookworm | tee -a $OUTFILE
-	sudo sed -i -e 's/bookworm/sid/g' /etc/apt/sources.list | tee -a $OUTFILE
+	sudo sed -i -e 's/bookworm/unstable/g' /etc/apt/sources.list | tee -a $OUTFILE
 	sudo apt update | tee -a $OUTFILE
 	sudo apt upgrade | tee -a $OUTFILE
 fi
