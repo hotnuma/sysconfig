@@ -68,7 +68,7 @@ if [[ ! -f "$dest" ]]; then
     popd
 fi
 
-#~ build_src "fileman" "/usr/local/bin/fileman"
+build_src "fileman" "/usr/local/bin/fileman"
 #~ build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
 build_src "sysquery" "/usr/local/bin/sysquery"
 build_src "systools" "/usr/local/bin/colortest"
