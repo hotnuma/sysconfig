@@ -87,7 +87,7 @@ if [[ ! -f $dest.bak ]]; then
 fi
 
 # install base
-#~ APPLIST="geany base-devel meson ninja"
+#~ APPLIST="geany base-devel git meson ninja"
 #~ sudo pacman -S --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
 
 # remove base
