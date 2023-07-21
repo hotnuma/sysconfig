@@ -87,12 +87,11 @@ if [[ ! -f $dest.bak ]]; then
 fi
 
 # install base
-#~ APPLIST="geany base-devel git meson ninja"
+#~ APPLIST=""
 #~ sudo pacman -S --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
 
 # remove base
-#APPLIST="matray pamac-gtk tumbler xfce4-power-manager xfce4-screensaver"
-#APPLIST+=" blueman bluez network-manager-applet"
+#APPLIST=""
 #sudo pacman -Rs --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
 
 # install / remove ============================================================
@@ -105,23 +104,22 @@ if [[ ! -f $dest ]]; then
     sudo pacman -Syu 2>&1 | tee -a $OUTFILE
 		
 	# install base
-	APPLIST="geany base-devel meson ninja"
+	APPLIST="geany base-devel git meson ninja"
 	sudo pacman -S --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     #~ # install softwares
-    #~ APPLIST="hsetroot picom rofi thunar xfce4-terminal xfce4-taskmanager mpv"
-    #~ APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils feh"
-    #~ sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    APPLIST="hsetroot rofi engrampa p7zip"
+    #~ APPLIST+=" mpv numlockx dos2unix cpufrequtils feh"
+	sudo pacman -S --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     #~ # install without recommends
     #~ APPLIST="smartmontools"
     #~ sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a $OUTFILE
     
     #~ # uninstall
-    #~ APPLIST="bluez dillo lxtask mousepad thonny vim-tiny xarchiver xcompmgr"
-    #~ APPLIST+=" system-config-printer tumbler vlc"
-    #~ sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
-    #~ sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
+    APPLIST="matray pamac-gtk tumbler xfce4-power-manager xfce4-screensaver"
+    APPLIST+=" blueman bluez mousepad network-manager-applet"
+    sudo pacman -Rs --noconfirm $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     #~ # services
     #~ APPLIST="avahi-daemon colord cups cups-browsed rsyslog triggerhappy"
@@ -169,6 +167,26 @@ fi
     #~ killall light-locker 2>&1 | tee -a "$OUTFILE"
 #~ fi
 
+# xfce4 =======================================================================
+
+dest=/etc/xdg/xfce4
+if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
+    echo " *** copy xdg xfce4" | tee -a "$OUTFILE"
+    sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
+    dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
+    sudo cp "$DEBDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# startup.sh ------------------------------------------------------------------
+
+dest=/usr/local/bin/startup.sh
+if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
+    echo " *** startup.sh" | tee -a "$OUTFILE"
+    sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+    dest="$HOME"/.config/autostart/startup.desktop
+    sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # user settings ===============================================================
 
 dest=~/config
@@ -179,13 +197,13 @@ fi
 
 # profile ---------------------------------------------------------------------
 
-#~ dest=~/.profile
-#~ if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
-    #~ echo " *** disable overlay scrolling" | tee -a $OUTFILE
-    #~ tee -a $dest > /dev/null << 'EOF'
-#~ export GTK_OVERLAY_SCROLLING=0
-#~ EOF
-#~ fi
+dest=~/.profile
+if ! sudo grep -q "GTK_OVERLAY_SCROLLING" $dest; then
+    echo " *** disable overlay scrolling" | tee -a $OUTFILE
+    tee -a $dest > /dev/null << 'EOF'
+export GTK_OVERLAY_SCROLLING=0
+EOF
+fi
 
 # aliases ---------------------------------------------------------------------
 
