@@ -40,7 +40,7 @@ fi
 
 dest=/etc/sudoers.d/010_pi-nopasswd
 if ! sudo grep -q "!logfile" $dest; then
-    echo "*** sudoers" | tee -a "$OUTFILE"
+    echo " *** sudoers" | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << EOF
 Defaults:$CURRENTUSER !logfile, !syslog
 $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
@@ -158,6 +158,13 @@ if [ "$(pidof light-locker)" ]; then
     echo " *** light-locker" | tee -a "$OUTFILE"
     sudo apt -y purge light-locker 2>&1 | tee -a "$OUTFILE"
     killall light-locker 2>&1 | tee -a "$OUTFILE"
+fi
+
+# mousepad --------------------------------------------------------------------
+
+if [[ -f "/usr/bin/mousepad" ]]; then
+    echo " *** mousepad" | tee -a "$OUTFILE"
+    sudo apt -y purge mousepad 2>&1 | tee -a "$OUTFILE"
 fi
 
 # user settings ===============================================================
