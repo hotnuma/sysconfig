@@ -41,4 +41,18 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 10,1372 s, 106 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202504 s, 5,3 GB/s
 
+#### Kingston
+
+- Athlon / ugreen USB
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 7,85056 s, 137 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,4552 s, 437 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219375 s, 4,9 GB/s
+
+- Athlon / other
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 8,31685 s, 129 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,54543 s, 422 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219586 s, 4,9 GB/s
+
 
