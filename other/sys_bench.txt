@@ -55,4 +55,10 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,54543 s, 422 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219586 s, 4,9 GB/s
 
+- Raspi / ugreen
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 5,75166 s, 187 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 3,19887 s, 336 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,785604 s, 1,4 GB/s
+
 
