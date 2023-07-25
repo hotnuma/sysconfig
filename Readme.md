@@ -1,6 +1,6 @@
 #### Readme
 
-My experimental post-install scripts.
+#### My experimental post-install scripts.
 
 - Screen tearing test
 
@@ -12,5 +12,14 @@ My experimental post-install scripts.
     uBlock Origin
     cookies.txt
     DownThemAll!
+
+#### Manual configuration
+
+- Git
+    
+    ```
+    git config --global user.name "John Doe"
+    git config --global user.email johndoe@example.com
+    ```
 
 

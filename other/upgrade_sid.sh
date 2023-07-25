@@ -19,6 +19,6 @@ if [[ ! -f ${dest}.bookworm ]]; then
 fi
 
 # sources.list
-#deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware
-#deb-src http://deb.debian.org/debian sid main contrib non-free
+#deb http://deb.debian.org/debian unstable main contrib non-free non-free-firmware
+#deb-src http://deb.debian.org/debian unstable main contrib non-free
 
