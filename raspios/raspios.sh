@@ -101,7 +101,7 @@ if [[ ! -f $dest ]]; then
     
     # install softwares
     APPLIST="hsetroot rofi thunar xfce4-terminal xfce4-taskmanager mpv"
-    APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils feh"
+    APPLIST+=" engrampa p7zip-full numlockx cpufrequtils stress dos2unix feh"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
