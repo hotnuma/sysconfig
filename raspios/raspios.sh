@@ -100,7 +100,7 @@ if [[ ! -f $dest ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install softwares
-    APPLIST="hsetroot picom rofi thunar xfce4-terminal xfce4-taskmanager mpv"
+    APPLIST="hsetroot rofi thunar xfce4-terminal xfce4-taskmanager mpv"
     APPLIST+=" engrampa p7zip-full numlockx dos2unix cpufrequtils feh"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
@@ -247,15 +247,6 @@ if [[ ! -d $dest ]]; then
     echo " *** configure openbox" | tee -a $OUTFILE
     mkdir -p $dest 2>&1 | tee -a $OUTFILE
     cp -a $BASEDIR/home/openbox/ ~/.config/ 2>&1 | tee -a $OUTFILE
-fi
-
-# picom -----------------------------------------------------------------------
-
-dest=~/.config/picom
-if [[ ! -d $dest ]]; then
-    echo " *** configure picom" | tee -a $OUTFILE
-    mkdir -p $dest 2>&1 | tee -a $OUTFILE
-    cp $BASEDIR/home/picom.conf "$dest/picom.conf" 2>&1 | tee -a $OUTFILE
 fi
 
 # xfwm4 -----------------------------------------------------------------------
