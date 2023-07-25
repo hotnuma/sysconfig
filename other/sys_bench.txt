@@ -51,9 +51,9 @@
 
 - Raspi / UGREEN ASMedia ASM225CM
 
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 5,75166 s, 187 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 3,19887 s, 336 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,785604 s, 1,4 GB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 5,77742 s, 186 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 3,0776 s, 349 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,80113 s, 1,3 GB/s
 
 - Athlon / JMicron JMS578
 
