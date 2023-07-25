@@ -53,6 +53,14 @@
 
 #### Other
 
+- Drive consumption
+
+    Toshiba Canvio Basics : a maximum of 900mA power, even in the largest capacity version.
+    
+    Kingston a400 SSD : 0.195W Idle / 0.279W Avg / 0.642W (MAX) Read / 1.535W (MAX) Write
+
+
+<!--
 - Upgrade
     
     https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
@@ -63,5 +71,5 @@
     https://unix.stackexchange.com/questions/242014/  
     
     `sudo apt install openbox=3.6.1-9+rpt1+deb11u1`
-
+-->
 
