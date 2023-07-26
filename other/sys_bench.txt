@@ -1,4 +1,5 @@
 
+
 #### SanDisk 32GB HC Class 10 A1 UHS-1 up to 98 MB/s Read Speed
 
 - Rpi4 / SD
@@ -10,6 +11,7 @@
     Bookworm Xfce startup time 34s 59
     Sid Xfce startup time 34s 40
     Sid LXDE startup time 33s 55
+
 
 #### Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
 
@@ -25,6 +27,7 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 11,2849 s, 95,1 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,226026 s, 4,8 GB/s
 
+
 #### Crucial BX500 120 GB CT120BX500SSD1-Up to 540 MB/s
 
 - Athlon / Sata
@@ -33,6 +36,7 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202222 s, 5,3 GB/s
 
+
 #### Toshiba 3 Canvio Basics 1 TB
 
 - Athlon USB
@@ -40,6 +44,7 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 13,2022 s, 81,3 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 10,1372 s, 106 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,202504 s, 5,3 GB/s
+
 
 #### Kingston
 
@@ -60,5 +65,16 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 8,31685 s, 129 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,54543 s, 422 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219586 s, 4,9 GB/s
+
+
+#### Power consumption
+
+- Kingston A400 SSD
+    
+    0.195W Idle / 0.279W Avg / 0.642W (MAX) Read / 1.535W (MAX) Write
+
+- Toshiba Canvio Basics
+    
+    1 TB : 5v / 1A
 
 
