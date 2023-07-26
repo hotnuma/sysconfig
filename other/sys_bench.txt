@@ -75,6 +75,6 @@
 
 - Toshiba Canvio Basics
     
-    1 TB : 5v / 1A
+    1 TB : 5v / max. 900mA
 
 
