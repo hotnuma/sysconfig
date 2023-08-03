@@ -56,26 +56,24 @@ if [[ ! -f $dest.bak ]]; then
     sudo tee $dest > /dev/null << 'EOF'
 # http://rpf.io/configtxt
 
-disable_overscan=1
-
-# overclock
-arm_freq=2000
-gpu_freq=600
-over_voltage=6
-
-# enable audio
-dtparam=audio=on
-
-# enable DRM VC4 V3D drive
 dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 arm_64bit=1
-#gpu_mem=256
+disable_overscan=1
 disable_splash=1
+boot_delay=0
+
+# overclock
+over_voltage=6
+arm_freq=2000
+gpu_freq=600
+
+# audio
+dtparam=audio=on
 
 # disable unneeded
-dtoverlay=disable-wifi
 dtoverlay=disable-bt
+dtoverlay=disable-wifi
 EOF
 fi
 
