@@ -4,10 +4,16 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR/../debian"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
+MODEL=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 
 echo "===============================================================================" | tee -a $OUTFILE
 echo " Raspi install..." | tee -a $OUTFILE
 echo "===============================================================================" | tee -a $OUTFILE
+
+if [[ "$MODEL" != "Raspberry Pi 4 Model B Rev 1.4" ]]; then
+    echo " *** wrong board model: abort." | tee -a $OUTFILE
+    exit 1
+fi
 
 DEV=0
 
