@@ -8,29 +8,20 @@
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 25,2873 s, 42,5 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,795709 s, 1,3 GB/s
 
-    Bookworm Xfce startup time 34s 59
-    Sid Xfce startup time 34s 40
-    Sid LXDE startup time 33s 55
+    Raspi Bookworm Xfce startup time 34s 59
+    Raspi Unstable Xfce startup time 34s 40
+    Raspi Unstable LXDE startup time 33s 55
 
+- Athlon 200GE / USB
 
-#### Sandisk Extreme Pro 64 GB XC A2 UHS-I Classe 10 U3 V30 190 MB/s (USB)
-
-- Rpi4 / USB
-
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 40,668 s, 26,4 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 29,3268 s, 36,6 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,802347 s, 1,3 GB/s
-
-- Athlon / USB
-
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 18,5889 s, 57,8 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 11,2849 s, 95,1 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,226026 s, 4,8 GB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 52,059 s, 20,6 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 11,0747 s, 97,0 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,194151 s, 5,5 GB/s
 
 
 #### Crucial BX500 120 GB CT120BX500SSD1-Up to 540 MB/s
 
-- Athlon / Sata
+- Athlon 200GE / Sata
 
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,84982 s, 377 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 1,96751 s, 546 MB/s
@@ -39,7 +30,7 @@
 
 #### Toshiba 3 Canvio Basics 1 TB
 
-- Athlon USB
+- Athlon 200GE USB
 
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 13,2022 s, 81,3 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 10,1372 s, 106 MB/s
@@ -48,19 +39,19 @@
 
 #### Kingston
 
-- Athlon / UGREEN ASMedia ASM225CM
-
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 7,85056 s, 137 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,4552 s, 437 MB/s
-    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219375 s, 4,9 GB/s
-
 - Raspi / UGREEN ASMedia ASM225CM
 
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 5,77742 s, 186 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 3,0776 s, 349 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,80113 s, 1,3 GB/s
 
-- Athlon / JMicron JMS578
+- Athlon 200GE / UGREEN ASMedia ASM225CM
+
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 7,85056 s, 137 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,4552 s, 437 MB/s
+    1073741824 octets (1,1 GB, 1,0 GiB) copiés, 0,219375 s, 4,9 GB/s
+
+- Athlon 200GE / JMicron JMS578
 
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 8,31685 s, 129 MB/s
     1073741824 octets (1,1 GB, 1,0 GiB) copiés, 2,54543 s, 422 MB/s
