@@ -1,4 +1,4 @@
-#### Readme
+## Readme
 
 #### My experimental post-install scripts.
 
@@ -21,5 +21,9 @@
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
     ```
+
+#### Additional programs
+
+    gnuplot plotutils datamash
 
 
