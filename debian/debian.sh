@@ -42,6 +42,7 @@ if [[ ! -f "$dest" ]]; then
     # install base
     APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
     APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
+    APPLIST+=" fonts-dejavu elementary-xfce-icon-theme"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
