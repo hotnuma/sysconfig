@@ -66,6 +66,10 @@
 
     https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md  
 
+* Disable startup programs
+    
+    https://github.com/hotnuma/doclinux/blob/master/00-Home.md  
+
 * Drivers infos
 
     `inxi -b`
@@ -144,10 +148,6 @@ fi
     ```
     
 * Use xfce4-terminal instead of x-terminal-emulator
-
-* Disable ssh agent and pgp agent
-    
-    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
 
 * Error message
 
