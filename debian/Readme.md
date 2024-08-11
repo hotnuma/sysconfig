@@ -3,11 +3,6 @@
 
 #### Manual configuration
 
-* Git
-    
-    `git config --global user.name "John Doe"`
-    `git config --global user.email johndoe@example.com`
-
 * Hide grub menu
 
     https://askubuntu.com/questions/18775/  
@@ -16,6 +11,15 @@
     Save the file and quit the text editor.  
     Run: `sudo update-grub`  
     Reboot.  
+
+* Add user to adm group
+    
+    `sudo usermod -a -G adm username`
+
+* Configure Git
+    
+    `git config --global user.name "John Doe"`
+    `git config --global user.email johndoe@example.com`
 
 * Configure hotkeys
 
@@ -58,74 +62,9 @@
     
     `sudo apt remove xserver-xorg-video-intel`
 
-* Add user to adm group
-    
-    `sudo usermod -a -G adm username`
-
 * Disable log messages
 
-    https://unix.stackexchange.com/questions/224370/  
-
-    In `/etc/pam.d/sudo` add the following :
-
-    `session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnuma`
-    
-    Example of `/etc/pam.d/sudo` file :
-    
-    ```
-    #%PAM-1.0
-
-    # Set up user limits from /etc/security/limits.conf.
-    session    required   pam_limits.so
-    session [success=1 default=ignore] pam_succeed_if.so quiet uid = 0 ruser = hotnuma
-
-    @include common-auth
-    @include common-account
-    @include common-session-noninteractive
-    ```
-
-    
-
-
-<!--
-
--------------------------------------------------------------------------------
-
-# resolv.conf -----------------------------------------------------------------
-
-dest=/etc/resolv.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** resolv.conf" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    cname="Wired connection 1"
-    nmcli con mod "$cname" ipv4.dns "8.8.8.8 8.8.4.4" 2>&1 | tee -a "$OUTFILE"
-    nmcli con mod "$cname" ipv4.ignore-auto-dns yes 2>&1 | tee -a "$OUTFILE"
-    nmcli con down "$cname" 2>&1 | tee -a "$OUTFILE"
-    nmcli con up "$cname" 2>&1 | tee -a "$OUTFILE"
-fi
-
-
-* Log warning
-    
-    ```
-    Hint: You are currently not seeing messages from other users and the system.
-      Users in groups 'adm', 'systemd-journal' can see all messages.
-      Pass -q to turn off this notice.
-    ```
-    
-    
-* Use xfce4-terminal instead of x-terminal-emulator
-
-* Disable ssh agent and pgp agent
-    
-    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
-
-* Error message
-
-    ```
-    platform MSFT0101:00: failed to claim resource 1
-    acpi MSFT0101:00: platform device creation failed: -16
-    ```
+    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md  
 
 * Drivers infos
 
@@ -177,6 +116,44 @@ fi
             Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940MX]
             Kernel driver in use: nouveau
             Kernel modules: nouveau
+    ```
+
+
+
+<!--
+
+# resolv.conf -----------------------------------------------------------------
+
+dest=/etc/resolv.conf
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** resolv.conf" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    cname="Wired connection 1"
+    nmcli con mod "$cname" ipv4.dns "8.8.8.8 8.8.4.4" 2>&1 | tee -a "$OUTFILE"
+    nmcli con mod "$cname" ipv4.ignore-auto-dns yes 2>&1 | tee -a "$OUTFILE"
+    nmcli con down "$cname" 2>&1 | tee -a "$OUTFILE"
+    nmcli con up "$cname" 2>&1 | tee -a "$OUTFILE"
+fi
+
+* Log warning
+    
+    ```
+    Hint: You are currently not seeing messages from other users and the system.
+      Users in groups 'adm', 'systemd-journal' can see all messages.
+      Pass -q to turn off this notice.
+    ```
+    
+* Use xfce4-terminal instead of x-terminal-emulator
+
+* Disable ssh agent and pgp agent
+    
+    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
+
+* Error message
+
+    ```
+    platform MSFT0101:00: failed to claim resource 1
+    acpi MSFT0101:00: platform device creation failed: -16
     ```
 
 -->
