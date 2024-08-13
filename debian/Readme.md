@@ -14,7 +14,7 @@
 
 * Add user to adm group
     
-    `sudo usermod -a -G adm username`
+    `sudo usermod -a -G adm <username>`
 
 * Configure Git
     
@@ -62,13 +62,13 @@
     
     `sudo apt remove xserver-xorg-video-intel`
 
-* Disable log messages
-
-    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md  
-
 * Disable startup programs
     
     https://github.com/hotnuma/doclinux/blob/master/00-Home.md  
+
+* Disable log messages
+
+    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md  
 
 * Drivers infos
 
