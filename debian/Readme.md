@@ -7,10 +7,9 @@
 
     https://askubuntu.com/questions/18775/  
 
-    In `/etc/default/grub` change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`  
-    Save the file and quit the text editor.  
-    Run: `sudo update-grub`  
-    Reboot.  
+    In `/etc/default/grub` change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`, save the file and quit the text editor.
+    
+    Run `sudo update-grub` and reboot.  
 
 * Add user to adm group
     
@@ -37,7 +36,12 @@
 
 * Configure thunar
 * Configure panel
-* Disable startup programs
+
+* Configure Terminal
+    
+    Font : DejaVu Sans Mono Book 10
+    Geometry : 120 x 35
+    
 * Don't save session, delete saved sessions
 
 * Firefox
@@ -47,18 +51,14 @@
     
     check webrender : type `about:support` in the address bar.
 
-    In `about:config` :
-
-    ```
-    browser.sessionstore.resume_from_crash false
-    ```
+    In `about:config` set `browser.sessionstore.resume_from_crash false`.
 
 * Intel GPU
     
-    https://christitus.com/fix-screen-tearing-linux/  
-    https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
     https://wiki.debian.org/Firefox  
     https://wiki.debian.org/HardwareVideoAcceleration  
+    https://christitus.com/fix-screen-tearing-linux/  
+    https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
     
     `sudo apt remove xserver-xorg-video-intel`
 
@@ -126,7 +126,7 @@
 
 <!--
 
-# resolv.conf -----------------------------------------------------------------
+# NetworkManager --------------------------------------------------------------
 
 dest=/etc/resolv.conf
 if [[ ! -f ${dest}.bak ]]; then
