@@ -64,11 +64,11 @@
 
 * Disable startup programs
     
-    https://github.com/hotnuma/doclinux/blob/master/00-Home.md  
+    https://github.com/hotnuma/doclinux/blob/master/00-Home.md#disable  
 
 * Disable log messages
 
-    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md  
+    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
 
 * Drivers infos
 
