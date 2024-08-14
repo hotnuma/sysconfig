@@ -126,19 +126,6 @@
 
 <!--
 
-# NetworkManager --------------------------------------------------------------
-
-dest=/etc/resolv.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** resolv.conf" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    cname="Wired connection 1"
-    nmcli con mod "$cname" ipv4.dns "8.8.8.8 8.8.4.4" 2>&1 | tee -a "$OUTFILE"
-    nmcli con mod "$cname" ipv4.ignore-auto-dns yes 2>&1 | tee -a "$OUTFILE"
-    nmcli con down "$cname" 2>&1 | tee -a "$OUTFILE"
-    nmcli con up "$cname" 2>&1 | tee -a "$OUTFILE"
-fi
-
 * Log warning
     
     ```
@@ -155,7 +142,6 @@ fi
     platform MSFT0101:00: failed to claim resource 1
     acpi MSFT0101:00: platform device creation failed: -16
     ```
-
 -->
 
 
