@@ -1,7 +1,9 @@
-
-alias ls='ls -la --color=auto'
+alias evince='LC_ALL=C evince'
 alias free='LANG=C free'
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
 alias hgrep='grep -rin --include=*.{h,hc,hpp,hxx}'
-alias sysprc='sudo sysquery -prc'
+alias jc='journalctl'
+alias jcn='journalctl --no-pager'
+alias ls='ls -la --color=auto'
 alias syslog='journalctl -b -f --lines=300'
+alias sysprc='sudo sysquery -prc'
