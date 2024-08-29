@@ -1,6 +1,45 @@
 
 #### Download and run install script
 
+#### <a name="disable"></a> Disable Programs
+
+* AppArmor
+    
+    https://linuxconfig.org/how-to-disable-apparmor-on-ubuntu-20-04-focal-fossa-linux  
+    https://help.ubuntu.com/community/AppArmor  
+
+* at-spi
+    
+    https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks  
+    
+    In `/etc/environment` add :
+    
+    `NO_AT_BRIDGE=1`
+
+* Autostart programs
+    
+    https://wiki.archlinux.org/title/XDG_Autostart  
+
+    `echo "Hidden=true" > $HOME/.config/autostart/xcompmgr.desktop`
+
+* Overlay Scrollbars
+    
+    https://forums.linuxmint.com/viewtopic.php?t=298083  
+
+* ssh agent and pgp agent
+    
+    https://docs.xfce.org/xfce/xfce4-session/advanced#ssh_and_gpg_agents  
+    
+    ```
+    xfconf-query -c xfce4-session -p /startup/ssh-agent/enabled -n -t bool -s false
+    xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
+    ```
+
+* systemd-oomd
+    
+    https://askubuntu.com/questions/1404888/  
+
+
 #### Manual configuration
 
 * Hide grub menu
@@ -44,6 +83,14 @@
     
 * Don't save session, delete saved sessions
 
+* Disable startup programs
+    
+    https://github.com/hotnuma/doclinux/blob/master/00-Home.md#disable  
+
+* Disable log messages
+
+    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
+
 * Firefox
     
     - install ublock origin
@@ -53,6 +100,17 @@
 
     In `about:config` set `browser.sessionstore.resume_from_crash false`.
 
+* Firefox extensions
+
+    SingleFile
+    uBlock Origin
+    cookies.txt
+    DownThemAll!
+
+* Screen tearing test
+
+    https://www.youtube.com/watch?v=cuXsupMuik4  
+
 * Intel GPU
     
     https://wiki.debian.org/Firefox  
@@ -61,14 +119,6 @@
     https://bugzilla.mozilla.org/show_bug.cgi?id=1710400  
     
     `sudo apt remove xserver-xorg-video-intel`
-
-* Disable startup programs
-    
-    https://github.com/hotnuma/doclinux/blob/master/00-Home.md#disable  
-
-* Disable log messages
-
-    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
 
 * Drivers infos
 
@@ -122,6 +172,9 @@
             Kernel modules: nouveau
     ```
 
+* Additional programs
+
+    gnuplot plotutils datamash
 
 
 <!--
