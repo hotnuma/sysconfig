@@ -1,10 +1,12 @@
-## Experimental Installation Scripts
+<link href="style.css" rel="stylesheet"></link>
+
+## SysConfig
 
 ---
 
-#### Install script
+#### Configuration
 
-* Execute one of the install scripts
+* Experimental post-install scripts
 
     ```
     debian/debian.sh
@@ -65,7 +67,8 @@
 
     https://askubuntu.com/questions/18775/  
 
-    In `/etc/default/grub` change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`, save the file and quit the text editor.
+    In `/etc/default/grub` change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`,  
+    save the file and quit the text editor.
     
     Run `sudo update-grub` and reboot.  
 
