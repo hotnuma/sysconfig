@@ -323,3 +323,59 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
     - incompatible usb to sata controllers
 
 
+<!--
+
+#### Old raspi docs
+
+* Compton
+
+    https://www.youtube.com/watch?v=3esPpe-fclI  
+    https://gist.github.com/kelleyk/6beba22586ac0c40aa30  
+    
+    ```
+    compton --backend glx --unredir-if-possible --vsync opengl-swc
+    compton --backend glx --vsync opengl-swc
+    ```
+
+* Firefox
+    
+    https://forums.raspberrypi.com/viewtopic.php?t=336756#p2015599  
+    https://forum.manjaro.org/t/new-mesa-drivers/39735  
+    https://forum.manjaro.org/t/firefox-webrender-pi4-400/63702  
+
+* Firefox Webrender
+
+	https://www.google.com/search?q=raspberry+pi+webrender  
+	https://bugzilla.mozilla.org/show_bug.cgi?id=1663285  
+	https://forum.manjaro.org/t/firefox-webrender-pi4-400/63702  
+		
+	https://forums.raspberrypi.com/search.php?keywords=webrender  
+
+	https://www.google.com/search?q=raspberry+pi+firefox+webrender  
+
+	https://bugzilla.mozilla.org/show_bug.cgi?id=1663285  
+
+	```
+	gfx.webrender.all to true
+	Run 'MOZ_X11_EGL=1 firefox' in terminal
+	```
+	
+	https://bugzilla.mozilla.org/show_bug.cgi?id=1725624  
+
+	https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1930982  
+
+* Chromium/Youtube audio choppy with Bullseye and KMS driver
+
+    https://forums.raspberrypi.com/viewtopic.php?p=1945157#p1935815  
+
+* Chromium 88 HW
+    
+    https://forums.raspberrypi.com/viewtopic.php?t=319304  
+
+* RPi4 HW Acceleration
+    
+    https://forums.raspberrypi.com/viewtopic.php?t=325586  
+
+-->
+
+
