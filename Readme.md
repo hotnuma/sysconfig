@@ -78,7 +78,7 @@
 
 * Additional programs
 
-    `calibre datamash gnuplot plotutils sigil zathura`
+    `zathura`
 
 * Configure Git
     
