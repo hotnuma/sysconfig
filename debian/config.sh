@@ -9,7 +9,7 @@ echo "==========================================================================
 echo " Debian install..." | tee -a $OUTFILE
 echo "===============================================================================" | tee -a $OUTFILE
 
-# test if sudo is succesfull ==================================================
+# system settings =============================================================
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root: abort."
@@ -31,6 +31,31 @@ if [[ ! -f "$dest" ]]; then
 Defaults:$CURRENTUSER !logfile, !syslog
 $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
+fi
+
+# numlock/autologin -----------------------------------------------------------
+
+dest=/etc/lightdm/lightdm.conf
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** numlock on" | tee -a "$OUTFILE"
+    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true
+    echo "*** autologin" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << EOF
+[Seat:*]
+autologin-guest=false
+autologin-user=$CURRENTUSER
+autologin-user-timeout=0
+autologin-session=lightdm-xsession
+EOF
+fi
+
+# backup files ----------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
 # install / remove ============================================================
@@ -73,6 +98,14 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
+# smartd ----------------------------------------------------------------------
+
+if [ "$(pidof smartd)" ]; then
+    echo "*** smartd" | tee -a "$OUTFILE"
+    sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
+fi
+
 # install dev packages ========================================================
 
 dest=/usr/include/gumbo.h
@@ -83,40 +116,16 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST
 fi
 
-# backup files ================================================================
-
-dest=/etc/default/grub
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-fi
-
-# environment -----------------------------------------------------------------
+# system settings =============================================================
 
 dest=/etc/environment
 if [[ ! -f ${dest}.bak ]]; then
     echo "*** environment" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << "EOF"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
-EOF
-fi
-
-# numlock/autologin -----------------------------------------------------------
-
-dest=/etc/lightdm/lightdm.conf
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** numlock on" | tee -a "$OUTFILE"
-    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true
-    echo "*** autologin" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo tee "$dest" > /dev/null << EOF
-[Seat:*]
-autologin-guest=false
-autologin-user=$CURRENTUSER
-autologin-user-timeout=0
-autologin-session=lightdm-xsession
 EOF
 fi
 
@@ -140,48 +149,28 @@ if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# smartd ----------------------------------------------------------------------
-
-if [ "$(pidof smartd)" ]; then
-    echo "*** smartd" | tee -a "$OUTFILE"
-    sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
-fi
-
 # user settings ===============================================================
-
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
-    echo "*** appfinder" | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
-fi
-
-# config ----------------------------------------------------------------------
 
 dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** appfinder" | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
 
-# colorsheme ------------------------------------------------------------------
-
-dest="$HOME"/.local/share/xfce4/terminal/colorschemes
-if [[ ! -f "$dest"/custom.theme ]]; then
-    echo "*** terminal colors" | tee -a "$OUTFILE"
+dest="$HOME"/.local/share/applications/
+if [[ ! -d "$dest" ]]; then
+    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
     mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# thunar terminal -------------------------------------------------------------
+# aliases ---------------------------------------------------------------------
 
-dest="$HOME"/.config/Thunar/uca.xml
-if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
-    echo "*** thunar terminal" | tee -a "$OUTFILE"
-    mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # powerctl --------------------------------------------------------------------
@@ -190,6 +179,24 @@ dest="$HOME"/.config/autostart/powerctl.desktop
 if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
     echo "*** powerctl" | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# thunar uca ------------------------------------------------------------------
+
+dest="$HOME"/.config/Thunar/uca.xml
+if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
+    echo "*** thunar terminal" | tee -a "$OUTFILE"
+    mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
+# terminal theme --------------------------------------------------------------
+
+dest="$HOME"/.local/share/xfce4/terminal/colorschemes
+if [[ ! -f "$dest"/custom.theme ]]; then
+    echo "*** terminal colors" | tee -a "$OUTFILE"
+    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # Hide Launchers --------------------------------------------------------------
@@ -212,12 +219,6 @@ app_show()
         appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
     fi
 }
-
-dest="$HOME"/.local/share/applications/
-if [[ ! -d "$dest" ]]; then
-    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
-    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
 
 if command -v appinfo &> /dev/null; then
     app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
