@@ -48,7 +48,7 @@ if [[ ! -f "$dest" ]]; then
     # install softwares
     APPLIST="rofi htop hardinfo net-tools uchardet curl dos2unix"
     APPLIST+=" gimp evince engrampa p7zip-full"
-    APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
+    APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui zathura"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
@@ -78,9 +78,8 @@ fi
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo " *** install dev packages"
-    APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
-    APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libnotify-dev"
-    APPLIST+=" libgumbo-dev libwnck-3-dev libxmu-dev"
+    APPLIST="gettext xfce4-dev-tools libxfconf-0-dev libxfce4ui-2-dev"
+    APPLIST+=" libgumbo-dev libnotify-dev libwnck-3-dev libxmu-dev"
     sudo apt -y install $APPLIST
 fi
 
