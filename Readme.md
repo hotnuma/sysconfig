@@ -22,7 +22,7 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     
     `git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig`
     
-    `./debian/install.sh`
+    `./debian/config.sh`
 
 
 #### <a name="disable"></a> Manual configuration
