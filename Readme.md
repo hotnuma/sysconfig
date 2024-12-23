@@ -16,7 +16,7 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     git config --global user.email johndoe@example.com
     ```
 
-* Execute the sript
+* Execute the script
 
     `mkdir ~/DevFiles; cd ~/DevFiles`
     
