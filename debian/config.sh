@@ -72,7 +72,18 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
-    
+
+# install dev packages ========================================================
+
+dest=/usr/include/gumbo.h
+if [[ ! -f "$dest" ]]; then
+    echo " *** install dev packages"
+    APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
+    APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libnotify-dev"
+    APPLIST+=" libgumbo-dev libwnck-3-dev libxmu-dev"
+    sudo apt -y install $APPLIST
+fi
+
 # backup files ================================================================
 
 dest=/etc/default/grub

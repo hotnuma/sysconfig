@@ -40,38 +40,6 @@ if [[ ! -d "$dest" ]]; then
 fi
 pushd "$BUILDDIR"
 
-# install dev packages --------------------------------------------------------
-
-dest=/usr/include/gumbo.h
-if [[ ! -f "$dest" ]]; then
-    echo " *** install dev packages"
-    APPLIST="libgtk-3-dev libpcre3-dev gettext xfce4-dev-tools"
-    APPLIST+=" libxfconf-0-dev libxfce4ui-2-dev libnotify-dev"
-    APPLIST+=" libgumbo-dev libwnck-3-dev libxmu-dev"
-    sudo apt -y install $APPLIST
-fi
-
-#~ libdbus-1-dev 	dbus-1
-#~ libexiv2-dev 	exiv2
-#~ libexo-2-dev 	exo-2
-#~ libexpat1-dev 	expat
-#~ libgdk-pixbuf-2.0-dev 	gdk-pixbuf-2.0
-#~ libglib2.0-dev 	glib-2.0
-#~ libgudev-1.0-dev 	gudev-1.0
-#~ libmount-dev 	mount
-#~ libpng-dev 	libpng
-#~ libpolkit-gobject-1-dev 	polkit-gobject-1
-#~ libprocps-dev 	libprocps
-#~ libsm-dev 	sm
-#~ libthunarx-3-dev 	thunarx-3
-#~ libtinyxml-dev 	tinyxml
-#~ libusb-dev 	libusb
-#~ libx11-dev 	x11
-#~ libxfce4util-dev 	libxfce4util-1.0
-#~ libxml2-dev 	libxml-2.0
-#~ libz3-dev 	z3
-#~ libzen-dev 	libzen
-
 # build from git --------------------------------------------------------------
 
 build_src()
@@ -102,15 +70,15 @@ build_src()
 #~ build_src "volman" "/usr/local/bin/volman"
 #~ build_src "powerctl" "/usr/local/bin/powerctl"
 
-dest=/usr/local/bin/hoedown
-if [[ ! -f "$dest" ]]; then
-    echo " *** hoedown"
-    git clone https://github.com/hoedown/hoedown.git
-    pushd hoedown
-    make && sudo make install
-    sudo strip /usr/local/bin/hoedown
-    popd
-fi
+#~ dest=/usr/local/bin/hoedown
+#~ if [[ ! -f "$dest" ]]; then
+    #~ echo " *** hoedown"
+    #~ git clone https://github.com/hoedown/hoedown.git
+    #~ pushd hoedown
+    #~ make && sudo make install
+    #~ sudo strip /usr/local/bin/hoedown
+    #~ popd
+#~ fi
 
 # pop dir ---------------------------------------------------------------------
 
