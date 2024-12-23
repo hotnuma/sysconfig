@@ -4,18 +4,28 @@
 
 ---
 
-#### Configuration
+Experimental post install scripts for XFCE, these are not recommended, use at your own risk. :-)
 
-* Experimental post-install scripts
 
+#### Post Install
+
+* Configure Git
+    
     ```
-    debian/debian.sh
-    raspios/raspios.sh
-    xubuntu/xubuntu.sh
+    git config --global user.name "John Doe"
+    git config --global user.email johndoe@example.com
     ```
 
+* Execute the sript
 
-#### <a name="disable"></a> Disable Programs
+    `mkdir ~/DevFiles; cd ~/DevFiles`
+    
+    `git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig`
+    
+    `./debian/install.sh`
+
+
+#### <a name="disable"></a> Manual configuration
 
 * AppArmor
     
@@ -60,9 +70,6 @@
     systemctl disable systemd-oomd
     ```
 
-
-#### Manual configuration
-
 * Hide grub menu
 
     https://askubuntu.com/questions/18775/  
@@ -79,13 +86,6 @@
 * Additional programs
 
     `zathura`
-
-* Configure Git
-    
-    ```
-    git config --global user.name "John Doe"
-    git config --global user.email johndoe@example.com
-    ```
 
 * Configure hotkeys
 

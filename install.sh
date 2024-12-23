@@ -16,13 +16,13 @@ fi
 
 case $DISTID in
 debian)
-    $BASEDIR/debian/debian.sh
+    $BASEDIR/debian/install.sh
     ;;
 raspios)
-    $BASEDIR/raspios/raspios.sh
+    $BASEDIR/raspios/install.sh
     ;;
 ubuntu)
-    $BASEDIR/xubuntu/xubuntu.sh
+    $BASEDIR/xubuntu/install.sh
     exit 0
     ;;
 *)
