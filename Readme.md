@@ -6,6 +6,12 @@
 
 Experimental post install scripts for XFCE, these are not recommended, use at your own risk. :-)
 
+#### Todo
+    
+    edit user dirs .config/user-dirs.dirs
+    
+    copy restore geany settings
+    copy mpv settings
 
 #### Post Install
 
@@ -27,9 +33,14 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     let the domain name blank or enter a local domain such as : `mydomain.local`  
     let the root password blank in order to use `sudo`  
 
-* Configure Git
+* Upgrade packages
+    
+    `sudo apt update; sudo apt upgrade`
+    
+* Install and Configure Git
     
     ```
+    sudo apt install git
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
     ```
@@ -37,6 +48,7 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 * Execute the script
 
     ```
+    sudo apt update; sudo apt upgrade
     mkdir ~/DevFiles; cd ~/DevFiles
     git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig
     ./debian/config.sh

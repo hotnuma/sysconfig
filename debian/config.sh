@@ -66,6 +66,8 @@ dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$OUTFILE"
     
+    sudo apt update; sudo apt upgrade
+    
     # install base
     APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
     APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
@@ -84,7 +86,7 @@ if [[ ! -f "$dest" ]]; then
     
     # uninstall
     APPLIST="at-spi2-core synaptic tumbler xfce4-power-manager"
-    APPLIST+=" exfalso mousepad xfburn xdg-desktop-portal xsane zutty"
+    APPLIST+=" exfalso mousepad xfburn xdg-desktop-portal xsane"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
@@ -95,7 +97,7 @@ if [[ ! -f "$dest" ]]; then
     
     # services
     APPLIST="apparmor avahi-daemon cron anacron cups cups-browsed"
-    APPLIST+=" bluetooth ModemManager wpa_supplicant"
+    APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
@@ -148,8 +150,9 @@ dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+    mkdir "$HOME"/.config/autostart/
     dest="$HOME"/.config/autostart/startup.desktop
-    sudo cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # user settings ===============================================================
