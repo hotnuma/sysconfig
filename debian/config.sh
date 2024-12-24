@@ -156,16 +156,16 @@ dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
+    dest="$HOME"/.local/share/applications/
+    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
     mkdir "$HOME/Bureau"
     mkdir "$HOME/Downloads"
+    echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
+    dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
     echo "*** appfinder" | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
-fi
-
-dest="$HOME"/.local/share/applications/
-if [[ ! -d "$dest" ]]; then
-    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
-    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # aliases ---------------------------------------------------------------------
