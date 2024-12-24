@@ -162,9 +162,10 @@ if [[ ! -L "$dest" ]]; then
     dest="$HOME"/.local/share/applications/
     mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
     mkdir "$HOME/Bureau"
-    mkdir "$HOME/Downloads"
+    mkdir -p "$HOME/Downloads/0Supprimer"
     echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
     echo "*** appfinder" | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
