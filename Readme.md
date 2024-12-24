@@ -36,28 +36,15 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 * Execute the script
 
-    `mkdir ~/DevFiles; cd ~/DevFiles`
-    
-    `git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig`
-    
-    `./debian/config.sh`
+    ```
+    mkdir ~/DevFiles; cd ~/DevFiles
+    git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig
+    ./debian/config.sh
+    systemctl reboot
+    ```
 
 
 #### <a name="disable"></a> Manual configuration
-
-* Hide grub menu
-
-    https://askubuntu.com/questions/18775/  
-
-    `sudo nano /etc/default/grub`
-    
-    change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`
-    save the file and quit the text editor.
-    
-    ```
-    sudo update-grub
-    systemctl reboot
-    ```
 
 * Configure hotkeys
     
@@ -123,6 +110,20 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 
 <!--
+* Hide grub menu
+
+    https://askubuntu.com/questions/18775/  
+
+    `sudo nano /etc/default/grub`
+    
+    change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`
+    save the file and quit the text editor.
+    
+    ```
+    sudo update-grub
+    systemctl reboot
+    ```
+
 * Add user to adm group
     
     `sudo usermod -a -G adm <username>`

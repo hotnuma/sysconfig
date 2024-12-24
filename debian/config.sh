@@ -33,6 +33,16 @@ $CURRENTUSER ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
+# grub ------------------------------------------------------------------------
+
+dest=/etc/default/grub
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** grub config backup" | tee -a "$OUTFILE"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    sudo sed -e 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' -i "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo update-grub 2>&1 | tee -a "$OUTFILE"
+fi
+
 # numlock/autologin -----------------------------------------------------------
 
 dest=/etc/lightdm/lightdm.conf
@@ -48,14 +58,6 @@ autologin-user=$CURRENTUSER
 autologin-user-timeout=0
 autologin-session=lightdm-xsession
 EOF
-fi
-
-# backup files ----------------------------------------------------------------
-
-dest=/etc/default/grub
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
 fi
 
 # install / remove ============================================================
