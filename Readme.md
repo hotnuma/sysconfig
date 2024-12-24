@@ -31,16 +31,21 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
     https://askubuntu.com/questions/18775/  
 
-    In `/etc/default/grub` change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`,  
+    `sudo nano /etc/default/grub`
+    
+    change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`
     save the file and quit the text editor.
     
-    Run `sudo update-grub` and reboot.  
+    ```
+    sudo update-grub
+    systemctl reboot
+    ```
 
 * Configure hotkeys
+    
+    `xfce4-keyboard-settings`
 
     ```
-    fileman /home/hotnuma/Downloads/    Super+E
-    
     firefox                             Super+B
     rofi -show run                      Super+Space
     systemctl poweroff                  Maj+Super+Q
@@ -48,13 +53,15 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     thunar /home/hotnuma/Downloads/     Super+E
     xfce4-taskmanager                   Super+S
     xfce4-terminal                      Super+T
+    
+    fileman /home/hotnuma/Downloads/    Super+E
     ```
 
 * Firefox
     
     Restore bookmarks and passwords.
     
-    Disable resume from crash :  `browser.sessionstore.resume_from_crash false`.
+    Disable resume from crash : `browser.sessionstore.resume_from_crash false`.
 
 * Firefox extensions
 
@@ -69,13 +76,9 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 * Configure Terminal
     
-    Font : DejaVu Sans Mono Book 9
-    Geometry : 120 x 35
+    Font :      DejaVu Sans Mono Book 9
+    Geometry :  120 x 35
     
-* Add user to adm group
-    
-    `sudo usermod -a -G adm <username>`
-
 * Disable log messages
 
     https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
@@ -102,6 +105,10 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 
 <!--
+* Add user to adm group
+    
+    `sudo usermod -a -G adm <username>`
+
 * at-spi
     
     https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks  

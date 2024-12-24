@@ -127,6 +127,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
 EOF
+    sudo usermod -a -G adm $CURRENTUSER
 fi
 
 # xfce4 session ---------------------------------------------------------------
@@ -155,6 +156,8 @@ dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    mkdir "$HOME/Bureau"
+    mkdir "$HOME/Downloads"
     echo "*** appfinder" | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
@@ -229,8 +232,6 @@ if command -v appinfo &> /dev/null; then
     app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
-    #~ app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
 fi
 
 echo "done" | tee -a $OUTFILE
