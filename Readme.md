@@ -9,6 +9,24 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 #### Post Install
 
+* Install Debian
+
+    https://www.debian.org/distrib/  
+    https://www.debian.org/releases/stable/amd64/ch04s03.fr.html  
+    
+    Download an ISO file and copy it to a USB drive :
+    
+    ```
+    sudo cp ./debian.iso /dev/sdX
+    sudo sync
+    ```
+    
+    https://www.youtube.com/watch?v=gddlhr9ST9Y  
+    
+    choose `Install` for the text based installer  
+    let the domain name blank or enter a local domain such as : `mydomain.local`  
+    let the root password blank in order to use `sudo`  
+
 * Configure Git
     
     ```
