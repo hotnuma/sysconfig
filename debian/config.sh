@@ -68,10 +68,18 @@ if [[ ! -f "$dest" ]]; then
     sudo apt update; sudo apt upgrade
     
     # set xfce settings
-    echo "*** numlock on" | tee -a "$OUTFILE"
+    echo "*** xfconf settings" | tee -a "$OUTFILE"
     xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
-    echo "*** workspace count" | tee -a "$OUTFILE"
     xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
+    # todo use resistance instead of magnet
+    
+    # disable autostart programs
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/nm-applet.desktop
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/print-applet.desktop
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xdg-user-dirs.desktop
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xfce4-clipman-plugin-autostart.desktop
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xiccd.desktop
+    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
     
     # install base
     APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
@@ -90,8 +98,8 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # uninstall
-    APPLIST="at-spi2-core synaptic tumbler xfce4-power-manager"
-    APPLIST+=" exfalso mousepad xfburn xdg-desktop-portal xsane"
+    APPLIST="at-spi2-core exfalso light-locker mousepad synaptic tumbler"
+    APPLIST+=" xdg-desktop-portal xfburn xfce4-power-manager xsane"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
