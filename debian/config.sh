@@ -116,7 +116,7 @@ dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo " *** install dev packages"
     APPLIST="gettext xfce4-dev-tools libxfconf-0-dev libxfce4ui-2-dev"
-    APPLIST+=" libgumbo-dev libnotify-dev libwnck-3-dev libxmu-dev"
+    APPLIST+=" libgudev-1.0-dev libgumbo-dev libnotify-dev libwnck-3-dev libxmu-dev"
     sudo apt -y install $APPLIST
 fi
 

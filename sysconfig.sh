@@ -58,30 +58,33 @@ build_src()
 if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
     build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
     build_src "fileman" "/usr/local/bin/fileman"
-    build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "systools" "/usr/local/bin/colortest"
+    build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
 fi
 
-#~ build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
-#~ build_src "mpvcmd" "/usr/local/bin/mpvcmd"
-#~ build_src "volman" "/usr/local/bin/volman"
-#~ build_src "powerctl" "/usr/local/bin/powerctl"
+if [[ ! -f "/usr/local/bin/mpvcmd" ]]; then
+    build_src "mpvcmd" "/usr/local/bin/mpvcmd"
+    #build_src "powerctl" "/usr/local/bin/powerctl"
+    build_src "sysquery" "/usr/local/bin/sysquery"
+    build_src "volman" "/usr/local/bin/volman"
+fi
 
-#~ build_src "appinfo" "/usr/local/bin/appinfo"
-#~ build_src "applist" "/usr/local/bin/applist"
-#~ build_src "firebook" "/usr/local/bin/firebook"
-#~ build_src "sfind" "/usr/local/bin/sfind"
+if [[ ! -f "/usr/local/bin/firebook" ]]; then
+    #~ build_src "appinfo" "/usr/local/bin/appinfo"
+    #~ build_src "applist" "/usr/local/bin/applist"
+    build_src "firebook" "/usr/local/bin/firebook"
+    build_src "sfind" "/usr/local/bin/sfind"
+fi
 
-
-#~ dest=/usr/local/bin/hoedown
-#~ if [[ ! -f "$dest" ]]; then
-    #~ echo " *** hoedown"
-    #~ git clone https://github.com/hoedown/hoedown.git
-    #~ pushd hoedown
-    #~ make && sudo make install
-    #~ sudo strip /usr/local/bin/hoedown
-    #~ popd
-#~ fi
+dest=/usr/local/bin/hoedown
+if [[ ! -f "$dest" ]]; then
+    echo " *** hoedown"
+    git clone https://github.com/hoedown/hoedown.git
+    pushd hoedown
+    make && sudo make install
+    sudo strip /usr/local/bin/hoedown
+    popd
+fi
 
 # pop dir ---------------------------------------------------------------------
 
