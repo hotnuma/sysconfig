@@ -64,14 +64,14 @@ fi
 
 if [[ ! -f "/usr/local/bin/mpvcmd" ]]; then
     build_src "mpvcmd" "/usr/local/bin/mpvcmd"
-    #build_src "powerctl" "/usr/local/bin/powerctl"
+    build_src "powerctl" "/usr/local/bin/powerctl"
     build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "volman" "/usr/local/bin/volman"
 fi
 
-if [[ ! -f "/usr/local/bin/firebook" ]]; then
-    #~ build_src "appinfo" "/usr/local/bin/appinfo"
-    #~ build_src "applist" "/usr/local/bin/applist"
+if [[ ! -f "/usr/local/bin/appinfo" ]]; then
+    build_src "appinfo" "/usr/local/bin/appinfo"
+    build_src "applist" "/usr/local/bin/applist"
     build_src "firebook" "/usr/local/bin/firebook"
     build_src "sfind" "/usr/local/bin/sfind"
 fi

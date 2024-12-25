@@ -47,8 +47,6 @@ fi
 
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** numlock on" | tee -a "$OUTFILE"
-    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true
     echo "*** autologin" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo tee "$dest" > /dev/null << EOF
@@ -66,7 +64,14 @@ dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$OUTFILE"
     
+    # upgrade
     sudo apt update; sudo apt upgrade
+    
+    # set xfce settings
+    echo "*** numlock on" | tee -a "$OUTFILE"
+    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
+    echo "*** workspace count" | tee -a "$OUTFILE"
+    xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
     
     # install base
     APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
@@ -116,7 +121,8 @@ dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo " *** install dev packages"
     APPLIST="gettext xfce4-dev-tools libxfconf-0-dev libxfce4ui-2-dev"
-    APPLIST+=" libgudev-1.0-dev libgumbo-dev libnotify-dev libwnck-3-dev libxmu-dev"
+    APPLIST+=" libgudev-1.0-dev libgumbo-dev libnotify-dev libwnck-3-dev"
+    APPLIST+=" libxss-dev libxmu-dev"
     sudo apt -y install $APPLIST
 fi
 
