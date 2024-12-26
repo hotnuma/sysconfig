@@ -28,7 +28,10 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.zip  
     # todo use resistance instead of magnet  
     
-    sudo apt install freefilesync  
+    sudo apt install audacious freefilesync  
+    
+    if needed set user right to drive mount :  
+    sudo chown -R $USER:$USER /media/hotnuma/Data/  
     
     
 #### Post Install

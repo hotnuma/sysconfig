@@ -89,9 +89,9 @@ if [[ ! -f "$dest" ]]; then
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
     
     # install base
-    APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
-    APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
-    APPLIST+=" inxi fonts-dejavu elementary-xfce-icon-theme"
+    APPLIST="hsetroot inxi dmz-cursor-theme fonts-dejavu elementary-xfce-icon-theme"
+    APPLIST+=" geany git build-essential pkg-config meson ninja-build clang-format"
+    APPLIST+=" libgtk-3-dev libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
