@@ -67,11 +67,18 @@ if [[ ! -f "$dest" ]]; then
     # upgrade
     sudo apt update; sudo apt upgrade
     
+    # create directories
+    mkdir "$HOME"/.config/autostart/ 2>/dev/null
+    mkdir -p "$HOME"/.local/share/applications/ 2>/dev/null
+    mkdir -p "$HOME"/.local/share/xfce4/terminal/colorschemes/ 2>/dev/null
+    mkdir "$HOME"/.themes/ 2>/dev/null
+    mkdir "$HOME"/Bureau/ 2>/dev/null
+    mkdir -p "$HOME"/Downloads/0Supprimer/ 2>/dev/null
+    
     # set xfce settings
     echo "*** xfconf settings" | tee -a "$OUTFILE"
     xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
     xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
-    # todo use resistance instead of magnet
     
     # disable autostart programs
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/nm-applet.desktop
@@ -84,7 +91,7 @@ if [[ ! -f "$dest" ]]; then
     # install base
     APPLIST="hsetroot geany build-essential pkg-config git meson ninja-build"
     APPLIST+=" clang-format libgtk-3-dev libpcre3-dev"
-    APPLIST+=" fonts-dejavu elementary-xfce-icon-theme"
+    APPLIST+=" inxi fonts-dejavu elementary-xfce-icon-theme"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
@@ -164,7 +171,6 @@ dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
-    mkdir "$HOME"/.config/autostart/
     dest="$HOME"/.config/autostart/startup.desktop
     cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
@@ -175,11 +181,6 @@ dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
-    echo "*** create .local/share/applications/" | tee -a "$OUTFILE"
-    dest="$HOME"/.local/share/applications/
-    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
-    mkdir "$HOME/Bureau"
-    mkdir -p "$HOME/Downloads/0Supprimer"
     echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
@@ -215,10 +216,9 @@ fi
 
 # terminal theme --------------------------------------------------------------
 
-dest="$HOME"/.local/share/xfce4/terminal/colorschemes
-if [[ ! -f "$dest"/custom.theme ]]; then
+dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
+if [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$OUTFILE"
-    mkdir -p "$dest" 2>&1 | tee -a "$OUTFILE"
     cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 

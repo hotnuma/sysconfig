@@ -14,12 +14,23 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     select adwata dark and then clair theme to have dark panel theme  
     set icon theme  elementary xfce  
     
+    install and set wm theme : xfwm4-settings  
+    ~/.local/share/themes or ~/.themes  
+    ~/.local/share/themes/<theme_name>/xfwm4/  
+    
     copy restore geany settings  
     copy mpv settings  
     
     disable ssh pgp
     
-
+    manual uninstall of hv3 and zutty if needed  
+    
+    https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.zip  
+    # todo use resistance instead of magnet  
+    
+    sudo apt install freefilesync  
+    
+    
 #### Post Install
 
 * Install Debian
@@ -83,9 +94,12 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 * Firefox
     
-    Restore bookmarks and passwords.
+    Restore bookmarks and passwords.  
     
-    Disable resume from crash : `browser.sessionstore.resume_from_crash false`.
+    Disable overlay scrollbars :    `widget.gtk.overlay-scrollbars.enabled false`  
+    Disable resume from crash :     `browser.sessionstore.resume_from_crash false`  
+    
+    Set always show scrollbars.  
 
 * Firefox extensions
 
