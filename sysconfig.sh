@@ -38,7 +38,7 @@ if [[ ! -d "$dest" ]]; then
     echo " *** create build dir"
     mkdir "$BUILDDIR"
 fi
-pushd "$BUILDDIR"
+pushd "$BUILDDIR" 1>/dev/null
 
 # build from git --------------------------------------------------------------
 
@@ -49,9 +49,9 @@ build_src()
     if [[ ! -f "$dest" ]]; then
         echo " *** ${pack}"
         git clone https://github.com/hotnuma/${pack}.git
-        pushd ${pack}
+        pushd ${pack} 1>/dev/null
         ./install.sh
-        popd
+        popd 1>/dev/null
     fi
 }
 
@@ -80,14 +80,14 @@ dest=/usr/local/bin/hoedown
 if [[ ! -f "$dest" ]]; then
     echo " *** hoedown"
     git clone https://github.com/hoedown/hoedown.git
-    pushd hoedown
+    pushd hoedown 1>/dev/null
     make && sudo make install
     sudo strip /usr/local/bin/hoedown
-    popd
+    popd 1>/dev/null
 fi
 
 # pop dir ---------------------------------------------------------------------
 
-popd
+popd 1>/dev/null
 
 

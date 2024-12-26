@@ -10,27 +10,15 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     
     edit user dirs .config/user-dirs.dirs
     
-    copy restore geany settings
-    copy mpv settings
+    xfce4-appearance-settings :  
+    select adwata dark and then clair theme to have dark panel theme  
+    set icon theme  elementary xfce  
     
-    disable more apps in :
-
-    ls /etc/xdg/autostart/
-    -rw-r--r--  1 root root 8530 23 mars   2023 gnome-keyring-pkcs11.desktop
-    -rw-r--r--  1 root root 8057 23 mars   2023 gnome-keyring-secrets.desktop
-    -rw-r--r--  1 root root 6596 23 mars   2023 gnome-keyring-ssh.desktop
-    -rw-r--r--  1 root root 5829  8 nov.   2022 nm-applet.desktop
-    -rw-r--r--  1 root root 4609 26 févr.  2023 polkit-gnome-authentication-agent-1.desktop
-    -rw-r--r--  1 root root 8462 12 déc.   2022 print-applet.desktop
-    -rw-r--r--  1 root root 5315 16 oct.   2022 pulseaudio.desktop
-    -rw-r--r--  1 root root  140 25 déc.  01:05 volman.desktop
-    -rw-r--r--  1 root root  212 26 sept.  2022 xdg-user-dirs.desktop
-    -rw-r--r--  1 root root  173 12 juil.  2023 xdg-user-dirs-kde.desktop
-    -rw-r--r--  1 root root 3491 16 août   2021 xfce4-clipman-plugin-autostart.desktop
-    -rw-r--r--  1 root root  166  2 févr.  2023 xfce4-notifyd.desktop
-    -rw-r--r--  1 root root 4778 27 févr.  2023 xfsettingsd.desktop
-    -rw-r--r--  1 root root  187 16 janv.  2023 xiccd.desktop
-    -rw-r--r--  1 root root 6163 27 févr.  2023 xscreensaver.desktop
+    copy restore geany settings  
+    copy mpv settings  
+    
+    disable ssh pgp
+    
 
 #### Post Install
 
