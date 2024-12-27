@@ -119,6 +119,14 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
     
     Font :      DejaVu Sans Mono Book 9
     Geometry :  120 x 35
+
+* Mount internal drives
+    
+    `sudo nano /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy`
+    
+    In the excerpt <action id=“org.freedesktop.udisks2.filesystem-mount-system”> in the defaults tag replace allow_active with yes :  
+
+    `<allow_active>yes</allow_active>`
     
 * Disable log messages
 
