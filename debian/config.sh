@@ -65,7 +65,7 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$OUTFILE"
     
     # upgrade
-    sudo apt update; sudo apt upgrade
+    sudo apt update; sudo apt upgrade 2>&1 | tee -a "$OUTFILE"
     
     # create directories
     mkdir "$HOME"/.config/autostart/ 2>/dev/null
@@ -91,7 +91,7 @@ if [[ ! -f "$dest" ]]; then
     # install base
     APPLIST="hsetroot inxi dmz-cursor-theme fonts-dejavu elementary-xfce-icon-theme"
     APPLIST+=" geany git build-essential pkg-config meson ninja-build clang-format"
-    APPLIST+=" libgtk-3-dev libpcre3-dev"
+    APPLIST+=" libpcre3-dev libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
@@ -134,11 +134,20 @@ fi
 
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
-    echo " *** install dev packages"
+    echo " *** install dev packages" | tee -a "$OUTFILE"
     APPLIST="gettext xfce4-dev-tools libxfconf-0-dev libxfce4ui-2-dev"
-    APPLIST+=" libgudev-1.0-dev libgumbo-dev libnotify-dev libwnck-3-dev"
-    APPLIST+=" libxss-dev libxmu-dev"
-    sudo apt -y install $APPLIST
+    APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
+    APPLIST+=" libwnck-3-dev libxss-dev libxmu-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
+dest=/usr/bin/qtcreator
+if [[ ! -f "$dest" ]]; then
+    echo "*** install dev softwares" | tee -a "$OUTFILE"
+    APPLIST="qtcreator"
+    # https://packages.debian.org/bookworm/qtcreator
+    # APPLIST+=" qtchooser qtbase5-dev qtbase5-dev-tools qt5-qmake"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
 # system settings =============================================================
@@ -152,7 +161,6 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
 EOF
-    sudo usermod -a -G adm $CURRENTUSER
 fi
 
 # xfce4 session ---------------------------------------------------------------
@@ -181,6 +189,8 @@ dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** add user to adm group" | tee -a "$OUTFILE"
+    sudo usermod -a -G adm $CURRENTUSER 2>&1 | tee -a "$OUTFILE"
     echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
