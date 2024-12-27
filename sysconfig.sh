@@ -60,6 +60,8 @@ if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
     build_src "fileman" "/usr/local/bin/fileman"
     build_src "systools" "/usr/local/bin/colortest"
     build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
+    popd 1>/dev/null
+    exit 0
 fi
 
 if [[ ! -f "/usr/local/bin/mpvcmd" ]]; then
@@ -67,6 +69,8 @@ if [[ ! -f "/usr/local/bin/mpvcmd" ]]; then
     build_src "powerctl" "/usr/local/bin/powerctl"
     build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "volman" "/usr/local/bin/volman"
+    popd 1>/dev/null
+    exit 0
 fi
 
 if [[ ! -f "/usr/local/bin/appinfo" ]]; then
@@ -74,6 +78,8 @@ if [[ ! -f "/usr/local/bin/appinfo" ]]; then
     build_src "applist" "/usr/local/bin/applist"
     build_src "firebook" "/usr/local/bin/firebook"
     build_src "sfind" "/usr/local/bin/sfind"
+    popd 1>/dev/null
+    exit 0
 fi
 
 dest=/usr/local/bin/hoedown
@@ -84,6 +90,7 @@ if [[ ! -f "$dest" ]]; then
     make && sudo make install
     sudo strip /usr/local/bin/hoedown
     popd 1>/dev/null
+    exit 0
 fi
 
 # pop dir ---------------------------------------------------------------------
