@@ -89,8 +89,8 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 
 * Configure Terminal
     
-    Font :      DejaVu Sans Mono Book 9
-    Geometry :  120 x 35
+    Font :      DejaVu Sans Mono Book 11
+    Geometry :  90 x 35
 
 * Mount internal drives
     
