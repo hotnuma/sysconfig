@@ -144,8 +144,9 @@ fi
 dest=/usr/bin/qtcreator
 if [[ ! -f "$dest" ]]; then
     echo "*** install dev softwares" | tee -a "$OUTFILE"
-    APPLIST="qtcreator"
+    APPLIST="qtcreator qmake6"
     # https://packages.debian.org/bookworm/qtcreator
+    # https://packages.debian.org/source/bookworm/qt6-base
     # APPLIST+=" qtchooser qtbase5-dev qtbase5-dev-tools qt5-qmake"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
