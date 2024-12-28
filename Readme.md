@@ -6,34 +6,6 @@
 
 Experimental post install scripts for XFCE, these are not recommended, use at your own risk. :-)
 
-#### Todo
-    
-    edit user dirs .config/user-dirs.dirs
-    
-    xfce4-appearance-settings :  
-    select adwata dark and then clair theme to have dark panel theme  
-    set icon theme  elementary xfce  
-    
-    install and set wm theme : xfwm4-settings  
-    ~/.local/share/themes or ~/.themes  
-    ~/.local/share/themes/<theme_name>/xfwm4/  
-    
-    copy restore geany settings  
-    copy mpv settings  
-    
-    disable ssh pgp
-    
-    manual uninstall of hv3 and zutty if needed  
-    
-    https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.zip  
-    # todo use resistance instead of magnet  
-    
-    sudo apt install audacious freefilesync  
-    
-    if needed set user right to drive mount :  
-    sudo chown -R $USER:$USER /media/hotnuma/Data/  
-    
-    
 #### Post Install
 
 * Install Debian
@@ -151,60 +123,5 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 * Video test
 
     https://www.youtube.com/watch?v=cuXsupMuik4  
-
-
-<!--
-* Hide grub menu
-
-    https://askubuntu.com/questions/18775/  
-
-    `sudo nano /etc/default/grub`
-    
-    change `GRUB_TIMEOUT=10` to `GRUB_TIMEOUT=0`
-    save the file and quit the text editor.
-    
-    ```
-    sudo update-grub
-    systemctl reboot
-    ```
-
-* Add user to adm group
-    
-    `sudo usermod -a -G adm <username>`
-
-* at-spi
-    
-    https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks  
-    
-    In `/etc/environment` add `NO_AT_BRIDGE=1`
-
-* Overlay Scrollbars
-    
-    In `/etc/environment` add `GTK_OVERLAY_SCROLLING=0`
-
-* AppArmor
-    
-    https://help.ubuntu.com/community/AppArmor  
-    
-    ```
-    sudo systemctl stop apparmor
-    sudo systemctl disable apparmor
-    ```
-
-* Autostart programs
-    
-    https://wiki.archlinux.org/title/XDG_Autostart  
-
-    `echo "Hidden=true" > $HOME/.config/autostart/xcompmgr.desktop`
-
-* systemd-oomd
-    
-    https://askubuntu.com/questions/1404888/  
-    
-    ```
-    systemctl stop systemd-oomd
-    systemctl disable systemd-oomd
-    ```
--->
 
 
