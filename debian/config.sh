@@ -105,9 +105,9 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # uninstall
-    APPLIST="at-spi2-core exfalso light-locker mousepad parole synaptic tumbler"
-    APPLIST+=" xdg-desktop-portal xfburn xfce4-power-manager xsane"
-    APPLIST+=" hv3 zutty"
+    APPLIST="at-spi2-core exfalso hv3 light-locker synaptic xdg-desktop-portal"
+    APPLIST+=" xsane xterm zutty mousepad parole tumbler xfburn"
+    APPLIST+=" xfce4-power-manager"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
