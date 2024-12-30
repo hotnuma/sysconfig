@@ -107,31 +107,31 @@ Experimental post install scripts for XFCE, these are not recommended, use at yo
 * Manual post install config
     
     ```
+    wget https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.tar.gz
+    tar xzf master.tar.gz
+    mkdir $HOME/.themes
+    mv ./Adwaita-xfwm4-master $HOME/.themes/Adwaita-xfwm4
+    ```
+    
     edit user dirs .config/user-dirs.dirs
     
-    xfce4-appearance-settings :  
+    xfce4-appearance-settings :
+    
     select adwata dark and then clair theme to have dark panel theme  
     set icon theme  elementary xfce  
-    
-    install and set wm theme : xfwm4-settings  
-    ~/.themes/Adwaita-xfwm4/xfwm4/  
-    or  
-    ~/.local/share/themes/Adwaita-xfwm4/xfwm4/  
     
     copy restore geany settings  
     copy mpv settings  
     
-    https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.zip  
-    # todo use resistance instead of magnet  
+    xfwm use resistance instead of magnet  
     
-    sudo apt install audacious freefilesync  
+    sudo apt install freefilesync  
     
     if needed set user right to drive mount :  
     sudo chown -R $USER:$USER /media/hotnuma/Data/  
     
     Put panel on top and disable shasows :  
     https://stackoverflow.com/questions/53725696/  
-    ```
     
 
 #### Graphic card

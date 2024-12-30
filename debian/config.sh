@@ -89,15 +89,15 @@ if [[ ! -f "$dest" ]]; then
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
     
     # install base
-    APPLIST="hsetroot inxi dmz-cursor-theme fonts-dejavu elementary-xfce-icon-theme"
-    APPLIST+=" geany git build-essential pkg-config meson ninja-build clang-format"
-    APPLIST+=" libpcre3-dev libgtk-3-dev libgtk-3-doc gtk-3-examples libglib2.0-doc"
+    APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
+    APPLIST+=" build-essential git meson ninja-build pkg-config clang-format"
+    APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="rofi htop hardinfo net-tools uchardet curl dos2unix"
-    APPLIST+=" gimp evince engrampa p7zip-full"
-    APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui zathura"
+    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full uchardet"
+    APPLIST+=" audacious engrampa evince geany gimp rofi zathura"
+    APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends
