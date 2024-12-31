@@ -96,8 +96,71 @@ Use at your own risk. :-)
     
     `sudo chown -R $USER:$USER /media/$USER/Data/`
 
-* Install QtCreator
+* Disable grub background
     
+    ```
+    cat /etc/default/grub
+
+    GRUB_DEFAULT=0
+    GRUB_TIMEOUT=0
+    GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+    GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+    GRUB_CMDLINE_LINUX=""
+    GRUB_BACKGROUND=
+    ```
+
+* Install Adwaita-xfwm4 theme
+    
+    ```
+    wget https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.tar.gz
+    tar xzf master.tar.gz
+    mkdir $HOME/.themes
+    mv ./Adwaita-xfwm4-master $HOME/.themes/Adwaita-xfwm4
+    ```
+
+* Panel dark mode
+
+    Run `xfce4-appearance-settings`, select adwata dark and then clair theme to
+    have dark panel working.
+
+* Icon theme
+
+    set icon theme  elementary xfce  
+
+* Disable log messages
+
+    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
+
+* User dirs
+    
+    edit user dirs .config/user-dirs.dirs
+
+* Progams settings
+    
+    copy restore geany settings  
+    copy mpv settings  
+
+* Xfwm4
+
+    Use resistance instead of magnet.
+    
+    If the panel is on top, disable drop down shasows :
+    
+    https://stackoverflow.com/questions/53725696/  
+
+* Install yt-dlp
+    
+    https://github.com/yt-dlp/yt-dlp/wiki/Installation  
+    
+    ```
+    mkdir -p $HOME/.local/bin/
+    wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O ~/.local/bin/yt-dlp
+    chmod a+rx $HOME/.local/bin/yt-dlp
+    ```
+
+* Install QtCreator
+
+    https://unix.stackexchange.com/questions/752145/  
     https://packages.debian.org/bookworm/qtcreator  
     https://packages.debian.org/source/bookworm/qt6-base  
 
@@ -125,50 +188,9 @@ Use at your own risk. :-)
     
     Select Qt6 kit :
     
-    ```
-    /usr/bin/qmake
-    /usr/lib/qt6/bin/qmake
-    ```
-
-
-* Disable log messages
-
-    https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
-
-* Install Adwaita-xfwm4 theme
+    in kit browse to /usr/lib/qt6/bin/qmake
     
-    ```
-    wget https://github.com/hotnuma/Adwaita-xfwm4/archive/refs/heads/master.tar.gz
-    tar xzf master.tar.gz
-    mkdir $HOME/.themes
-    mv ./Adwaita-xfwm4-master $HOME/.themes/Adwaita-xfwm4
-    ```
-
-* Panel dark mode
-
-    Run `xfce4-appearance-settings`, select adwata dark and then clair theme to
-    have dark panel working.
-
-* Icon theme
-
-    set icon theme  elementary xfce  
-
-* User dirs
-    
-    edit user dirs .config/user-dirs.dirs
-
-* Progams settings
-    
-    copy restore geany settings  
-    copy mpv settings  
-
-* Xfwm4
-
-    Use resistance instead of magnet.
-    
-    If the panel is on top, disable drop down shasows :
-    
-    https://stackoverflow.com/questions/53725696/  
+    In firt page select kit version
 
 * Additional programs
 
