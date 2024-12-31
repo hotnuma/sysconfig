@@ -58,6 +58,21 @@ autologin-session=lightdm-xsession
 EOF
 fi
 
+# disable log messages --------------------------------------------------------
+
+dest=/etc/systemd/system/rtkit-daemon.service.d/
+if [[ ! -d ${dest} ]]; then
+    echo "*** disable rtkit logs" | tee -a "$OUTFILE"
+    sudo mkdir $dest
+    dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
+    sudo tee "$dest" > /dev/null << "EOF"
+[Service]
+LogLevelMax=4
+EOF
+    sudo systemctl daemon-reload 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$OUTFILE"
+fi
+
 # install / remove ============================================================
 
 dest=/usr/bin/hsetroot
