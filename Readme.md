@@ -96,8 +96,19 @@ Use at your own risk. :-)
     
     `sudo chown -R $USER:$USER /media/$USER/Data/`
 
-* Disable QtCreator plugins
+* Install QtCreator
+    
+    https://packages.debian.org/bookworm/qtcreator  
+    https://packages.debian.org/source/bookworm/qt6-base  
 
+    `sudo apt install qtcreator qt6-base-dev`
+
+    It may require additional packages :
+    
+    `qtchooser qmake6 cmake`
+
+    Disable unneeded plugins :
+    
     ```
     QbsProjectManager
     Help
@@ -112,6 +123,14 @@ Use at your own risk. :-)
     Version Control
     ```
     
+    Select Qt6 kit :
+    
+    ```
+    /usr/bin/qmake
+    /usr/lib/qt6/bin/qmake
+    ```
+
+
 * Disable log messages
 
     https://github.com/hotnuma/doclinux/blob/master/01-Systemd.md#disable  
