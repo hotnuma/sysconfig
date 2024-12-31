@@ -96,7 +96,7 @@ if [[ ! -f "$dest" ]]; then
 
     # install softwares
     APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full uchardet"
-    APPLIST+=" audacious engrampa evince geany gimp rofi zathura"
+    APPLIST+=" audacious engrampa evince feh geany gimp rofi zathura"
     APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     

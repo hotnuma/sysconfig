@@ -68,7 +68,7 @@ Use at your own risk. :-)
 
 * Firefox
     
-    Install uBlock Origin, SingleFile, restore bookmarks and passwords.  
+    Install uBlock Origin, SingleFile, cookies.txt. Restore bookmarks and passwords.  
     
     Disable overlay scrollbars : `widget.gtk.overlay-scrollbars.enabled false`  
     Disable resume from crash : `browser.sessionstore.resume_from_crash false`  
