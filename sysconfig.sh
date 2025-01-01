@@ -3,7 +3,15 @@
 BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 BUILDDIR="$HOME/DevFiles"
 
-# install ---------------------------------------------------------------------
+# tests -----------------------------------------------------------------------
+
+if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
+    echo "*** XFCE was not detected"
+    echo "abort..."
+    exit 1
+fi
+
+# system detection ------------------------------------------------------------
 
 if [[ -f /boot/config.txt ]]; then
     DISTID="raspios"
@@ -16,14 +24,10 @@ fi
 
 case $DISTID in
 debian)
-    $BASEDIR/debian/config.sh
+    $BASEDIR/debian/config.sh "$@"
     ;;
 raspios)
     $BASEDIR/raspios/config.sh
-    ;;
-ubuntu)
-    $BASEDIR/xubuntu/config.sh
-    exit 0
     ;;
 *)
     echo "Unknown system"
@@ -38,6 +42,7 @@ if [[ ! -d "$dest" ]]; then
     echo " *** create build dir"
     mkdir "$BUILDDIR"
 fi
+
 pushd "$BUILDDIR" 1>/dev/null
 
 # build from git --------------------------------------------------------------

@@ -166,10 +166,7 @@ Use at your own risk. :-)
     https://packages.debian.org/bookworm/qtcreator  
     https://packages.debian.org/source/bookworm/qt6-base  
 
-    `sudo apt install qtcreator qt6-base-dev`
-
-    It may require additional packages :      
-    `qtchooser qmake6 cmake`
+    `./sysconfig qtcreator`
 
     Disable unneeded plugins :
     

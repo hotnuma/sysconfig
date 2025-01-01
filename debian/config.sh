@@ -4,10 +4,28 @@ BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 DEBDIR="$BASEDIR"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
+QTCREATOR=0
 
-echo "===============================================================================" | tee -a $OUTFILE
-echo " Debian install..." | tee -a $OUTFILE
-echo "===============================================================================" | tee -a $OUTFILE
+# tests -----------------------------------------------------------------------
+
+if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
+    echo "*** XFCE was not detected"
+    echo "abort..."
+    exit 1
+fi
+
+while [[ $# > 0 ]]; do
+    key="$1"
+    case $key in
+        qtcreator)
+        QTCREATOR=1
+        shift
+        ;;
+        *)
+        shift
+        ;;
+    esac
+done
 
 # system settings =============================================================
 
@@ -21,6 +39,12 @@ else
         exit 1
     fi
 fi
+
+# start =======================================================================
+
+echo "===============================================================================" | tee -a $OUTFILE
+echo " Debian install..." | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $OUTFILE
 
 # sudoers ---------------------------------------------------------------------
 
@@ -157,6 +181,16 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
+# install QtCreator ===========================================================
+
+dest=/usr/bin/qtcreator
+if [[ $QTCREATOR == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install QtCreator" | tee -a "$OUTFILE"
+    APPLIST="qtcreator qt6-base-dev"
+    # APPLIST+=" qtchooser qt6-tools-dev qmake6"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+fi
+
 # system settings =============================================================
 
 dest=/etc/environment
@@ -196,12 +230,15 @@ dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$OUTFILE"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    
     echo "*** add user to adm group" | tee -a "$OUTFILE"
     sudo usermod -a -G adm $CURRENTUSER 2>&1 | tee -a "$OUTFILE"
+    
     echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+    
     echo "*** appfinder" | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
@@ -222,6 +259,14 @@ if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
     sudo cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
+# terminal theme --------------------------------------------------------------
+
+dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
+if [[ ! -f "$dest" ]]; then
+    echo "*** terminal colors" | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # thunar uca ------------------------------------------------------------------
 
 dest="$HOME"/.config/Thunar/uca.xml
@@ -229,14 +274,6 @@ if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     echo "*** thunar terminal" | tee -a "$OUTFILE"
     mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
-fi
-
-# terminal theme --------------------------------------------------------------
-
-dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
-if [[ ! -f "$dest" ]]; then
-    echo "*** terminal colors" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # Hide Launchers --------------------------------------------------------------
