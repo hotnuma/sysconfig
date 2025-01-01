@@ -153,10 +153,12 @@ Use at your own risk. :-)
     https://github.com/yt-dlp/yt-dlp/wiki/Installation  
     
     ```
-    mkdir -p $HOME/.local/bin/
-    wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O ~/.local/bin/yt-dlp
-    chmod a+rx $HOME/.local/bin/yt-dlp
+    wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
+    chmod a+rx ./yt-dlp
+    sudo mv ./yt-dlp /usr/local/bin/
     ```
+    
+    To upgrade download the program again.
 
 * Install QtCreator
 
