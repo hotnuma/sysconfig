@@ -166,8 +166,7 @@ Use at your own risk. :-)
 
     `sudo apt install qtcreator qt6-base-dev`
 
-    It may require additional packages :
-    
+    It may require additional packages :      
     `qtchooser qmake6 cmake`
 
     Disable unneeded plugins :
@@ -186,11 +185,12 @@ Use at your own risk. :-)
     Version Control
     ```
     
-    Select Qt6 kit :
+    In the `Project Page`, select : `Manage kits...`
     
-    in kit browse to /usr/lib/qt6/bin/qmake
+    In `Qt Version`, browse to qmake path, such as :  
+    `/usr/lib/qt6/bin/qmake`
     
-    In firt page select kit version
+    In the `Kits tab`, select the previously detected `Qt Version`.
 
 * Additional programs
 
