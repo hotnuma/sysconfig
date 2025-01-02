@@ -80,9 +80,10 @@ Use at your own risk. :-)
     Install uBlock Origin, SingleFile, cookies.txt.  
     Restore bookmarks, passwords and filters.  
     
+    Disable DRM banner : `browser.eme.ui.enabled false`  
     Disable overlay scrollbars : `widget.gtk.overlay-scrollbars.enabled false`  
     Disable resume from crash : `browser.sessionstore.resume_from_crash false`  
-    Hide download box : `browser.download.alwaysOpenPanel	false`
+    Hide download box : `browser.download.alwaysOpenPanel	false`  
     
     Test videos :  
     
