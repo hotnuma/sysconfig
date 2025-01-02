@@ -63,7 +63,14 @@ dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
     echo "*** grub config backup" | tee -a "$OUTFILE"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo sed -e 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' -i "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo tee "$dest" > /dev/null << "EOF"
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+GRUB_CMDLINE_LINUX=""
+GRUB_BACKGROUND=
+EOF
     sudo update-grub 2>&1 | tee -a "$OUTFILE"
 fi
 
