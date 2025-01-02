@@ -83,6 +83,12 @@ Use at your own risk. :-)
     Disable overlay scrollbars : `widget.gtk.overlay-scrollbars.enabled false`  
     Disable resume from crash : `browser.sessionstore.resume_from_crash false`  
     Hide download box : `browser.download.alwaysOpenPanel	false`
+    
+    Test videos :  
+    
+    https://www.youtube.com/watch?v=cuXsupMuik4  
+    https://www.youtube.com/watch?v=TVtoxUohG5E  
+
 
 * Configure Terminal
     
