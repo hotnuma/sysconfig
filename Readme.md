@@ -55,9 +55,18 @@ Use at your own risk. :-)
 
 * Configure hotkeys
     
-    `xfce4-keyboard-settings`
+    Predefined shorcut using super key :
 
     ```
+    Super+Tab                           swith window in the same application
+    Super+Arrows                        mosaic placing
+    Super+P                             screen settings
+    ```
+
+    Run `xfce4-keyboard-settings` and add new hotkeys :
+
+    ```
+    fileman /home/hotnuma/Downloads/    Super+E
     firefox                             Super+B
     rofi -show run                      Super+Space
     systemctl poweroff                  Maj+Super+Q
@@ -68,7 +77,8 @@ Use at your own risk. :-)
 
 * Firefox
     
-    Install uBlock Origin, SingleFile, cookies.txt. Restore bookmarks and passwords.  
+    Install uBlock Origin, SingleFile, cookies.txt.  
+    Restore bookmarks, passwords and filters.  
     
     Disable overlay scrollbars : `widget.gtk.overlay-scrollbars.enabled false`  
     Disable resume from crash : `browser.sessionstore.resume_from_crash false`  
