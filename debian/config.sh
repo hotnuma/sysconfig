@@ -141,9 +141,9 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full uchardet"
-    APPLIST+=" audacious engrampa evince feh geany gimp rofi zathura"
-    APPLIST+=" mpv mkvtoolnix mkvtoolnix-gui mediainfo-gui"
+    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
+    APPLIST+=" audacious engrampa feh geany gimp rofi zathura"
+    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # install without recommends

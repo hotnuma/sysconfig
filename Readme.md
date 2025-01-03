@@ -211,7 +211,7 @@ Use at your own risk. :-)
 
 * Additional programs
 
-    `datamash freefilesync gnuplot plotutils sigil`
+    `datamash evince freefilesync gnuplot plotutils sigil uchardet`
 
 
 #### Graphic card
