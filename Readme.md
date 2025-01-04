@@ -15,6 +15,7 @@ Use at your own risk. :-)
 
     https://www.debian.org/distrib/  
     https://www.debian.org/releases/stable/amd64/ch04s03.fr.html  
+    https://forums.debian.net/viewtopic.php?p=781767#p781767  
     
     Download an ISO file and copy it to a USB drive :
     
