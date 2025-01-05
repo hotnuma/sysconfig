@@ -216,6 +216,7 @@ Use at your own risk. :-)
     evince
     freefilesync
     gnuplot
+    greybird-gtk-theme
     plotutils
     python3-pip
     sigil
