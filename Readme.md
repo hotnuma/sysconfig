@@ -211,7 +211,16 @@ Use at your own risk. :-)
 
 * Additional programs
 
-    `datamash evince freefilesync gnuplot plotutils sigil uchardet`
+    ```
+    datamash
+    evince
+    freefilesync
+    gnuplot
+    plotutils
+    python3-pip
+    sigil
+    uchardet
+    ```
 
 
 #### Graphic card

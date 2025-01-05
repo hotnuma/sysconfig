@@ -136,7 +136,7 @@ if [[ ! -f "$dest" ]]; then
     
     # install base
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
-    APPLIST+=" build-essential git meson ninja-build pkg-config clang-format"
+    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
     APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
@@ -158,12 +158,12 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
     
     # timers
-    APPLIST="apt-daily.timer apt-daily-upgrade.timer anacron.timer"
+    APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
     
     # services
-    APPLIST="apparmor avahi-daemon cron anacron cups cups-browsed"
+    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
     APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
@@ -182,9 +182,9 @@ fi
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo " *** install dev packages" | tee -a "$OUTFILE"
-    APPLIST="gettext xfce4-dev-tools libxfconf-0-dev libxfce4ui-2-dev"
+    APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
     APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
-    APPLIST+=" libwnck-3-dev libxss-dev libxmu-dev"
+    APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
