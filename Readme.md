@@ -79,12 +79,20 @@ Use at your own risk. :-)
     
     Install uBlock Origin, SingleFile, cookies.txt.  
     Restore bookmarks, passwords and filters.  
+    Disable telemetry.  
     
-    Disable DRM banner : `browser.eme.ui.enabled false`  
-    Disable overlay scrollbars : `widget.gtk.overlay-scrollbars.enabled false`  
-    Disable resume from crash : `browser.sessionstore.resume_from_crash false`  
-    Hide download box : `browser.download.alwaysOpenPanel	false`  
-    
+    ```
+    "browser.download.alwaysOpenPanel", false
+    "browser.eme.ui.enabled", false
+    "browser.sessionstore.resume_from_crash", false
+    "datareporting.healthreport.uploadEnabled", false
+    "font.minimum-size.x-western", 14
+    "gfx.x11-egl.force-enabled", true
+    "media.ffvpx.enabled", false
+    "media.videocontrols.picture-in-picture.video-toggle.enabled", false
+    "widget.gtk.overlay-scrollbars.enabled", false
+    ```
+
     Test videos :  
     
     https://www.youtube.com/watch?v=cuXsupMuik4  
