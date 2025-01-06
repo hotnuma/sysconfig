@@ -308,15 +308,23 @@ if command -v appinfo &> /dev/null; then
     app_show "fileman"                      "false" 2>&1 | tee -a "$OUTFILE"
     app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
     app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "RealTimeSync"                 "false" 2>&1 | tee -a "$OUTFILE"
     app_show "system-config-printer"        "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "thunar"                       "false" 2>&1 | tee -a "$OUTFILE"
     app_show "thunar-bulk-rename"           "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "thunar-settings"              "false" 2>&1 | tee -a "$OUTFILE"
+    app_show "thunar-volman-settings"       "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
     app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
+fi
+
+dest="$HOME"/.local/share/applications/thunar.desktop
+if [[ ! -f "$dest" ]]; then
+    echo "*** hide thunar launcher" | tee -a "$OUTFILE"
+    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
 
 echo "done" | tee -a $OUTFILE
