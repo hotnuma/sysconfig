@@ -5,6 +5,7 @@ DEBDIR="$BASEDIR"
 CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
 QTCREATOR=0
+YES=0
 
 # tests -----------------------------------------------------------------------
 
@@ -15,10 +16,14 @@ if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
 fi
 
 while [[ $# > 0 ]]; do
-    key="$1"
-    case $key in
+    arg="$1"
+    case $arg in
         qtcreator)
         QTCREATOR=1
+        shift
+        ;;
+        yes)
+        YES=1
         shift
         ;;
         *)
@@ -27,15 +32,24 @@ while [[ $# > 0 ]]; do
     esac
 done
 
+if [[ $YES != 1 ]]; then
+    # don't run a scipt without nowing what it does :-P
+    echo "*** missing parameter"
+    echo "abort..."
+    exit 1
+fi
+
 # system settings =============================================================
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root: abort."
+    echo "*** must not be run as root"
+    echo "abort..."
     exit 1
 else
     sudo -k # make sure to ask for password on next sudo
     if ! sudo true; then
-        echo "*** sudo failed: abort."
+        echo "*** sudo failed"
+        echo "abort..."
         exit 1
     fi
 fi
@@ -136,7 +150,7 @@ if [[ ! -f "$dest" ]]; then
     
     # install base
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
-    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
+    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
     APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 

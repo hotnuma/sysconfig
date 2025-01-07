@@ -2,11 +2,34 @@
 
 BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
 BUILDDIR="$HOME/DevFiles"
+ARGS="$@"
+YES=0
 
 # tests -----------------------------------------------------------------------
 
 if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
     echo "*** XFCE was not detected"
+    echo "abort..."
+    exit 1
+fi
+
+
+while [[ $# > 0 ]]; do
+    arg="$1"
+    case $arg in
+        yes)
+        YES=1
+        shift
+        ;;
+        *)
+        shift
+        ;;
+    esac
+done
+
+if [[ $YES != 1 ]]; then
+    # don't run a scipt without nowing what it does :-P
+    echo "*** missing parameter"
     echo "abort..."
     exit 1
 fi
@@ -24,10 +47,10 @@ fi
 
 case $DISTID in
 debian)
-    $BASEDIR/debian/config.sh "$@"
+    $BASEDIR/debian/config.sh "$ARGS"
     ;;
 raspios)
-    $BASEDIR/raspios/config.sh
+    $BASEDIR/raspios/config.sh "$ARGS"
     ;;
 *)
     echo "Unknown system"

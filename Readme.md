@@ -87,10 +87,15 @@ Use at your own risk. :-)
     "browser.sessionstore.resume_from_crash", false
     "datareporting.healthreport.uploadEnabled", false
     "font.minimum-size.x-western", 14
-    "gfx.x11-egl.force-enabled", true
-    "media.ffvpx.enabled", false
     "media.videocontrols.picture-in-picture.video-toggle.enabled", false
     "widget.gtk.overlay-scrollbars.enabled", false
+    ```
+    
+    Maybe useless
+    
+    ```
+    "gfx.x11-egl.force-enabled", true
+    "media.ffvpx.enabled", false
     ```
 
     Test videos :  

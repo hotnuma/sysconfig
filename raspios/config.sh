@@ -6,6 +6,9 @@ CURRENTUSER="$USER"
 OUTFILE="$HOME/install.log"
 MODEL=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 
+# a bit outdated
+exit 1
+
 echo "===============================================================================" | tee -a $OUTFILE
 echo " Raspi install..." | tee -a $OUTFILE
 echo "===============================================================================" | tee -a $OUTFILE
