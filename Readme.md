@@ -91,13 +91,6 @@ Use at your own risk. :-)
     "widget.gtk.overlay-scrollbars.enabled", false
     ```
     
-    Maybe useless
-    
-    ```
-    "gfx.x11-egl.force-enabled", true
-    "media.ffvpx.enabled", false
-    ```
-
     Test videos :  
     
     https://www.youtube.com/watch?v=cuXsupMuik4  
