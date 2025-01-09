@@ -78,24 +78,12 @@ Use at your own risk. :-)
 * Firefox
     
     Install uBlock Origin, SingleFile, cookies.txt.  
-    Restore bookmarks, passwords and filters.  
-    Disable telemetry.  
-    
-    ```
-    "browser.download.alwaysOpenPanel", false
-    "browser.eme.ui.enabled", false
-    "browser.sessionstore.resume_from_crash", false
-    "datareporting.healthreport.uploadEnabled", false
-    "font.minimum-size.x-western", 14
-    "media.videocontrols.picture-in-picture.video-toggle.enabled", false
-    "widget.gtk.overlay-scrollbars.enabled", false
-    ```
+    Restore bookmarks, passwords, filters and user.js.  
     
     Test videos :  
     
     https://www.youtube.com/watch?v=cuXsupMuik4  
     https://www.youtube.com/watch?v=TVtoxUohG5E  
-
 
 * Configure Terminal
     
