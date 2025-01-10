@@ -18,10 +18,13 @@ Use at your own risk. :-)
     
     Download an ISO file and copy it to a USB drive :
     
-    ```
-    sudo cp ./debian.iso /dev/sdX
-    sudo sync
-    ```
+    `sudo dd if=<file> of=<device> bs=16M status=progress oflag=sync`
+    
+    or
+    
+    `sudo cp <file> <device> && sudo sync`
+    
+    where <device> is the all device such as `/dev/sdc`, not a partition.
     
     https://www.youtube.com/watch?v=gddlhr9ST9Y  
     
