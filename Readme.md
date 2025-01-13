@@ -218,6 +218,7 @@ Use at your own risk. :-)
     python3-pip
     sigil
     uchardet
+    vainfo
     ```
 
 
