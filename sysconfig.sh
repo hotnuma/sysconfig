@@ -142,11 +142,6 @@ if [[ ! -f "$dest" ]]; then
     mkdir "$HOME"/Bureau/ 2>/dev/null
     mkdir -p "$HOME"/Downloads/0Supprimer/ 2>/dev/null
     
-    # set xfce settings
-    echo "*** xfconf settings" | tee -a "$OUTFILE"
-    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
-    
     # disable autostart programs
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/nm-applet.desktop
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/print-applet.desktop
@@ -267,7 +262,9 @@ if [[ ! -L "$dest" ]]; then
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
     sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
     
-    echo "*** appfinder" | tee -a "$OUTFILE"
+    echo "*** xfconf settings" | tee -a "$OUTFILE"
+    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
     xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
 fi
 
