@@ -214,8 +214,8 @@ Use at your own risk. :-)
     freefilesync
     gnuplot
     greybird-gtk-theme
+    lz4json
     plotutils
-    python3-pip
     sigil
     uchardet
     vainfo
