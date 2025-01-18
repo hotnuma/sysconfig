@@ -155,7 +155,7 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="curl dos2unix hardinfo htop inxi lz4json net-tools p7zip-full"
+    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
     APPLIST+=" audacious engrampa feh geany gimp rofi zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
