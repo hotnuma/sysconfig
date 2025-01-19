@@ -306,12 +306,15 @@ fi
 filemod()
 {
     if [[ ! -f "$1" ]]; then
+        echo "file ${1} doesn't exist" | tee -a "$OUTFILE"
         return
     fi
+    
     filename=$(basename "$1")
     echo "*** hide ${filename}" | tee -a "$OUTFILE"
+    dest="$HOME"/.local/share/applications/$filename
     cp "$1" "$HOME"/.local/share/applications/
-    echo "NoDisplay=true" >> "$HOME"/.local/share/applications/$filename
+    echo "NoDisplay=true" >> "$dest"
 }
 
 app_hide()
