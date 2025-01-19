@@ -303,40 +303,50 @@ fi
 
 # Hide Launchers --------------------------------------------------------------
 
-app_show()
+filemod()
 {
-    userpath=$(appinfo -u "$1")
-    if [[ $userpath != "" ]]; then
+    if [[ ! -f "$1" ]]; then
+        return
+    fi
+    filename=$(basename "$1")
+    echo "*** hide ${filename}" | tee -a "$OUTFILE"
+    cp "$1" "$HOME"/.local/share/applications/
+    echo "NoDisplay=true" >> "$HOME"/.local/share/applications/$filename
+}
+
+app_hide()
+{
+    syspath=$(find /usr/local/share/applications/ \
+              -name ${1}.desktop -print -quit 2>/dev/null)
+    if [[ $syspath != "" ]]; then
+        filemod $syspath
         return
     fi
     
-    syspath=$(appinfo -f "$1")
-    if [[ $syspath == "" ]]; then
+    syspath=$(find /usr/share/applications/ \
+              -name ${1}.desktop -print -quit 2>/dev/null)
+    if [[ $syspath != "" ]]; then
+        filemod $syspath
         return
-    fi
-    
-    if [[ $2 == "true" ]]; then
-        appinfo -s "$1" 2>&1 | tee -a "$OUTFILE"
-    else
-        appinfo -h "$1" 2>&1 | tee -a "$OUTFILE"
     fi
 }
 
-if command -v appinfo &> /dev/null; then
-    app_show "fileman"                      "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "gcr-prompter"                 "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "gcr-viewer"                   "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "RealTimeSync"                 "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "system-config-printer"        "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "thunar-bulk-rename"           "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "thunar-settings"              "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "thunar-volman-settings"       "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce-backdrop-settings"       "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-appfinder"              "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-file-manager"           "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-mail-reader"            "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-run"                    "false" 2>&1 | tee -a "$OUTFILE"
-    app_show "xfce4-web-browser"            "false" 2>&1 | tee -a "$OUTFILE"
+dest="$HOME"/.local/share/applications/fileman.desktop
+if [[ ! -f "$dest" ]]; then
+    app_hide "fileman"
+    app_hide "gcr-prompter"
+    app_hide "gcr-viewer"
+    app_hide "RealTimeSync"
+    app_hide "system-config-printer"
+    app_hide "thunar-bulk-rename"
+    app_hide "thunar-settings"
+    app_hide "thunar-volman-settings"
+    app_hide "xfce-backdrop-settings"
+    app_hide "xfce4-appfinder"
+    app_hide "xfce4-file-manager"
+    app_hide "xfce4-mail-reader"
+    app_hide "xfce4-run"
+    app_hide "xfce4-web-browser"
 fi
 
 dest="$HOME"/.local/share/applications/thunar.desktop
