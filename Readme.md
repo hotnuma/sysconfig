@@ -79,6 +79,9 @@ Use at your own risk. :-)
     ```
     
     run terminal in a specific directory :  
+    
+    https://unix.stackexchange.com/questions/676601/  
+    
     `xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/`
     
 * Firefox
