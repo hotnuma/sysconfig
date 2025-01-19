@@ -77,7 +77,10 @@ Use at your own risk. :-)
     xfce4-taskmanager                   Super+S
     xfce4-terminal                      Super+T
     ```
-
+    
+    run terminal in a specific directory :  
+    `xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/`
+    
 * Firefox
     
     Install uBlock Origin, SingleFile, cookies.txt.  
