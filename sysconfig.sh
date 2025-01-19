@@ -301,7 +301,7 @@ if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
-# Hide Launchers --------------------------------------------------------------
+# Hide Launchers ==============================================================
 
 filemod()
 {
@@ -387,17 +387,10 @@ if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
     build_src "fileman" "/usr/local/bin/fileman"
     build_src "systools" "/usr/local/bin/colortest"
     build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
-fi
-
-if [[ ! -f "/usr/local/bin/mpvcmd" ]]; then
     build_src "mpvcmd" "/usr/local/bin/mpvcmd"
     build_src "powerctl" "/usr/local/bin/powerctl"
     build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "volman" "/usr/local/bin/volman"
-fi
-
-if [[ ! -f "/usr/local/bin/appinfo" ]]; then
-    build_src "appinfo" "/usr/local/bin/appinfo"
     build_src "applist" "/usr/local/bin/applist"
     build_src "firebook" "/usr/local/bin/firebook"
     build_src "sfind" "/usr/local/bin/sfind"
