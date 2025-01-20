@@ -314,6 +314,7 @@ filemod()
     echo "*** hide ${filename}" | tee -a "$OUTFILE"
     dest="$HOME"/.local/share/applications/$filename
     cp "$1" "$HOME"/.local/share/applications/
+    sed -i '/^MimeType=/d' "$dest" | tee -a "$OUTFILE"
     echo "NoDisplay=true" >> "$dest"
 }
 
@@ -350,11 +351,8 @@ if [[ ! -f "$dest" ]]; then
     app_hide "xfce4-mail-reader"
     app_hide "xfce4-run"
     app_hide "xfce4-web-browser"
-fi
-
-dest="$HOME"/.local/share/applications/thunar.desktop
-if [[ ! -f "$dest" ]]; then
     echo "*** hide thunar launcher" | tee -a "$OUTFILE"
+    dest="$HOME"/.local/share/applications/thunar.desktop
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
 
