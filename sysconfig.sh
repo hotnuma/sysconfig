@@ -383,15 +383,14 @@ build_src()
 if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
     build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
     build_src "fileman" "/usr/local/bin/fileman"
+    build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "systools" "/usr/local/bin/colortest"
     build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
-    build_src "mpvcmd" "/usr/local/bin/mpvcmd"
-    build_src "powerctl" "/usr/local/bin/powerctl"
-    build_src "sysquery" "/usr/local/bin/sysquery"
-    build_src "volman" "/usr/local/bin/volman"
     build_src "applist" "/usr/local/bin/applist"
     build_src "firebook" "/usr/local/bin/firebook"
-    build_src "sfind" "/usr/local/bin/sfind"
+    build_src "mpvcmd" "/usr/local/bin/mpvcmd"
+    build_src "powerctl" "/usr/local/bin/powerctl"
+    build_src "volman" "/usr/local/bin/volman"
 fi
 
 dest=/usr/local/bin/hoedown
