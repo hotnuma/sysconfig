@@ -187,7 +187,9 @@ Use at your own risk. :-)
     https://packages.debian.org/bookworm/qtcreator  
     https://packages.debian.org/source/bookworm/qt6-base  
 
-    `./sysconfig qtcreator`
+    `./sysconfig qtcreator`  
+    
+    additional packages : `qtchooser qt6-tools-dev`
 
     Disable unneeded plugins :
     
@@ -211,6 +213,9 @@ Use at your own risk. :-)
     `/usr/lib/qt6/bin/qmake`
     
     In the `Kits tab`, select the previously detected `Qt Version`.
+    
+    In the preferences of the editor, `Fonts and Colors`, set font
+    size to 11 and select the `Default Classic` color scheme.
 
 * Additional programs
 
