@@ -210,7 +210,7 @@ dest=/usr/bin/qtcreator
 if [[ $QTCREATOR == 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install QtCreator" | tee -a "$OUTFILE"
     APPLIST="qtcreator qt6-base-dev"
-    # APPLIST+=" qtchooser qt6-tools-dev qmake6"
+    # APPLIST+=" qtchooser qt6-tools-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
