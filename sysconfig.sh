@@ -8,6 +8,14 @@ OUTFILE="$HOME/install.log"
 QTCREATOR=0
 YES=0
 
+# update ======================================================================
+
+if [[ $# == 1 ]] && [[ $1 == "update" ]]; then
+    echo "*** update files..."
+    cp "$HOME"/.bash_aliases "$BASEDIR"/home/bash_aliases
+    exit 0
+fi
+
 # tests =======================================================================
 
 if [[ -f /etc/os-release ]]; then

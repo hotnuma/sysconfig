@@ -4,9 +4,8 @@
 
 ---
 
-Post install scripts for XFCE, these are meant to be
-some examples and **must not be executed as is**.
-Use at your own risk. :-)
+Experimental post install script for Debian XFCE, **this is an example script
+it must not be executed as is**.
 
 
 #### System Install
