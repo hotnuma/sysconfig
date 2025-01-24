@@ -4,8 +4,8 @@
 
 ---
 
-Experimental post install script for Debian XFCE, **this is an example script
-it must not be executed as is**.
+Experimental post install script for Debian XFCE.  
+**This is an example script it must not be executed as is.**
 
 
 #### System Install
