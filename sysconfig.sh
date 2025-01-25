@@ -291,7 +291,7 @@ fi
 dest="$HOME"/.config/autostart/powerctl.desktop
 if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
     echo "*** powerctl" | tee -a "$OUTFILE"
-    sudo cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
 fi
 
 # terminal theme --------------------------------------------------------------
