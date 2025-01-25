@@ -270,9 +270,12 @@ if [[ ! -L "$dest" ]]; then
     sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
     
     echo "*** xfconf settings" | tee -a "$OUTFILE"
-    xfconf-query -c keyboards -p /Default/Numlock -t bool -s true 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfwm4 -p /general/workspace_count -s 1 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-appfinder -np /enable-service -t 'bool' -s 'false'
+    xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
 fi
 
 # aliases ---------------------------------------------------------------------
