@@ -221,6 +221,7 @@ Experimental post install script for Debian XFCE.
     ```
     datamash
     evince
+    feh
     freefilesync
     gnuplot
     greybird-gtk-theme
