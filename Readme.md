@@ -97,6 +97,13 @@ Experimental post install script for Debian XFCE.
     
     https://bbs.archlinux.org/viewtopic.php?id=255794  
     https://unix.stackexchange.com/questions/66662/  
+    https://askubuntu.com/questions/530779/  
+    
+    ```
+    sudo mv /usr/share/dbus-1/services/org.xfce.FileManager.service .
+    sudo mv /usr/share/dbus-1/services/org.xfce.Thunar.FileManager1.service .
+    sudo mv /usr/share/dbus-1/services/org.xfce.Thunar.service .
+    ```
 
 * Configure Terminal
     
