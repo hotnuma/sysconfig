@@ -92,6 +92,11 @@ Experimental post install script for Debian XFCE.
     
     https://www.youtube.com/watch?v=cuXsupMuik4  
     https://www.youtube.com/watch?v=TVtoxUohG5E  
+    
+    Disable Filemanager service :
+    
+    https://bbs.archlinux.org/viewtopic.php?id=255794  
+    https://unix.stackexchange.com/questions/66662/  
 
 * Configure Terminal
     
