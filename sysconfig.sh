@@ -195,8 +195,8 @@ if [[ ! -f "$dest" ]]; then
     # disable gvfs backends
     APPLIST="gvfs-afc-volume-monitor gvfs-goa-volume-monitor"
     APPLIST+=" gvfs-gphoto2-volume-monitor"
-    sudo systemctl --user stop $APPLIST 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl --user mask $APPLIST 2>&1 | tee -a "$OUTFILE"
+    systemctl --user stop $APPLIST 2>&1 | tee -a "$OUTFILE"
+    systemctl --user mask $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
 # smartd ----------------------------------------------------------------------
