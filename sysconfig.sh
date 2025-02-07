@@ -165,7 +165,7 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
 
     # install softwares
-    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
+    APPLIST="curl dos2unix gvfs-backends hardinfo htop inxi net-tools p7zip-full"
     APPLIST+=" audacious engrampa geany gimp rofi zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
@@ -186,11 +186,17 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
     
-    # services
+    # disable services
     APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
     APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
+    
+    # disable gvfs backends
+    APPLIST="gvfs-afc-volume-monitor gvfs-goa-volume-monitor"
+    APPLIST+=" gvfs-gphoto2-volume-monitor"
+    sudo systemctl --user stop $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl --user mask $APPLIST 2>&1 | tee -a "$OUTFILE"
 fi
 
 # smartd ----------------------------------------------------------------------
