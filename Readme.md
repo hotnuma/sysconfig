@@ -228,6 +228,21 @@ Experimental post install script for Debian XFCE.
     In the preferences of the editor, `Fonts and Colors`, set font
     size to 11 and select the `Default Classic` color scheme.
 
+* gvfs-backends
+    
+    Provides `gvfs-mtp-volume-monitor` which permits to mount Android devices.
+    
+    Mask service :
+    
+    ```
+    systemctl --user stop gvfs-mtp-volume-monitor
+    systemctl --user mask gvfs-mtp-volume-monitor
+    ```
+    
+    Unmask service :
+    
+    `rm $HOME/.config/systemd/user/gvfs-mtp-volume-monitor.service`
+    
 * Additional programs
 
     ```
