@@ -232,6 +232,8 @@ Experimental post install script for Debian XFCE.
     
     Provides `gvfs-mtp-volume-monitor` which permits to mount Android devices.
     
+    Install `sudo apt install gvfs-backends`
+    
     Mask service :
     
     ```
