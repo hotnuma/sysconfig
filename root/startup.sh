@@ -8,7 +8,7 @@ if [[ ! -f "/usr/bin/hsetroot" ]]; then
     exit 0
 fi
 
-dest="$HOME"/wallpaper
+dest="$HOME"/.wallpaper
 if [[ -f $dest ]]; then
     hsetroot -cover "$dest"
     exit 0
