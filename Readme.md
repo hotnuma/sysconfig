@@ -77,6 +77,12 @@ Experimental post install script for Debian XFCE.
     xfce4-terminal                      Super+T
     ```
     
+    Run `xfwm4-settings` and edit hotkeys :
+
+    ```
+    show desktop                        Super+D
+    ```
+
     run terminal in a specific directory :  
     
     https://unix.stackexchange.com/questions/676601/  
