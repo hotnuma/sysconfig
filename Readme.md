@@ -265,6 +265,7 @@ Experimental post install script for Debian XFCE.
     sigil
     uchardet
     vainfo
+    xfce4-screenshooter
     ```
 
 
