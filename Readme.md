@@ -260,6 +260,7 @@ Experimental post install script for Debian XFCE.
     freefilesync
     gnuplot
     greybird-gtk-theme
+    libgd-dev
     lz4json
     plotutils
     sigil
