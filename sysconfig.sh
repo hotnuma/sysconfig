@@ -1,20 +1,12 @@
 #!/usr/bin/bash
 
-BASEDIR="$(dirname -- "$(readlink -f -- "$0";)")"
-DEBDIR="$BASEDIR"
-BUILDDIR="$HOME/DevFiles"
-CURRENTUSER="$USER"
-OUTFILE="$HOME/install.log"
-QTCREATOR=0
-YES=0
-
-# update ======================================================================
-
-if [[ $# == 1 ]] && [[ $1 == "update" ]]; then
-    echo "*** update files..."
-    cp "$HOME"/.bash_aliases "$BASEDIR"/home/bash_aliases
-    exit 0
-fi
+basedir="$(dirname -- "$(readlink -f -- "$0";)")"
+debdir="$basedir"
+builddir="$HOME/DevFiles"
+currentuser="$USER"
+outfile="$HOME/install.log"
+opt_qtcreator=0
+opt_yes=0
 
 # tests =======================================================================
 
@@ -30,25 +22,21 @@ if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
     exit 1
 fi
 
-while [[ $# > 0 ]]; do
-    arg="$1"
-    case $arg in
+while (($#)); do
+    case "$1" in
         qtcreator)
-        QTCREATOR=1
-        shift
+        opt_qtcreator=1
         ;;
         yes)
-        YES=1
-        shift
+        opt_yes=1
         ;;
         *)
-        shift
         ;;
     esac
+    shift
 done
 
-if [[ $YES != 1 ]]; then
-    # don't run a scipt without nowing what it does :-P
+if [[ $opt_yes != 1 ]]; then
     echo "*** missing parameter"
     echo "abort..."
     exit 1
@@ -71,18 +59,18 @@ fi
 
 # start =======================================================================
 
-echo "===============================================================================" | tee -a $OUTFILE
-echo " Debian install..." | tee -a $OUTFILE
-echo "===============================================================================" | tee -a $OUTFILE
+echo "===============================================================================" | tee -a $outfile
+echo " Debian install..." | tee -a $outfile
+echo "===============================================================================" | tee -a $outfile
 
 # sudoers ---------------------------------------------------------------------
 
 dest=/etc/sudoers.d/10_custom
 if [[ ! -f "$dest" ]]; then
-    echo "*** sudoers" | tee -a "$OUTFILE"
+    echo "*** sudoers" | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << EOF
-Defaults:$CURRENTUSER !logfile, !syslog
-$CURRENTUSER ALL=(ALL) NOPASSWD: ALL
+Defaults:$currentuser !logfile, !syslog
+$currentuser ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
 
@@ -90,8 +78,8 @@ fi
 
 dest=/etc/default/grub
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** grub config backup" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    echo "*** grub config backup" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << "EOF"
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=0
@@ -100,19 +88,19 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 GRUB_CMDLINE_LINUX=""
 GRUB_BACKGROUND=
 EOF
-    sudo update-grub 2>&1 | tee -a "$OUTFILE"
+    sudo update-grub 2>&1 | tee -a "$outfile"
 fi
 
 # numlock/autologin -----------------------------------------------------------
 
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** autologin" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    echo "*** autologin" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << EOF
 [Seat:*]
 autologin-guest=false
-autologin-user=$CURRENTUSER
+autologin-user=$currentuser
 autologin-user-timeout=0
 autologin-session=lightdm-xsession
 EOF
@@ -122,25 +110,25 @@ fi
 
 dest=/etc/systemd/system/rtkit-daemon.service.d/
 if [[ ! -d ${dest} ]]; then
-    echo "*** disable rtkit logs" | tee -a "$OUTFILE"
+    echo "*** disable rtkit logs" | tee -a "$outfile"
     sudo mkdir $dest
     dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
     sudo tee "$dest" > /dev/null << "EOF"
 [Service]
 LogLevelMax=4
 EOF
-    sudo systemctl daemon-reload 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl daemon-reload 2>&1 | tee -a "$outfile"
+    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
 fi
 
 # install / remove ============================================================
 
 dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
-    echo "*** install softwares" | tee -a "$OUTFILE"
+    echo "*** install softwares" | tee -a "$outfile"
     
     # upgrade
-    sudo apt update; sudo apt upgrade 2>&1 | tee -a "$OUTFILE"
+    sudo apt update; sudo apt upgrade 2>&1 | tee -a "$outfile"
     
     # create directories
     mkdir "$HOME"/.config/autostart/ 2>/dev/null
@@ -162,71 +150,71 @@ if [[ ! -f "$dest" ]]; then
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
     APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
 
     # install softwares
     APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
     APPLIST+=" audacious engrampa geany gimp rofi zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     
     # install without recommends
     APPLIST="smartmontools"
-    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$outfile"
     
     # uninstall
     APPLIST="at-spi2-core exfalso hv3 light-locker synaptic"
     APPLIST+=" xdg-desktop-portal xsane xterm yt-dlp zutty"
     APPLIST+=" mousepad parole tumbler xfburn xfce4-power-manager"
-    sudo apt -y purge $APPLIST 2>&1 | tee -a "$OUTFILE"
-    sudo apt -y autoremove 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
+    sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     
     # timers
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
-    sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
+    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
     
     # disable services
     APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
     APPLIST+=" ModemManager wpa_supplicant"
-    sudo systemctl stop $APPLIST 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl disable $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
+    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
 fi
 
 # smartd ----------------------------------------------------------------------
 
 if [ "$(pidof smartd)" ]; then
-    echo "*** smartd" | tee -a "$OUTFILE"
-    sudo systemctl stop smartd 2>&1 | tee -a "$OUTFILE"
-    sudo systemctl disable smartd 2>&1 | tee -a "$OUTFILE"
+    echo "*** smartd" | tee -a "$outfile"
+    sudo systemctl stop smartd 2>&1 | tee -a "$outfile"
+    sudo systemctl disable smartd 2>&1 | tee -a "$outfile"
 fi
 
 # install dev packages ========================================================
 
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
-    echo "*** install dev packages" | tee -a "$OUTFILE"
+    echo "*** install dev packages" | tee -a "$outfile"
     APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
     APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
     APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
 fi
 
 # install QtCreator ===========================================================
 
 dest=/usr/bin/qtcreator
-if [[ $QTCREATOR == 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install QtCreator" | tee -a "$OUTFILE"
+if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install QtCreator" | tee -a "$outfile"
     APPLIST="qtcreator qt6-base-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$OUTFILE"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
 fi
 
 # system settings =============================================================
 
 dest=/etc/environment
 if [[ ! -f ${dest}.bak ]]; then
-    echo "*** environment" | tee -a "$OUTFILE"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
+    echo "*** environment" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << "EOF"
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 GTK_OVERLAY_SCROLLING=0
@@ -238,77 +226,69 @@ fi
 
 dest=/etc/xdg/xfce4
 if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
-    echo "*** copy xdg xfce4" | tee -a "$OUTFILE"
-    sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$OUTFILE"
+    echo "*** copy xdg xfce4" | tee -a "$outfile"
+    sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$outfile"
     dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
-    sudo cp "$DEBDIR"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo cp "$debdir"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$outfile"
 fi
     
 # startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
 if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
-    echo "*** startup.sh" | tee -a "$OUTFILE"
-    sudo cp "$DEBDIR"/root/startup.sh "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** startup.sh" | tee -a "$outfile"
+    sudo cp "$debdir"/root/startup.sh "$dest" 2>&1 | tee -a "$outfile"
     dest="$HOME"/.config/autostart/startup.desktop
-    cp "$DEBDIR"/home/startup.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+    cp "$debdir"/home/startup.desktop "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # user settings ===============================================================
 
 dest="$HOME"/config
 if [[ ! -L "$dest" ]]; then
-    echo "*** config link" | tee -a "$OUTFILE"
-    ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** config link" | tee -a "$outfile"
+    ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$outfile"
     
-    echo "*** add user to adm group" | tee -a "$OUTFILE"
-    sudo usermod -a -G adm $CURRENTUSER 2>&1 | tee -a "$OUTFILE"
+    echo "*** add user to adm group" | tee -a "$outfile"
+    sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
     
-    echo "*** xfce4-panel.xml" | tee -a "$OUTFILE"
+    echo "*** xfce4-panel.xml" | tee -a "$outfile"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    sudo cp "$DEBDIR"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo cp "$debdir"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$outfile"
     
-    echo "*** xfconf settings" | tee -a "$OUTFILE"
-    xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$OUTFILE"
-fi
-
-# aliases ---------------------------------------------------------------------
-
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** xfconf settings" | tee -a "$outfile"
+    xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
 # powerctl --------------------------------------------------------------------
 
 dest="$HOME"/.config/autostart/powerctl.desktop
 if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
-    echo "*** powerctl" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** powerctl" | tee -a "$outfile"
+    cp "$debdir"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # terminal theme --------------------------------------------------------------
 
 dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
 if [[ ! -f "$dest" ]]; then
-    echo "*** terminal colors" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/custom.theme "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** terminal colors" | tee -a "$outfile"
+    cp "$debdir"/home/custom.theme "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # thunar uca ------------------------------------------------------------------
 
 dest="$HOME"/.config/Thunar/uca.xml
 if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
-    echo "*** thunar terminal" | tee -a "$OUTFILE"
-    mv "$dest" ${dest}.bak 2>&1 | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/uca.xml "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** thunar terminal" | tee -a "$outfile"
+    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    cp "$debdir"/home/uca.xml "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # Hide Launchers ==============================================================
@@ -316,15 +296,15 @@ fi
 filemod()
 {
     if [[ ! -f "$1" ]]; then
-        echo "file ${1} doesn't exist" | tee -a "$OUTFILE"
+        echo "file ${1} doesn't exist" | tee -a "$outfile"
         return
     fi
     
     filename=$(basename "$1")
-    echo "*** hide ${filename}" | tee -a "$OUTFILE"
+    echo "*** hide ${filename}" | tee -a "$outfile"
     dest="$HOME"/.local/share/applications/$filename
     cp "$1" "$HOME"/.local/share/applications/
-    sed -i '/^MimeType=/d' "$dest" | tee -a "$OUTFILE"
+    sed -i '/^MimeType=/d' "$dest" | tee -a "$outfile"
     echo "NoDisplay=true" >> "$dest"
 }
 
@@ -361,19 +341,19 @@ if [[ ! -f "$dest" ]]; then
     app_hide "xfce4-mail-reader"
     app_hide "xfce4-run"
     app_hide "xfce4-web-browser"
-    echo "*** hide thunar launcher" | tee -a "$OUTFILE"
+    echo "*** hide thunar launcher" | tee -a "$outfile"
     dest="$HOME"/.local/share/applications/thunar.desktop
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
 
 # build from sources ==========================================================
 
-dest="$BUILDDIR"
+dest="$builddir"
 if [[ ! -d "$dest" ]]; then
-    echo "*** create build dir" | tee -a "$OUTFILE"
-    mkdir "$BUILDDIR"
+    echo "*** create build dir" | tee -a "$outfile"
+    mkdir "$builddir"
 fi
-pushd "$BUILDDIR" 1>/dev/null
+pushd "$builddir" 1>/dev/null
 
 # build from git --------------------------------------------------------------
 
@@ -382,10 +362,10 @@ build_src()
     local pack="$1"
     local dest="$2"
     if [[ ! -f "$dest" ]]; then
-        echo "*** build ${pack}" | tee -a "$OUTFILE"
-        git clone https://github.com/hotnuma/${pack}.git 2>&1 | tee -a "$OUTFILE"
+        echo "*** build ${pack}" | tee -a "$outfile"
+        git clone https://github.com/hotnuma/${pack}.git 2>&1 | tee -a "$outfile"
         pushd ${pack} 1>/dev/null
-        ./install.sh 2>&1 | tee -a "$OUTFILE"
+        ./install.sh 2>&1 | tee -a "$outfile"
         popd 1>/dev/null
     fi
 }
@@ -405,16 +385,16 @@ fi
 
 dest=/usr/local/bin/hoedown
 if [[ ! -f "$dest" ]]; then
-    echo "*** build hoedown" | tee -a "$OUTFILE"
-    git clone https://github.com/hoedown/hoedown.git 2>&1 | tee -a "$OUTFILE"
+    echo "*** build hoedown" | tee -a "$outfile"
+    git clone https://github.com/hoedown/hoedown.git 2>&1 | tee -a "$outfile"
     pushd hoedown 1>/dev/null
-    make && sudo make install 2>&1 | tee -a "$OUTFILE"
-    sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$OUTFILE"
+    make && sudo make install 2>&1 | tee -a "$outfile"
+    sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
 
 # pop dir ---------------------------------------------------------------------
 
 popd 1>/dev/null
-echo "done" | tee -a $OUTFILE
+echo "done" | tee -a $outfile
 
 
