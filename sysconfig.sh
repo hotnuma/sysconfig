@@ -77,7 +77,7 @@ fi
 # grub ------------------------------------------------------------------------
 
 dest=/etc/default/grub
-if [[ ! -f ${dest}.bak ]]; then
+if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
     echo "*** grub config backup" | tee -a "$outfile"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << "EOF"
