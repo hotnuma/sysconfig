@@ -257,6 +257,11 @@ if [[ ! -L "$dest" ]]; then
     echo "*** add user to adm group" | tee -a "$outfile"
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
     
+    echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
+    dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo cp "$debdir"/home/xfce4-keyboard-shortcuts.xml "$dest" 2>&1 | tee -a "$outfile"
+    
     echo "*** xfce4-panel.xml" | tee -a "$outfile"
     dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
