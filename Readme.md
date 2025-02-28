@@ -74,8 +74,15 @@ Experimental post install script for Debian XFCE.
     systemctl poweroff                  Maj+Super+Q
     systemctl reboot                    Maj+Super+R
     xfce4-taskmanager                   Super+S
-    xfce4-terminal                      Super+T
     ```
+    
+    run terminal in a specific directory :  
+    
+    https://unix.stackexchange.com/questions/676601/  
+    
+    `xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/`
+    
+    shortcut : `Super+T`
     
     Run `xfwm4-settings` and edit hotkeys :
 
@@ -83,12 +90,6 @@ Experimental post install script for Debian XFCE.
     show desktop                        Super+D
     ```
 
-    run terminal in a specific directory :  
-    
-    https://unix.stackexchange.com/questions/676601/  
-    
-    `xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/`
-    
 * Firefox
     
     Install uBlock Origin, SingleFile, cookies.txt.  
