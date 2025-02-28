@@ -251,24 +251,6 @@ Experimental post install script for Debian XFCE.
     
     `rm $HOME/.config/systemd/user/gvfs-mtp-volume-monitor.service`
     
-* Additional programs
-
-    ```
-    datamash
-    evince
-    exiv2
-    freefilesync
-    gnuplot
-    greybird-gtk-theme
-    libgd-dev
-    lz4json
-    plotutils
-    sigil
-    uchardet
-    vainfo
-    xfce4-screenshooter
-    ```
-
 
 #### Graphic card
 
