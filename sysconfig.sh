@@ -155,7 +155,7 @@ if [[ ! -f "$dest" ]]; then
     # install softwares
     APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
     APPLIST+=" audacious engrampa geany gimp rofi zathura"
-    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
+    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv xfce4-screenshooter"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     
     # install without recommends
