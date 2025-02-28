@@ -372,6 +372,7 @@ build_src()
 
 if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
     build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
+    build_src "libtinyui" "/usr/local/include/tinyui/etkaction.h"
     build_src "fileman" "/usr/local/bin/fileman"
     build_src "sysquery" "/usr/local/bin/sysquery"
     build_src "systools" "/usr/local/bin/colortest"
