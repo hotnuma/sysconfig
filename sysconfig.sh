@@ -149,7 +149,7 @@ if [[ ! -f "$dest" ]]; then
     # install base
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
-    APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
+    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
 
     # install softwares
