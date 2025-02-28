@@ -161,9 +161,14 @@ if [[ ! -f "$dest" ]]; then
     # install without recommends
     APPLIST="smartmontools"
     sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$outfile"
+fi
+
+dest=/usr/bin/mousepad
+if [[ -f "$dest" ]]; then
+    echo "*** uninstall softwares" | tee -a "$outfile"
     
     # uninstall
-    APPLIST="at-spi2-core exfalso hv3 light-locker synaptic"
+    APPLIST="at-spi2-core exfalso light-locker synaptic"
     APPLIST+=" xdg-desktop-portal xsane xterm yt-dlp zutty"
     APPLIST+=" mousepad parole tumbler xfburn xfce4-power-manager"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
@@ -180,7 +185,7 @@ if [[ ! -f "$dest" ]]; then
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
 fi
-
+    
 # smartd ----------------------------------------------------------------------
 
 if [ "$(pidof smartd)" ]; then
