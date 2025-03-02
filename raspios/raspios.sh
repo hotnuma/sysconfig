@@ -3,26 +3,33 @@
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 currentuser="$USER"
 outfile="$HOME/install.log"
+
+if [[ -d "/boot/grub" ]]; then
+    echo "*** not a Raspberry Pi"
+    echo "abort..."
+    exit 1
+fi
+
 model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
+if [[ "$model" != "Raspberry Pi 4 Model B Rev 1.4" ]]; then
+    echo "*** wrong board model: abort."
+    echo "abort..."
+    exit 1
+fi
 
 echo "===============================================================================" | tee -a $outfile
 echo " Raspi config..." | tee -a $outfile
 echo "===============================================================================" | tee -a $outfile
 
-if [[ "$model" != "Raspberry Pi 4 Model B Rev 1.4" ]]; then
-    echo " *** wrong board model: abort." | tee -a $outfile
-    exit 1
-fi
-
 # test if sudo is succesfull ==================================================
 
 if [[ "$EUID" = 0 ]]; then
-    echo " *** must not be run as root: abort." | tee -a $outfile
+    echo "*** must not be run as root, abort..." | tee -a $outfile
     exit 1
 else
     sudo -k
     if ! sudo true; then
-        echo " *** sudo failed: abort." | tee -a $outfile
+        echo "*** sudo failed, abort..." | tee -a $outfile
         exit 1
     fi
 fi
@@ -31,7 +38,7 @@ fi
 
 dest=/boot/config.txt
 if [[ ! -f $dest.bak ]]; then
-    echo " *** edit /boot/config.txt" | tee -a $outfile
+    echo "*** edit /boot/config.txt" | tee -a $outfile
     sudo cp $dest $dest.bak 2>&1 | tee -a $outfile
     sudo tee $dest > /dev/null << 'EOF'
 # http://rpf.io/configtxt
@@ -59,7 +66,7 @@ fi
 
 dest=/boot/cmdline.txt
 if [[ ! -f ${dest}.bak ]]; then
-    echo " *** edit /boot/cmdline.txt" | tee -a $outfile
+    echo "*** edit /boot/cmdline.txt" | tee -a $outfile
     sudo cp $dest ${dest}.bak 2>&1 | tee -a $outfile
     sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' $dest
 fi
@@ -68,7 +75,7 @@ fi
 
 dest=/etc/default/cpufrequtils
 if [[ ! -f $dest ]]; then
-    echo " *** set governor to performance" | tee -a $outfile
+    echo "*** set governor to performance" | tee -a $outfile
     sudo tee $dest > /dev/null << 'EOF'
 GOVERNOR="performance"
 EOF
@@ -78,7 +85,7 @@ fi
 
 #~ dest=~/Images
 #~ if [[ -d $dest ]]; then
-    #~ echo " *** clean home dir" | tee -a $outfile
+    #~ echo "*** clean home dir" | tee -a $outfile
     #~ rm -r ~/Images 2>&1 | tee -a $outfile
     #~ rm -r ~/Modèles 2>&1 | tee -a $outfile
     #~ rm -r ~/Musique 2>&1 | tee -a $outfile
