@@ -276,6 +276,14 @@ if [[ ! -L "$dest" ]]; then
     xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME"/.bash_aliases
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$OUTFILE"
+    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+fi
+
 # powerctl --------------------------------------------------------------------
 
 dest="$HOME"/.config/autostart/powerctl.desktop
