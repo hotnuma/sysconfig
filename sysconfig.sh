@@ -16,7 +16,7 @@ error_exit()
     exit 1
 }
 
-# tests =======================================================================
+# -----------------------------------------------------------------------------
 
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
@@ -46,7 +46,7 @@ done
 
 test "$opt_yes" -eq 1 || error_exit "missing parameter"
 
-# system settings =============================================================
+# test sudo -------------------------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root"
@@ -95,7 +95,7 @@ EOF
     sudo update-grub 2>&1 | tee -a "$outfile"
 fi
 
-# numlock/autologin -----------------------------------------------------------
+# autologin -------------------------------------------------------------------
 
 dest=/etc/lightdm/lightdm.conf
 if [[ ! -f ${dest}.bak ]]; then
@@ -125,9 +125,8 @@ EOF
     sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
 fi
 
-# install / remove ============================================================
+# upgrade ---------------------------------------------------------------------
 
-# upgrade
 if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
     echo "*** upgrade" | tee -a "$outfile"
     sudo apt update; sudo apt upgrade 2>&1 | tee -a "$outfile"
@@ -150,7 +149,8 @@ if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
 fi
 
-# install base
+# install base ================================================================
+
 dest=/usr/bin/meson
 if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
@@ -161,20 +161,20 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install softwares
+# install softwares -----------------------------------------------------------
+
 dest=/usr/bin/ffmpeg
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$outfile"
-    APPLIST="dos2unix hardinfo htop p7zip-full"
+    APPLIST="dos2unix htop net-tools p7zip-full"
     APPLIST+=" audacious engrampa geany gimp rofi xfce4-screenshooter zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# curl net-tools inxi
+# install without recommends --------------------------------------------------
 
-# install without recommends
 dest=/usr/sbin/smartctl
 if [[ ! -f "$dest" ]]; then
     echo "*** install without recommends" | tee -a "$outfile"
@@ -183,7 +183,33 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# uninstall
+# other programs
+# curl inxi hardinfo
+
+# install dev packages --------------------------------------------------------
+
+dest=/usr/include/gumbo.h
+if [[ ! -f "$dest" ]]; then
+    echo "*** install dev packages" | tee -a "$outfile"
+    APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
+    APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
+    APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# install QtCreator -----------------------------------------------------------
+
+dest=/usr/bin/qtcreator
+if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install QtCreator" | tee -a "$outfile"
+    APPLIST="qtcreator qt6-base-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# uninstall ===================================================================
+
 dest=/usr/bin/mousepad
 if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
@@ -213,28 +239,6 @@ if [ "$(pidof smartd)" ]; then
     echo "*** smartd" | tee -a "$outfile"
     sudo systemctl stop smartd 2>&1 | tee -a "$outfile"
     sudo systemctl disable smartd 2>&1 | tee -a "$outfile"
-fi
-
-# install dev packages ========================================================
-
-dest=/usr/include/gumbo.h
-if [[ ! -f "$dest" ]]; then
-    echo "*** install dev packages" | tee -a "$outfile"
-    APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
-    APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
-    APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
-# install QtCreator ===========================================================
-
-dest=/usr/bin/qtcreator
-if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install QtCreator" | tee -a "$outfile"
-    APPLIST="qtcreator qt6-base-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # system settings =============================================================
@@ -291,7 +295,6 @@ if [[ ! -L "$dest" ]]; then
     sudo cp "$debdir"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
-    #xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
     xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$outfile"
     xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
     xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
@@ -332,7 +335,7 @@ if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     cp "$debdir"/home/uca.xml "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# Hide Launchers ==============================================================
+# Hide Launchers --------------------------------------------------------------
 
 filemod()
 {
@@ -387,7 +390,7 @@ if [[ ! -f "$dest" ]]; then
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
 
-# build from sources ==========================================================
+# build programs ==============================================================
 
 dest="$builddir"
 if [[ ! -d "$dest" ]]; then
@@ -395,8 +398,6 @@ if [[ ! -d "$dest" ]]; then
     mkdir "$builddir"
 fi
 pushd "$builddir" 1>/dev/null
-
-# build from git --------------------------------------------------------------
 
 build_src()
 {
