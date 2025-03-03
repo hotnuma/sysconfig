@@ -1,0 +1,27 @@
+
+builddep thunar
+
+sudo apt install \
+gettext \
+libexif-dev \
+libexo-2-dev \
+libglib2.0-dev \
+libgtk-3-dev \
+libgudev-1.0-dev \
+libjpeg-dev \
+libnotify-dev \
+libpcre2-dev \
+libxfce4panel-2.0-dev \
+libxfce4ui-2-dev \
+libxfce4util-dev \
+libxfconf-0-dev \
+xfce4-dev-tools \
+gtk-doc-tools \
+autopoint
+
+git clone https://gitlab.xfce.org/xfce/thunar
+git checkout <branch|tag>  #optional step. Per default master is checked out
+cd thunar
+./autogen.sh
+make
+make install
