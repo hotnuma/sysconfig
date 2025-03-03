@@ -17,30 +17,30 @@ if [[ "$model" != "Raspberry Pi 4 Model B Rev 1.4" ]]; then
     exit 1
 fi
 
-echo "===============================================================================" | tee -a $outfile
-echo " Raspi config..." | tee -a $outfile
-echo "===============================================================================" | tee -a $outfile
+echo "===============================================================================" | tee -a "$outfile"
+echo " Raspi config..." | tee -a "$outfile"
+echo "===============================================================================" | tee -a "$outfile"
 
 # test if sudo is succesfull ==================================================
 
 if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root, abort..." | tee -a $outfile
+    echo "*** must not be run as root, abort..." | tee -a "$outfile"
     exit 1
 else
     sudo -k
     if ! sudo true; then
-        echo "*** sudo failed, abort..." | tee -a $outfile
+        echo "*** sudo failed, abort..." | tee -a "$outfile"
         exit 1
     fi
 fi
 
 # rpi configuration ===========================================================
 
-dest=/boot/config.txt
-if [[ -f $dest ]] && [[ ! -f $dest.bak ]]; then
-    echo "*** edit /boot/config.txt" | tee -a $outfile
-    sudo cp $dest $dest.bak 2>&1 | tee -a $outfile
-    sudo tee $dest > /dev/null << 'EOF'
+dest="/boot/config.txt"
+if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
+    echo "*** edit /boot/config.txt" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << 'EOF'
 # http://rpf.io/configtxt
 
 dtoverlay=vc4-kms-v3d
@@ -56,7 +56,7 @@ arm_freq=2000
 gpu_freq=600
 
 # audio
-dtparam=audio=on
+#dtparam=audio=on
 
 # disable unneeded
 dtoverlay=disable-bt
@@ -64,35 +64,23 @@ dtoverlay=disable-wifi
 EOF
 fi
 
-dest=/boot/cmdline.txt
+dest="/boot/cmdline.txt"
 if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    echo "*** edit /boot/cmdline.txt" | tee -a $outfile
-    sudo cp $dest ${dest}.bak 2>&1 | tee -a $outfile
-    sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' $dest
+    echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
 fi
 
 # cpu governor ================================================================
 
-dest=/etc/default/cpufrequtils
+dest="/etc/default/cpufrequtils"
 if [[ ! -f $dest ]]; then
-    echo "*** set governor to performance" | tee -a $outfile
-    sudo tee $dest > /dev/null << 'EOF'
+    echo "*** set governor to performance" | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << 'EOF'
 GOVERNOR="performance"
 EOF
 fi
 
-# clean directories -----------------------------------------------------------
-
-#~ dest=~/Images
-#~ if [[ -d $dest ]]; then
-    #~ echo "*** clean home dir" | tee -a $outfile
-    #~ rm -r ~/Images 2>&1 | tee -a $outfile
-    #~ rm -r ~/Modèles 2>&1 | tee -a $outfile
-    #~ rm -r ~/Musique 2>&1 | tee -a $outfile
-    #~ rm -r ~/Public 2>&1 | tee -a $outfile
-    #~ rm -r ~/Vidéos 2>&1 | tee -a $outfile
-#~ fi
-
-echo "done" | tee -a $outfile
+echo "done" | tee -a "$outfile"
 
 

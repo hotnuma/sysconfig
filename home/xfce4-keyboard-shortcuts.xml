@@ -47,7 +47,7 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;r" type="string" value="systemctl reboot"/>
       <property name="&lt;Super&gt;e" type="string" value="fileman /home/hotnuma/Downloads/"/>
       <property name="&lt;Super&gt;s" type="string" value="xfce4-taskmanager"/>
-      <property name="&lt;Super&gt;b" type="string" value="/opt/firefox134.01/firefox"/>
+      <property name="&lt;Super&gt;b" type="string" value="firefox"/>
       <property name="&lt;Super&gt;t" type="string" value="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/"/>
     </property>
   </property>
