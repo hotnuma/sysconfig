@@ -8,6 +8,14 @@ outfile="$HOME/install.log"
 opt_qtcreator=0
 opt_yes=0
 
+error_exit()
+{
+    msg="$1"
+    test "$msg" != "" || msg="an error occurred"
+    printf "*** $msg\nabort...\n" | tee -a "$outfile"
+    exit 1
+}
+
 # tests =======================================================================
 
 if [[ -f /etc/os-release ]]; then
@@ -36,11 +44,7 @@ while (($#)); do
     shift
 done
 
-if [[ $opt_yes != 1 ]]; then
-    echo "*** missing parameter"
-    echo "abort..."
-    exit 1
-fi
+test "$opt_yes" -eq 1 || error_exit "missing parameter"
 
 # system settings =============================================================
 
@@ -123,20 +127,19 @@ fi
 
 # install / remove ============================================================
 
-dest=/usr/bin/hsetroot
-if [[ ! -f "$dest" ]]; then
-    echo "*** install softwares" | tee -a "$outfile"
-    
-    # upgrade
+# upgrade
+if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
+    echo "*** upgrade" | tee -a "$outfile"
     sudo apt update; sudo apt upgrade 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "upgrade failed"
     
     # create directories
-    mkdir "$HOME"/.config/autostart/ 2>/dev/null
-    mkdir -p "$HOME"/.local/share/applications/ 2>/dev/null
-    mkdir -p "$HOME"/.local/share/xfce4/terminal/colorschemes/ 2>/dev/null
-    mkdir "$HOME"/.themes/ 2>/dev/null
-    mkdir "$HOME"/Bureau/ 2>/dev/null
-    mkdir -p "$HOME"/Downloads/0Supprimer/ 2>/dev/null
+    mkdir "$HOME/.config/autostart/" 2>/dev/null
+    mkdir -p "$HOME/.local/share/applications/" 2>/dev/null
+    mkdir -p "$HOME/.local/share/xfce4/terminal/colorschemes/" 2>/dev/null
+    mkdir "$HOME/.themes/" 2>/dev/null
+    mkdir "$HOME/Bureau/" 2>/dev/null
+    mkdir -p "$HOME/Downloads/0Supprimer/" 2>/dev/null
     
     # disable autostart programs
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/nm-applet.desktop
@@ -145,33 +148,49 @@ if [[ ! -f "$dest" ]]; then
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xfce4-clipman-plugin-autostart.desktop
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xiccd.desktop
     printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
-    
-    # install base
+fi
+
+# install base
+dest=/usr/bin/meson
+if [[ ! -f "$dest" ]]; then
+    echo "*** install base" | tee -a "$outfile"
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
     APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
 
-    # install softwares
+# install softwares
+dest=/usr/bin/ffmpeg
+if [[ ! -f "$dest" ]]; then
+    echo "*** install softwares" | tee -a "$outfile"
     APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
     APPLIST+=" audacious engrampa geany gimp rofi zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv xfce4-screenshooter"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    
-    # install without recommends
-    APPLIST="smartmontools"
-    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
+# install without recommends
+dest=/usr/bin/hsetroot
+if [[ ! -f "$dest" ]]; then
+    echo "*** install without recommends" | tee -a "$outfile"
+    APPLIST="smartmontools"
+    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# uninstall
 dest=/usr/bin/mousepad
 if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
     
-    # uninstall
     APPLIST="at-spi2-core exfalso light-locker synaptic"
     APPLIST+=" xdg-desktop-portal xsane xterm yt-dlp zutty"
     APPLIST+=" mousepad parole tumbler xfburn xfce4-power-manager"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     
     # timers
@@ -203,6 +222,7 @@ if [[ ! -f "$dest" ]]; then
     APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
     APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # install QtCreator ===========================================================
@@ -212,6 +232,7 @@ if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install QtCreator" | tee -a "$outfile"
     APPLIST="qtcreator qt6-base-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # system settings =============================================================
