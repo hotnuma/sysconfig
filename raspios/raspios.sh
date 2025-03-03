@@ -37,7 +37,7 @@ fi
 # rpi configuration ===========================================================
 
 dest=/boot/config.txt
-if [[ ! -f $dest.bak ]]; then
+if [[ -f $dest ]] && [[ ! -f $dest.bak ]]; then
     echo "*** edit /boot/config.txt" | tee -a $outfile
     sudo cp $dest $dest.bak 2>&1 | tee -a $outfile
     sudo tee $dest > /dev/null << 'EOF'
@@ -65,7 +65,7 @@ EOF
 fi
 
 dest=/boot/cmdline.txt
-if [[ ! -f ${dest}.bak ]]; then
+if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
     echo "*** edit /boot/cmdline.txt" | tee -a $outfile
     sudo cp $dest ${dest}.bak 2>&1 | tee -a $outfile
     sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' $dest
