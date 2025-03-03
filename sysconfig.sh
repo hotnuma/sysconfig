@@ -156,7 +156,7 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
     APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
-    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples libpcre3-dev"
+    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -165,15 +165,17 @@ fi
 dest=/usr/bin/ffmpeg
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$outfile"
-    APPLIST="curl dos2unix hardinfo htop inxi net-tools p7zip-full"
-    APPLIST+=" audacious engrampa geany gimp rofi zathura"
-    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv xfce4-screenshooter"
+    APPLIST="dos2unix hardinfo htop p7zip-full"
+    APPLIST+=" audacious engrampa geany gimp rofi xfce4-screenshooter zathura"
+    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
+# curl net-tools inxi
+
 # install without recommends
-dest=/usr/bin/hsetroot
+dest=/usr/sbin/smartctl
 if [[ ! -f "$dest" ]]; then
     echo "*** install without recommends" | tee -a "$outfile"
     APPLIST="smartmontools"
@@ -289,7 +291,7 @@ if [[ ! -L "$dest" ]]; then
     sudo cp "$debdir"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
-    xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
+    #xfconf-query -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
     xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$outfile"
     xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
     xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
@@ -301,8 +303,8 @@ fi
 
 dest="$HOME"/.bash_aliases
 if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$OUTFILE"
-    cp "$DEBDIR"/home/bash_aliases "$dest" 2>&1 | tee -a "$OUTFILE"
+    echo "*** aliases" | tee -a "$outfile"
+    cp "$debdir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # powerctl --------------------------------------------------------------------
@@ -409,19 +411,49 @@ build_src()
     fi
 }
 
-if [[ ! -f "/usr/local/include/tinyc/cstring.h" ]]; then
-    build_src "libtinyc" "/usr/local/include/tinyc/cstring.h"
-    build_src "libtinyui" "/usr/local/include/tinyui/etkaction.h"
-    build_src "fileman" "/usr/local/bin/fileman"
-    build_src "sysquery" "/usr/local/bin/sysquery"
-    build_src "systools" "/usr/local/bin/colortest"
-    build_src "taskman" "/usr/local/bin/xfce4-taskmanager"
-    build_src "applist" "/usr/local/bin/applist"
-    build_src "firebook" "/usr/local/bin/firebook"
-    build_src "mpvcmd" "/usr/local/bin/mpvcmd"
-    build_src "powerctl" "/usr/local/bin/powerctl"
-    build_src "volman" "/usr/local/bin/volman"
-fi
+dest="/usr/local/include/tinyc/cstring.h"
+build_src "libtinyc" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/include/tinyui/etkaction.h"
+build_src "libtinyui" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/fileman"
+build_src "fileman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/sysquery"
+build_src "sysquery" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/colortest"
+build_src "systools" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/xfce4-taskmanager"
+build_src "taskman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/applist"
+build_src "applist" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/firebook"
+build_src "firebook" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/mpvcmd"
+build_src "mpvcmd" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/powerctl"
+build_src "powerctl" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/volman"
+build_src "volman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
 
 dest=/usr/local/bin/hoedown
 if [[ ! -f "$dest" ]]; then
