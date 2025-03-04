@@ -71,6 +71,13 @@ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
     sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
 fi
 
+dest="~/.local/share/keyrings"
+if [[ -d $dest ]] && [[ ! -d ${dest}.bak ]]; then
+    echo "*** reset keyring password" | tee -a "$outfile"
+	cp -r "$dest" ${dest}.bak 
+	rm "$dest/*.keyring"
+fi
+
 # cpu governor ================================================================
 
 dest="/etc/default/cpufrequtils"
