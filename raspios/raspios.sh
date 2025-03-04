@@ -36,9 +36,9 @@ fi
 
 # rpi configuration ===========================================================
 
-dest="/boot/config.txt"
+dest="/boot/firmware/config.txt"
 if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    echo "*** edit /boot/config.txt" | tee -a "$outfile"
+    echo "*** edit /boot/firmware/config.txt" | tee -a "$outfile"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << 'EOF'
 # http://rpf.io/configtxt
@@ -64,12 +64,12 @@ dtoverlay=disable-wifi
 EOF
 fi
 
-dest="/boot/cmdline.txt"
-if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
-fi
+#~ dest="/boot/firmware/cmdline.txt"
+#~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
+    #~ echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
+    #~ sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    #~ sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
+#~ fi
 
 dest="~/.local/share/keyrings"
 if [[ -d $dest ]] && [[ ! -d ${dest}.bak ]]; then
