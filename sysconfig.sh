@@ -266,7 +266,7 @@ fi
 # xfce4 session ---------------------------------------------------------------
 
 dest=/etc/xdg/xfce4
-if [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
+if [[ "$opt_xfce" -eq 1 ]] && [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     echo "*** copy xdg xfce4" | tee -a "$outfile"
     sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$outfile"
     dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
@@ -276,7 +276,8 @@ fi
 # startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
-if [[ -f "/usr/bin/hsetroot" ]] && [[ ! -f "$dest" ]]; then
+if [[ "$opt_xfce" -eq 1 ]] && [[ -f "/usr/bin/hsetroot" ]] \
+&& [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$outfile"
     sudo cp "$debdir"/root/startup.sh "$dest" 2>&1 | tee -a "$outfile"
     dest="$HOME"/.config/autostart/startup.desktop
@@ -285,8 +286,16 @@ fi
 
 # user settings ===============================================================
 
+dest="$HOME/.bash_aliases"
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$outfile"
+    cp "$debdir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
+# xfce settings ---------------------------------------------------------------
+
 dest="$HOME"/config
-if [[ ! -L "$dest" ]]; then
+if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
     echo "*** config link" | tee -a "$outfile"
     ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$outfile"
     
@@ -294,14 +303,14 @@ if [[ ! -L "$dest" ]]; then
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
     
     echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
-    dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+    dest="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$debdir"/home/xfce4-keyboard-shortcuts.xml "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$debdir/home/xfce4-keyboard-shortcuts.xml" "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfce4-panel.xml" | tee -a "$outfile"
-    dest="$HOME"/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    dest="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$debdir"/home/xfce4-panel.xml "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$debdir/home/xfce4-panel.xml" "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
     xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$outfile"
@@ -311,37 +320,27 @@ if [[ ! -L "$dest" ]]; then
     xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
-# aliases ---------------------------------------------------------------------
+dest="$HOME/.local/share/xfce4/terminal/colorschemes/custom.theme"
+if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** terminal colors" | tee -a "$outfile"
+    cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
+fi
+exit 1
 
-dest="$HOME"/.bash_aliases
-if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$outfile"
-    cp "$debdir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+dest="$HOME/.config/Thunar/uca.xml"
+if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
+    echo "*** thunar terminal" | tee -a "$outfile"
+    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    cp "$debdir/home/uca.xml" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # powerctl --------------------------------------------------------------------
 
-dest="$HOME"/.config/autostart/powerctl.desktop
-if [[ -f "/usr/local/bin/powerctl" ]] && [[ ! -f "$dest" ]]; then
+dest="$HOME/.config/autostart/powerctl.desktop"
+if [[ "$opt_wayland" -eq 0 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
+&& [[ ! -f "$dest" ]]; then
     echo "*** powerctl" | tee -a "$outfile"
-    cp "$debdir"/home/powerctl.desktop "$dest" 2>&1 | tee -a "$outfile"
-fi
-
-# terminal theme --------------------------------------------------------------
-
-dest="$HOME"/.local/share/xfce4/terminal/colorschemes/custom.theme
-if [[ ! -f "$dest" ]]; then
-    echo "*** terminal colors" | tee -a "$outfile"
-    cp "$debdir"/home/custom.theme "$dest" 2>&1 | tee -a "$outfile"
-fi
-
-# thunar uca ------------------------------------------------------------------
-
-dest="$HOME"/.config/Thunar/uca.xml
-if [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
-    echo "*** thunar terminal" | tee -a "$outfile"
-    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    cp "$debdir"/home/uca.xml "$dest" 2>&1 | tee -a "$outfile"
+    cp "$debdir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # Hide Launchers --------------------------------------------------------------
@@ -355,8 +354,8 @@ filemod()
     
     filename=$(basename "$1")
     echo "*** hide ${filename}" | tee -a "$outfile"
-    dest="$HOME"/.local/share/applications/$filename
-    cp "$1" "$HOME"/.local/share/applications/
+    dest="$HOME/.local/share/applications/$filename"
+    cp "$1" "$HOME/.local/share/applications/"
     sed -i '/^MimeType=/d' "$dest" | tee -a "$outfile"
     echo "NoDisplay=true" >> "$dest"
 }
@@ -395,7 +394,7 @@ if [[ ! -f "$dest" ]]; then
     app_hide "xfce4-run"
     app_hide "xfce4-web-browser"
     echo "*** hide thunar launcher" | tee -a "$outfile"
-    dest="$HOME"/.local/share/applications/thunar.desktop
+    dest="$HOME/.local/share/applications/thunar.desktop"
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
 
@@ -477,6 +476,6 @@ fi
 # pop dir ---------------------------------------------------------------------
 
 popd 1>/dev/null
-echo "done" | tee -a $outfile
+echo "done" | tee -a "$outfile"
 
 
