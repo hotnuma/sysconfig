@@ -42,7 +42,7 @@ done
 
 test "$opt_yes" -eq 1 || error_exit "missing parameter"
 test $XDG_CURRENT_DESKTOP == "XFCE" || opt_xfce=0
-test XDG_SESSION_TYPE == "x11" || opt_wayland=1
+test $XDG_SESSION_TYPE == "x11" || opt_wayland=1
 
 # test sudo -------------------------------------------------------------------
 
