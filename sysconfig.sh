@@ -220,7 +220,7 @@ fi
 # uninstall ===================================================================
 
 dest=/usr/bin/mousepad
-if [[ -f "$dest" ]]; then
+if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
     
     APPLIST="at-spi2-core exfalso light-locker synaptic"
@@ -276,12 +276,11 @@ fi
 # startup.sh ------------------------------------------------------------------
 
 dest=/usr/local/bin/startup.sh
-if [[ "$opt_xfce" -eq 1 ]] && [[ -f "/usr/bin/hsetroot" ]] \
-&& [[ ! -f "$dest" ]]; then
+if [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$outfile"
-    sudo cp "$debdir"/root/startup.sh "$dest" 2>&1 | tee -a "$outfile"
-    dest="$HOME"/.config/autostart/startup.desktop
-    cp "$debdir"/home/startup.desktop "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$debdir/root/startup.sh" "$dest" 2>&1 | tee -a "$outfile"
+    dest="$HOME/.config/autostart/startup.desktop"
+    cp "$debdir/home/startup.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # user settings ===============================================================
