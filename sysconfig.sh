@@ -161,7 +161,7 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install x11 softwares -------------------------------------------------------
+# install xfce softwares -------------------------------------------------------
 
 dest=/usr/bin/xfce4-screenshooter
 if [[ "$opt_xfce" == 1 ]] && [[ ! -f "$dest" ]]; then
@@ -219,16 +219,18 @@ fi
 
 # uninstall ===================================================================
 
-dest=/usr/bin/mousepad
-if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]]; then
+dest=/usr/bin/xfce4-power-manager
+if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
     
     APPLIST="at-spi2-core exfalso light-locker synaptic"
     APPLIST+=" xdg-desktop-portal xsane xterm yt-dlp zutty"
-    APPLIST+=" mousepad parole tumbler xfburn xfce4-power-manager"
+    APPLIST+=" parole tumbler xfburn xfce4-power-manager"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
+    
+    # mousepad
     
     # timers
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
@@ -454,10 +456,6 @@ dest="/usr/local/bin/mpvcmd"
 build_src "mpvcmd" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-#~ dest="/usr/local/bin/powerctl"
-#~ build_src "powerctl" "$dest"
-#~ test -f "$dest" || error_exit "compilation failed"
-
 dest="/usr/local/bin/volman"
 build_src "volman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
@@ -470,6 +468,10 @@ if [[ ! -f "$dest" ]]; then
     make && sudo make install 2>&1 | tee -a "$outfile"
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
+
+#~ dest="/usr/local/bin/powerctl"
+#~ build_src "powerctl" "$dest"
+#~ test -f "$dest" || error_exit "compilation failed"
 
 # pop dir ---------------------------------------------------------------------
 
