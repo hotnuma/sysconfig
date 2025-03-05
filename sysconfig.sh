@@ -200,7 +200,7 @@ fi
 dest=/usr/bin/wofi
 if [[ "$opt_x11" == 0 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install wayland softwares" | tee -a "$outfile"
-    APPLIST="wofi xfce4-terminal"
+    APPLIST="swaybg wofi xfce4-terminal"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
