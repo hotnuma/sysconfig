@@ -231,20 +231,22 @@ if [[ -f "$dest" ]]; then
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     
     # mousepad
+fi
+    
+# services --------------------------------------------------------------------
+
+if [ "$(pidof cupsd)" ]; then
+    echo "*** disable services" | tee -a "$outfile"
+    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
+    APPLIST+=" ModemManager wpa_supplicant"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
+    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
     
     # timers
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-    
-    # disable services
-    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
-    APPLIST+=" ModemManager wpa_supplicant"
-    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
-    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
 fi
-    
-# smartd ----------------------------------------------------------------------
 
 if [ "$(pidof smartd)" ]; then
     echo "*** smartd" | tee -a "$outfile"
