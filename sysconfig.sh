@@ -325,7 +325,6 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$outfile"
     cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
-exit 1
 
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
@@ -456,9 +455,9 @@ dest="/usr/local/bin/mpvcmd"
 build_src "mpvcmd" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/powerctl"
-build_src "powerctl" "$dest"
-test -f "$dest" || error_exit "compilation failed"
+#~ dest="/usr/local/bin/powerctl"
+#~ build_src "powerctl" "$dest"
+#~ test -f "$dest" || error_exit "compilation failed"
 
 dest="/usr/local/bin/volman"
 build_src "volman" "$dest"
