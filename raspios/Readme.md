@@ -50,4 +50,16 @@
 	
 	xfconf-query --create -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true'
 	
+* labwc-tweak-gtk
+
+    https://github.com/labwc/labwc-tweaks-gtk  
+    
+    ```
+    git clone https://github.com/labwc/labwc-tweaks-gtk.git
+    cd labwc-tweaks-gtk
+    meson setup build
+    meson compile -C build
+    sudo meson install -C build
+    ```
+
 
