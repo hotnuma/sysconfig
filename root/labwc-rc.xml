@@ -27,93 +27,65 @@
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
-    <dropShadows>yes</dropShadows>
+    <dropShadows>no</dropShadows>
   </theme>
 
   <keyboard>
     <numlock>on</numlock>
     <default />
 
-    <keybind key="W-b"><action name="Execute" command="chromium-browser" /></keybind>
-    <keybind key="W-e"><action name="Execute" command="fileman /home/hotnuma/Downloads/" /></keybind>
-    <keybind key="W-s"><action name="Execute" command="xfce4-taskmanager" /></keybind>
-    <keybind key="W-t"><action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/" /></keybind>
-    <keybind key="W-space"><action name="Execute" command="wofi --show run" /></keybind>
+    <keybind key="W-S-r">
+      <action name="Execute" command="systemctl reboot" /></keybind>
+    <keybind key="W-S-q">
+      <action name="Execute" command="systemctl poweroff" /></keybind>
+    
+    <keybind key="W-b">
+      <action name="Execute" command="chromium-browser" /></keybind>
+    <keybind key="W-e">
+      <action name="Execute" command="fileman /home/hotnuma/Downloads/" /></keybind>
+    <keybind key="W-s">
+      <action name="Execute" command="xfce4-taskmanager" /></keybind>
+    <keybind key="W-t">
+      <action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/" /></keybind>
+    <keybind key="W-space">
+      <action name="Execute" command="wofi --show run" /></keybind>
 
     <keybind key="A-Left" />
     <keybind key="A-Right" />
-    <keybind key="A-Up" />
     <keybind key="A-Down" />
-    <keybind key="C-A-Left">
-      <action name="SnapToEdge" direction="left"></action>
-    </keybind>
-    <keybind key="C-A-Right">
-      <action name="SnapToEdge" direction="right"></action>
-    </keybind>
+
+    <keybind key="W-KP_4">
+      <action name="SnapToEdge" direction="left"></action></keybind>
+    <keybind key="W-KP_6">
+      <action name="SnapToEdge" direction="right"></action></keybind>
     <keybind key="C-A-Up">
-      <action name="Maximize"></action>
-    </keybind>
+      <action name="Maximize"></action></keybind>
     <keybind key="C-A-Down">
-      <action name="UnMaximize"></action>
-    </keybind>
+      <action name="UnMaximize"></action></keybind>
+    
     <keybind key="XF86AudioRaiseVolume">
-      <action name="Execute">
-        <command>wfpanelctl volumepulse volu</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl volumepulse volu</command></action></keybind>
     <keybind key="XF86AudioLowerVolume">
-      <action name="Execute">
-        <command>wfpanelctl volumepulse vold</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl volumepulse vold</command></action></keybind>
     <keybind key="XF86AudioMute">
-      <action name="Execute">
-        <command>wfpanelctl volumepulse mute</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl volumepulse mute</command></action></keybind>
     <keybind key="Super_L" onRelease="yes">
-      <action name="Execute">
-        <command>wfpanelctl smenu menu</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl smenu menu</command></action></keybind>
     <keybind key="C-A-w">
-      <action name="Execute">
-         <command>wfpanelctl netman menu</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl netman menu</command></action></keybind>
     <keybind key="C-A-b">
-      <action name="Execute">
-         <command>wfpanelctl bluetooth menu</command>
-      </action>
-    </keybind>
-    <keybind key="C-A-t">
-      <action name="Execute">
-         <command>lxterminal</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>wfpanelctl bluetooth menu</command></action></keybind>
     <keybind key="C-A-space">
-      <action name="Execute">
-         <command>gui-pkinst orca reboot</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>gui-pkinst orca reboot</command></action></keybind>
     <keybind key="C-A-Delete">
-      <action name="Execute">
-         <command>lxde-pi-shutdown-helper</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>lxde-pi-shutdown-helper</command></action></keybind>
     <keybind key="XF86PowerOff" onRelease="yes">
-      <action name="Execute">
-        <command>pwrkey</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>pwrkey</command></action></keybind>
+    
     <keybind key="Print">
-      <action name="Execute">
-        <command>grim</command>
-      </action>
-    </keybind>
+      <action name="Execute"><command>grim</command></action></keybind>
     <keybind key="C-A-m">
-      <action name="ToggleMagnify" />
-    </keybind>
+      <action name="ToggleMagnify" /></keybind>
   </keyboard>
 
   <mouse>

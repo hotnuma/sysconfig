@@ -389,11 +389,13 @@ app_hide()
     fi
 }
 
-dest="$HOME"/.local/share/applications/fileman.desktop
+dest="$HOME"/.local/share/applications/org.xfce.mousepad.desktop
 if [[ ! -f "$dest" ]]; then
     app_hide "fileman"
     app_hide "gcr-prompter"
     app_hide "gcr-viewer"
+    app_hide "org.xfce.mousepad"
+    app_hide "org.xfce.mousepad-settings"
     app_hide "RealTimeSync"
     app_hide "system-config-printer"
     app_hide "thunar-bulk-rename"
