@@ -1,0 +1,9 @@
+
+cat /etc/lightdm/lightdm.conf
+[Seat:*]
+autologin-guest=false
+autologin-user=hotnuma
+autologin-user-timeout=0
+autologin-session=xfce
+
+

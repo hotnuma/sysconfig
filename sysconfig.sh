@@ -394,8 +394,6 @@ if [[ ! -f "$dest" ]]; then
     app_hide "fileman"
     app_hide "gcr-prompter"
     app_hide "gcr-viewer"
-    app_hide "org.xfce.mousepad"
-    app_hide "org.xfce.mousepad-settings"
     app_hide "RealTimeSync"
     app_hide "system-config-printer"
     app_hide "thunar-bulk-rename"
@@ -410,7 +408,12 @@ if [[ ! -f "$dest" ]]; then
     echo "*** hide thunar launcher" | tee -a "$outfile"
     dest="$HOME/.local/share/applications/thunar.desktop"
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
+    dest="$HOME/.local/share/applications/org.xfce.mousepad.desktop"
+    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
+    dest="$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
+    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
+
 
 # build programs ==============================================================
 
