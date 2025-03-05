@@ -6,6 +6,8 @@ builddir="$HOME/DevFiles"
 currentuser="$USER"
 outfile="$HOME/install.log"
 opt_qtcreator=0
+opt_wayland=0
+opt_xfce=1
 opt_yes=0
 
 error_exit()
@@ -24,12 +26,6 @@ if [[ -f /etc/os-release ]]; then
     DISTVER=$VERSION_ID
 fi
 
-if [ $XDG_CURRENT_DESKTOP != "XFCE" ]; then
-    echo "*** XFCE was not detected"
-    echo "abort..."
-    exit 1
-fi
-
 while (($#)); do
     case "$1" in
         qtcreator)
@@ -45,6 +41,8 @@ while (($#)); do
 done
 
 test "$opt_yes" -eq 1 || error_exit "missing parameter"
+test $XDG_CURRENT_DESKTOP == "XFCE" || opt_xfce=0
+test XDG_SESSION_TYPE == "x11" || opt_wayland=1
 
 # test sudo -------------------------------------------------------------------
 
@@ -151,12 +149,24 @@ fi
 
 # install base ================================================================
 
-dest=/usr/bin/meson
+dest=/usr/bin/gtk3-demo
 if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
-    APPLIST="dmz-cursor-theme elementary-xfce-icon-theme fonts-dejavu hsetroot"
-    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config python3-pip"
-    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc gtk-3-examples"
+    APPLIST="dmz-cursor-theme dos2unix elementary-xfce-icon-theme fonts-dejavu"
+    APPLIST+=" htop net-tools p7zip-full python3-pip"
+    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
+    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc"
+    APPLIST+=" gtk-3-examples"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# install x11 softwares -------------------------------------------------------
+
+dest=/usr/bin/hsetroot
+if [[ "$opt_wayland" == 0 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install x11 softwares" | tee -a "$outfile"
+    APPLIST="hsetroot rofi xfce4-screenshooter"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -166,8 +176,7 @@ fi
 dest=/usr/bin/ffmpeg
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$outfile"
-    APPLIST="dos2unix htop net-tools p7zip-full"
-    APPLIST+=" audacious engrampa geany gimp rofi xfce4-screenshooter zathura"
+    APPLIST="audacious engrampa geany gimp zathura"
     APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
