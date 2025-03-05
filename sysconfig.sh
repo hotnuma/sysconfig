@@ -108,6 +108,19 @@ autologin-session=lightdm-xsession
 EOF
 fi
 
+# environment -----------------------------------------------------------------
+
+dest=/etc/environment
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** environment" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << "EOF"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+GTK_OVERLAY_SCROLLING=0
+NO_AT_BRIDGE=1
+EOF
+fi
+
 # disable log messages --------------------------------------------------------
 
 dest=/etc/systemd/system/rtkit-daemon.service.d/
@@ -161,7 +174,18 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install xfce softwares -------------------------------------------------------
+# install softwares -----------------------------------------------------------
+
+dest=/usr/bin/ffmpeg
+if [[ ! -f "$dest" ]]; then
+    echo "*** install softwares" | tee -a "$outfile"
+    APPLIST="audacious engrampa geany gimp zathura"
+    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# install xfce softwares ------------------------------------------------------
 
 dest=/usr/bin/xfce4-screenshooter
 if [[ "$opt_xfce" == 1 ]] && [[ ! -f "$dest" ]]; then
@@ -171,13 +195,12 @@ if [[ "$opt_xfce" == 1 ]] && [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install softwares -----------------------------------------------------------
+# install wayland softwares ---------------------------------------------------
 
-dest=/usr/bin/ffmpeg
-if [[ ! -f "$dest" ]]; then
-    echo "*** install softwares" | tee -a "$outfile"
-    APPLIST="audacious engrampa geany gimp zathura"
-    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
+dest=/usr/bin/wofi
+if [[ "$opt_x11" == 0 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install wayland softwares" | tee -a "$outfile"
+    APPLIST="wofi xfce4-terminal"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -222,10 +245,9 @@ fi
 dest=/usr/bin/xfce4-power-manager
 if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
-    
-    APPLIST="at-spi2-core exfalso light-locker synaptic"
-    APPLIST+=" xdg-desktop-portal xsane xterm yt-dlp zutty"
-    APPLIST+=" parole tumbler xfburn xfce4-power-manager"
+    APPLIST="at-spi2-core exfalso light-locker parole synaptic tumbler"
+    APPLIST+=" xdg-desktop-portal xfburn xfce4-power-manager xsane xterm"
+    APPLIST+=" yt-dlp zutty"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
@@ -241,7 +263,6 @@ if [ "$(pidof cupsd)" ]; then
     APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-    
     # timers
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
@@ -255,19 +276,6 @@ if [ "$(pidof smartd)" ]; then
 fi
 
 # system settings =============================================================
-
-dest=/etc/environment
-if [[ ! -f ${dest}.bak ]]; then
-    echo "*** environment" | tee -a "$outfile"
-    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo tee "$dest" > /dev/null << "EOF"
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-GTK_OVERLAY_SCROLLING=0
-NO_AT_BRIDGE=1
-EOF
-fi
-
-# xfce4 session ---------------------------------------------------------------
 
 dest=/etc/xdg/xfce4
 if [[ "$opt_xfce" -eq 1 ]] && [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
@@ -293,6 +301,15 @@ dest="$HOME/.bash_aliases"
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$outfile"
     cp "$debdir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
+# autostart -------------------------------------------------------------------
+
+dest="$HOME/.config/autostart/powerctl.desktop"
+if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
+&& [[ ! -f "$dest" ]]; then
+    echo "*** powerctl" | tee -a "$outfile"
+    cp "$debdir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # xfce settings ---------------------------------------------------------------
@@ -323,12 +340,6 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
     xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
-dest="$HOME/.local/share/xfce4/terminal/colorschemes/custom.theme"
-if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** terminal colors" | tee -a "$outfile"
-    cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
-fi
-
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     echo "*** thunar terminal" | tee -a "$outfile"
@@ -336,13 +347,12 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     cp "$debdir/home/uca.xml" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# powerctl --------------------------------------------------------------------
+# terminal --------------------------------------------------------------------
 
-dest="$HOME/.config/autostart/powerctl.desktop"
-if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
-&& [[ ! -f "$dest" ]]; then
-    echo "*** powerctl" | tee -a "$outfile"
-    cp "$debdir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
+dest="$HOME/.local/share/xfce4/terminal/colorschemes/custom.theme"
+if [[ ! -f "$dest" ]]; then
+    echo "*** terminal colors" | tee -a "$outfile"
+    cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # Hide Launchers --------------------------------------------------------------
