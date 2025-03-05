@@ -29,18 +29,11 @@
 	XDG_VIDEOS_DIR="$HOME"
 	```
 
-* Disable smartmontools
-	
-	```
-	sudo systemctl stop smartmontools
-	sudo systemctl disable smartmontools
-	```
-
 * Avoid keyring password
     
     https://unix.stackexchange.com/questions/324843/  
     
-    `mv ~/.local/share/keyrings ~/.local/share/keyrings.bak`
+    `rm ~/.local/share/keyrings/*.keyrings`
     
     Restart Chrome
     
@@ -61,5 +54,11 @@
     meson compile -C build
     sudo meson install -C build
     ```
+* Disable smartmontools
+	
+	```
+	sudo systemctl stop smartmontools
+	sudo systemctl disable smartmontools
+	```
 
 
