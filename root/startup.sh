@@ -1,14 +1,10 @@
 #!/usr/bin/bash
 
-if [[ $XDG_CURRENT_DESKTOP != "XFCE" ]]; then
-    exit 0
-fi
+test "$XDG_CURRENT_DESKTOP" == "XFCE" || exit 0
+test "$XDG_SESSION_TYPE" == "x11" || exit 0
+which hsetroot || exit 0
 
-if [[ ! -f "/usr/bin/hsetroot" ]]; then
-    exit 0
-fi
-
-dest="$HOME"/.wallpaper
+dest="$HOME/.wallpaper"
 if [[ -f $dest ]]; then
     hsetroot -cover "$dest"
     exit 0
