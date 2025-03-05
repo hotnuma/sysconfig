@@ -24,6 +24,23 @@ https://github.com/raspberrypi/rpi-eeprom
 [best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
 
 
+#### Xfce
+
+* Install Xfce
+    
+    Switch to NetworkManager, install xfce desktop :
+    
+    `sudo apt install xfce4`
+    
+    Set xfce session :
+
+    `~/.dmrc`
+
+    ```
+    [Desktop]
+    Session=xfce
+    ```
+
 #### System informations
 
 * kernel, firmware, bootloader, eeprom
@@ -176,26 +193,9 @@ https://www.raspberrypi.com/documentation/computers/os.html
 `/etc/xdg/menus/lxde-pi-applications.menu`
 
 
-#### Xfce
-
 * Switch to network-manager
     
     `sudo raspi-config` advanced configuration, network.
-
-* Install Xfce
-    
-    Switch to NetworkManager, install xfce desktop :
-    
-    `sudo apt install xfce4`
-    
-    Set xfce session :
-
-    `~/.dmrc`
-
-    ```
-    [Desktop]
-    Session=xfce
-    ```
 
 * Fix screen tearing
     
