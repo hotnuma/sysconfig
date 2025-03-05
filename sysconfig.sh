@@ -168,7 +168,7 @@ if [[ ! -f "$dest" ]]; then
     APPLIST="dmz-cursor-theme dos2unix elementary-xfce-icon-theme fonts-dejavu"
     APPLIST+=" hsetroot htop net-tools p7zip-full python3-pip rofi"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
-    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc"
+    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc libxml2-dev"
     APPLIST+=" gtk-3-examples"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
