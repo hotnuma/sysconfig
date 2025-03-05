@@ -6,7 +6,7 @@ builddir="$HOME/DevFiles"
 currentuser="$USER"
 outfile="$HOME/install.log"
 opt_qtcreator=0
-opt_wayland=0
+opt_x11=1
 opt_xfce=1
 opt_yes=0
 
@@ -42,7 +42,7 @@ done
 
 test "$opt_yes" -eq 1 || error_exit "missing parameter"
 test $XDG_CURRENT_DESKTOP == "XFCE" || opt_xfce=0
-test $XDG_SESSION_TYPE == "x11" || opt_wayland=1
+test $XDG_SESSION_TYPE == "x11" || opt_x11=0
 
 # test sudo -------------------------------------------------------------------
 
@@ -149,11 +149,11 @@ fi
 
 # install base ================================================================
 
-dest=/usr/bin/gtk3-demo
+dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
     APPLIST="dmz-cursor-theme dos2unix elementary-xfce-icon-theme fonts-dejavu"
-    APPLIST+=" htop net-tools p7zip-full python3-pip"
+    APPLIST+=" hsetroot htop net-tools p7zip-full python3-pip rofi"
     APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
     APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc"
     APPLIST+=" gtk-3-examples"
@@ -163,10 +163,10 @@ fi
 
 # install x11 softwares -------------------------------------------------------
 
-dest=/usr/bin/hsetroot
-if [[ "$opt_wayland" == 0 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install x11 softwares" | tee -a "$outfile"
-    APPLIST="hsetroot rofi xfce4-screenshooter"
+dest=/usr/bin/xfce4-screenshooter
+if [[ "$opt_xfce" == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install XFCE softwares" | tee -a "$outfile"
+    APPLIST="xfce4-screenshooter"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -335,7 +335,7 @@ fi
 # powerctl --------------------------------------------------------------------
 
 dest="$HOME/.config/autostart/powerctl.desktop"
-if [[ "$opt_wayland" -eq 0 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
+if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
 && [[ ! -f "$dest" ]]; then
     echo "*** powerctl" | tee -a "$outfile"
     cp "$debdir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
