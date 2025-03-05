@@ -4,6 +4,12 @@
 
 ---
 
+#### Labwc
+    
+    https://labwc.github.io/getting-started.html  
+    https://wiki.archlinux.org/title/Labwc  
+
+
 #### Manual configuration
 
 * User dirs
