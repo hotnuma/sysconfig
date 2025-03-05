@@ -1,0 +1,7 @@
+# https://github.com/labwc/labwc/blob/master/docs/autostart
+# /usr/share/doc/labwc/autostart
+
+swaybg -i /home/hotnuma/.backgrounds/winxp_bliss >/dev/null 2>&1 &
+wf-panel-pi &
+/usr/bin/kanshi &
+/usr/bin/lxsession-xdg-autostart
