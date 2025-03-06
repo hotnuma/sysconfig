@@ -176,7 +176,7 @@ fi
 
 # install softwares -----------------------------------------------------------
 
-dest=/usr/bin/ffmpeg
+dest=/usr/bin/zathura
 if [[ ! -f "$dest" ]]; then
     echo "*** install softwares" | tee -a "$outfile"
     APPLIST="audacious engrampa geany gimp zathura"
