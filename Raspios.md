@@ -62,15 +62,15 @@
     
     ```
     gtk-nop
-    gvfs-afc-volume-monitor
-    gvfsd-fuse
-    gvfs-gphoto2-volume-monitor
-    gvfs-goa-volume-monitor
-    gvfs-mtp-volume-monitor
-    systemd-inhibit
-    menu-cached
-    thd
+    gvfs-afc-volume-monitor     gvfs-backends
+    gvfs-goa-volume-monitor     gvfs-backends
+    gvfs-gphoto2-volume-monitor gvfs-backends
+    gvfs-mtp-volume-monitor     gvfs-backends
+    gvfsd-fuse                  gvfs-backends
     kanshi
+    menu-cached
+    systemd-inhibit
+    thd                         triggerhappy
     ```
 
 #### Manual configuration
@@ -122,6 +122,10 @@
 	sudo systemctl stop smartmontools
 	sudo systemctl disable smartmontools
 	```
+
+* gvfs-backends
+    
+    `sudo apt purge gvfs-backends`
 
 
 #### Rpi specifics
