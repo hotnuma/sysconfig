@@ -1,13 +1,18 @@
-<link href="style.css" rel="stylesheet"></link>
+<link href="../style.css" rel="stylesheet"></link>
 
 ## Raspios
 
 ---
 
-#### Labwc
+* Labwc
     
     https://labwc.github.io/getting-started.html  
+    https://github.com/labwc/labwc-artwork/  
     https://wiki.archlinux.org/title/Labwc  
+
+* wl sessions
+    
+    `/usr/share/wayland-sessions/`
 
 
 #### Manual configuration

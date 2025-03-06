@@ -254,7 +254,9 @@ if [[ -f "$dest" ]]; then
     
     # mousepad
 fi
-    
+
+which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
+
 # services --------------------------------------------------------------------
 
 if [ "$(pidof cupsd)" ]; then
