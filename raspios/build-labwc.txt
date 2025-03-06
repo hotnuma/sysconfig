@@ -1,3 +1,35 @@
 
-sudo apt install libdrm-dev libinput-dev
+https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
+
+builddep labwc
+
+sudo apt install \
+cmake \
+libwlroots-0.18-dev \
+libxml2-dev \
+liblzma-dev \
+libglib2.0-dev \
+libcairo2-dev \
+libpango1.0-dev \
+libinput-dev \
+libpng-dev \
+librsvg2-dev \
+meson \
+pkgconf \
+wayland-protocols \
+libxkbcommon-dev \
+libdrm-dev \
+scdoc \
+gettext \
+
+* configure
+
+    meson setup -Dxwayland=disabled --wrap-mode=nodownload build/
+    or
+    meson setup -Dxwayland=disabled build/
+
+* compile & install
+
+    meson compile -C build/
+    sudo meson install --skip-subprojects -C build/
 
