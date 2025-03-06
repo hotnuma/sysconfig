@@ -18,6 +18,52 @@ error_exit()
     exit 1
 }
 
+create_dir()
+{
+    test "$1" != "" || error_exit "create_dir failed"
+    test ! -d "$1" || return
+    echo "create_dir : $1"
+    mkdir -p "$1"
+}
+
+hide_launcher()
+{
+    test "$1" != "" || error_exit "hide_launcher failed"
+    test ! -f "$1" || return
+    echo "hide_launcher : $1"
+    printf "[Desktop Entry]\nHidden=True\n" > "$1"
+}
+
+filemod()
+{
+    if [[ ! -f "$1" ]]; then
+        echo "file ${1} doesn't exist" | tee -a "$outfile"
+        return
+    fi
+    filename=$(basename "$1")
+    echo "*** hide ${filename}" | tee -a "$outfile"
+    dest="$HOME/.local/share/applications/$filename"
+    cp "$1" "$HOME/.local/share/applications/"
+    sed -i '/^MimeType=/d' "$dest" | tee -a "$outfile"
+    echo "NoDisplay=true" >> "$dest"
+}
+
+app_hide()
+{
+    syspath=$(find /usr/local/share/applications/ \
+              -name ${1}.desktop -print -quit 2>/dev/null)
+    if [[ $syspath != "" ]]; then
+        filemod $syspath
+        return
+    fi
+    syspath=$(find /usr/share/applications/ \
+              -name ${1}.desktop -print -quit 2>/dev/null)
+    if [[ $syspath != "" ]]; then
+        filemod $syspath
+        return
+    fi
+}
+
 # -----------------------------------------------------------------------------
 
 if [[ -f /etc/os-release ]]; then
@@ -142,23 +188,24 @@ if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
     echo "*** upgrade" | tee -a "$outfile"
     sudo apt update; sudo apt upgrade 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "upgrade failed"
-    
-    # create directories
-    mkdir "$HOME/.config/autostart/" 2>/dev/null
-    mkdir -p "$HOME/.local/share/applications/" 2>/dev/null
-    mkdir -p "$HOME/.local/share/xfce4/terminal/colorschemes/" 2>/dev/null
-    mkdir "$HOME/.themes/" 2>/dev/null
-    mkdir "$HOME/Bureau/" 2>/dev/null
-    mkdir -p "$HOME/Downloads/0Supprimer/" 2>/dev/null
-    
-    # disable autostart programs
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/nm-applet.desktop
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/print-applet.desktop
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xdg-user-dirs.desktop
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xfce4-clipman-plugin-autostart.desktop
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xiccd.desktop
-    printf "[Desktop Entry]\nHidden=True\n" > "$HOME"/.config/autostart/xscreensaver.desktop
 fi
+
+# create directories
+create_dir "$HOME/.config/autostart/"
+create_dir "$HOME/.local/share/applications/"
+create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
+create_dir "$HOME/.themes/"
+create_dir "$HOME/Bureau/"
+create_dir "$HOME/Downloads/0Supprimer/"
+
+# disable autostart programs
+hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
+hide_launcher "$HOME/.config/autostart/print-applet.desktop"
+hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
+hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
+hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
+hide_launcher "$HOME/.config/autostart/xiccd.desktop"
+hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
 
 # install base ================================================================
 
@@ -366,38 +413,6 @@ if [[ ! -f "$dest" ]]; then
 fi
 
 # Hide Launchers --------------------------------------------------------------
-
-filemod()
-{
-    if [[ ! -f "$1" ]]; then
-        echo "file ${1} doesn't exist" | tee -a "$outfile"
-        return
-    fi
-    
-    filename=$(basename "$1")
-    echo "*** hide ${filename}" | tee -a "$outfile"
-    dest="$HOME/.local/share/applications/$filename"
-    cp "$1" "$HOME/.local/share/applications/"
-    sed -i '/^MimeType=/d' "$dest" | tee -a "$outfile"
-    echo "NoDisplay=true" >> "$dest"
-}
-
-app_hide()
-{
-    syspath=$(find /usr/local/share/applications/ \
-              -name ${1}.desktop -print -quit 2>/dev/null)
-    if [[ $syspath != "" ]]; then
-        filemod $syspath
-        return
-    fi
-    
-    syspath=$(find /usr/share/applications/ \
-              -name ${1}.desktop -print -quit 2>/dev/null)
-    if [[ $syspath != "" ]]; then
-        filemod $syspath
-        return
-    fi
-}
 
 dest="$HOME"/.local/share/applications/org.xfce.mousepad.desktop
 if [[ ! -f "$dest" ]]; then
