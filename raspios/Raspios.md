@@ -4,6 +4,87 @@
 
 ---
 
+#### Labwc
+    
+    https://labwc.github.io/getting-started.html  
+    https://wiki.archlinux.org/title/Labwc  
+
+
+#### Manual configuration
+
+* User dirs
+	
+	update : `~/.config/user-dirs.locale`
+	
+	and : `~/.config/user-dirs.dirs`
+	
+	```
+	XDG_DESKTOP_DIR="$HOME/Bureau"
+	XDG_DOWNLOAD_DIR="$HOME/Downloads"
+	XDG_TEMPLATES_DIR="$HOME/.templates
+	XDG_PUBLICSHARE_DIR="$HOME"
+	XDG_DOCUMENTS_DIR="$HOME"
+	XDG_MUSIC_DIR="$HOME"
+	XDG_PICTURES_DIR="$HOME"
+	XDG_VIDEOS_DIR="$HOME"
+	```
+
+* Avoid keyring password
+    
+    https://unix.stackexchange.com/questions/324843/  
+    
+    `rm ~/.local/share/keyrings/*.keyrings`
+    
+    Restart Chrome
+    
+    When prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
+
+* num lock
+	
+	xfconf-query --create -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true'
+
+* session
+    
+    ```
+    STATUS="Openbox on X11"
+    autologin-session=LXDE-pi-x
+    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
+      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-x/"
+    fi
+    
+    STATUS="Wayfire on Wayland"
+    autologin-session=LXDE-pi-wayfire
+    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
+      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
+    fi
+    
+    STATUS="Labwc on Wayland"
+    autologin-session=LXDE-pi-labwc/"
+    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
+      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
+    fi
+    ```
+
+* labwc-tweak-gtk
+
+    https://github.com/labwc/labwc-tweaks-gtk  
+    
+    ```
+    git clone https://github.com/labwc/labwc-tweaks-gtk.git
+    cd labwc-tweaks-gtk
+    meson setup build
+    meson compile -C build
+    sudo meson install -C build
+    ```
+* Disable smartmontools
+	
+	```
+	sudo systemctl stop smartmontools
+	sudo systemctl disable smartmontools
+	```
+
+---
+
 #### References
 
 https://forums.raspberrypi.com/search.php?search_id=newposts  
