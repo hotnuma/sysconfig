@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. /usr/bin/setup_env
+
+exec /usr/local/bin/labwc -m $@
+

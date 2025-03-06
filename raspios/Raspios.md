@@ -4,18 +4,66 @@
 
 ---
 
+#### References
+
+* Rpi
+
+    https://github.com/orgs/raspberrypi-ui/repositories  
+    https://github.com/orgs/RPi-Distro/repositories  
+    https://github.com/orgs/raspberrypi/repositories  
+    
 * Labwc
     
     https://labwc.github.io/getting-started.html  
     https://github.com/labwc/labwc-artwork/  
     https://wiki.archlinux.org/title/Labwc  
 
-* wl sessions
+
+#### Startup
+
+* Lightdm config
+
+    https://wiki.archlinux.org/title/LightDM  
+    
+    ```
+    cat /etc/lightdm/lightdm.conf
+    
+    [Seat:*]
+    autologin-guest=false
+    autologin-user=hotnuma
+    autologin-user-timeout=0
+    autologin-session=LXDE-pi-labwc
+    ```
+    
+    show current config : `lightdm --show-config`
+
+* Wayland sessions
     
     `/usr/share/wayland-sessions/`
+    
+    ```
+    ls /usr/share/wayland-sessions/
+    
+    -rw-r--r--   1 root root   131 25 oct.  20:51 labwc.desktop
+    -rw-r--r--   1 root root    86 12 févr. 08:39 LXDE-pi-labwc.desktop
+    -rw-r--r--   1 root root    90 12 févr. 08:39 LXDE-pi-wayfire.desktop
+    -rw-r--r--   1 root root   102  1 déc.   2022 wayfire.desktop
+    ```
+
+* Startup script
+
+    ```
+    cat /usr/share/wayland-sessions/LXDE-pi-labwc.desktop | grep Exec
+    
+    Exec=/usr/bin/labwc-pi
+    ```
 
 
 #### Manual configuration
+
+* Install Xfce
+    
+    `sudo apt install xfce4`
 
 * User dirs
 	
@@ -40,35 +88,7 @@
     
     `rm ~/.local/share/keyrings/*.keyrings`
     
-    Restart Chrome
-    
-    When prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
-
-* num lock
-	
-	xfconf-query --create -c keyboards -p '/Default/Numlock' -t 'bool' -s 'true'
-
-* session
-    
-    ```
-    STATUS="Openbox on X11"
-    autologin-session=LXDE-pi-x
-    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
-      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-x/"
-    fi
-    
-    STATUS="Wayfire on Wayland"
-    autologin-session=LXDE-pi-wayfire
-    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
-      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
-    fi
-    
-    STATUS="Labwc on Wayland"
-    autologin-session=LXDE-pi-labwc/"
-    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
-      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
-    fi
-    ```
+    Restart Chrome, when prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
 
 * labwc-tweak-gtk
 
@@ -81,6 +101,7 @@
     meson compile -C build
     sudo meson install -C build
     ```
+
 * Disable smartmontools
 	
 	```
@@ -88,46 +109,12 @@
 	sudo systemctl disable smartmontools
 	```
 
----
 
-#### References
+#### Rpi specifics
 
-https://forums.raspberrypi.com/search.php?search_id=newposts  
+* Read CPU temperature
 
-https://www.raspberrypi.com/documentation/  
-https://www.raspberrypi.com/documentation/computers/raspberry-pi.html  
-https://linuxhint.com/gpio-pinout-raspberry-pi/  
-[tearing_test](https://www.youtube.com/watch?v=cuXsupMuik4)  
-[howto_desktops](https://forums.raspberrypi.com/viewtopic.php?t=133691)  
-[howto_autostart](https://forums.raspberrypi.com/viewtopic.php?t=294014)  
-
-https://downloads.raspberrypi.org/raspios_arm64/images/  
-https://github.com/orgs/raspberrypi-ui/repositories  
-https://github.com/orgs/RPi-Distro/repositories  
-https://github.com/orgs/raspberrypi/repositories  
-https://github.com/raspberrypi/rpi-eeprom  
-
-[best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
-
-
-#### Xfce
-
-* Install Xfce
-    
-    Switch to NetworkManager, install xfce desktop :
-    
-    `sudo apt install xfce4`
-    
-    Set xfce session :
-
-    `~/.dmrc`
-
-    ```
-    [Desktop]
-    Session=xfce
-    ```
-
-#### System informations
+    `vcgencmd measure_temp`
 
 * kernel, firmware, bootloader, eeprom
 
@@ -143,24 +130,32 @@ https://github.com/raspberrypi/rpi-eeprom
     
     `cat /sys/firmware/devicetree/base/model`
 
-* Read CPU temperature
-
-    `vcgencmd measure_temp`
-
 * Release notes : 
     
     https://downloads.raspberrypi.org/raspios_arm64/release_notes.txt  
 
+* USB Chipset
+    
+    https://forums.raspberrypi.com/viewtopic.php?t=245931  
+    https://forums.raspberrypi.com/viewtopic.php?t=326157  
+    
+    ```
+    That's true for most of the JMS578 family of USB 3.0 bridge chips,
+    but not necessarily with the 580 series USB 3.1 chips.
+    I have a USB 3.1 Gen 2 enclosure with a JMS583 chip that works
+    fine with Pi computers. It supports UASP in RPiOS, and TRIM works
+    with a udev rule.
+    ```
+
+
+
+<!--
+
+[best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
 
 #### Raspios configuration
 
 https://www.raspberrypi.com/documentation/computers/os.html  
-
-* Change hostname, disable xcompmgr
-
-    ```
-    sudo raspi-config
-    ```
 
 * Revert to specific firmware using git commit hash
 
@@ -176,71 +171,11 @@ https://www.raspberrypi.com/documentation/computers/os.html
     ```
 
 
-#### Startup Sequence
-
-```
-/sbin/ini
-
-  graphical.target
-
-  lightdm
-    Xorg
-    lightdm --session-child 14 17
-      lxsession -s LXDE-pi -e LXDE
-    
-    systemd/systemd --user
-```
-
-
-#### LightDM
-
-* Configuration
-
-    `/etc/lightdm/lightdm.conf`
-
-    `lightdm --show-config`
-
-    ```
-    [LightDM]
-
-    [Seat:*]
-    greeter-session=pi-greeter
-    greeter-hide-users=false
-    display-setup-script=/usr/share/dispsetup.sh
-    autologin-user=username
-
-    [XDMCPServer]
-    [VNCServer]
-    ```
-
 * Session
 
     https://askubuntu.com/questions/77191/  
 
     _The Name entry is what lightdm would display for this session. The Exec entry is the important thing, and it should be the name of the program that starts the actual session. When you log in, lightdm calls the /etc/X11/Xsession script, passing it the value of Exec as an argument, and Xsession will, eventually, execute this program (for example, it could be startxfce4 for starting a xfce4 session). If the Exec entry is the special string default, then Xsession will execute the user's ~/.xsession file. (Xsession would also execute ~/.xsession if it's called without arguments.)_
-
-    `DESKTOP_SESSION=LXDE-pi`
-
-    `~/.dmrc`
-
-    ```
-    [Desktop]
-    Session=lightdm-xsession
-    ```
-
-    `/usr/share/xsessions/lightdm-xsession.desktop`
-
-    ```
-    [Desktop Entry]
-    Version=1.0
-    Name=Default Xsession
-    Exec=default
-    Icon=
-    Type=Application
-    ```
-    
-    Startup script : `/usr/bin/startlxde-pi`
-
 
 #### Openbox
 
@@ -273,15 +208,9 @@ https://www.raspberrypi.com/documentation/computers/os.html
     
     `picom --backend glx`
 
-
 #### Application menu
 
 `/etc/xdg/menus/lxde-pi-applications.menu`
-
-
-* Switch to network-manager
-    
-    `sudo raspi-config` advanced configuration, network.
 
 * Fix screen tearing
     
@@ -300,14 +229,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
     xfwm4 --replace --vblank=glx &
     xfconf-query -c xfwm4 -p /general/vblank_mode -s glx
     ```
-
-
-#### Browser
-
-https://forums.raspberrypi.com/viewtopic.php?t=331397  
-https://bugzilla.mozilla.org/show_bug.cgi?id=1663285  
-https://bugzilla.mozilla.org/show_bug.cgi?id=1725624  
-
 
 #### Other
 
@@ -348,19 +269,6 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
 * Glamor
     
     `/usr/share/X11/xorg.conf.d/20-noglamor.conf`
-
-* USB Chipset
-    
-    https://forums.raspberrypi.com/viewtopic.php?t=245931  
-    https://forums.raspberrypi.com/viewtopic.php?t=326157  
-    
-    ```
-    That's true for most of the JMS578 family of USB 3.0 bridge chips,
-    but not necessarily with the 580 series USB 3.1 chips.
-    I have a USB 3.1 Gen 2 enclosure with a JMS583 chip that works
-    fine with Pi computers. It supports UASP in RPiOS, and TRIM works
-    with a udev rule.
-    ```
 
 * Test RPi version
 
@@ -424,7 +332,6 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
     
     Kingston a400 SSD : 0.195W Idle / 0.279W Avg / 0.642W (MAX) Read / 1.535W (MAX) Write
 
-
 - Upgrade
     
     https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
@@ -436,20 +343,25 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
     
     `sudo apt install openbox=3.6.1-9+rpt1+deb11u1`
 
-<!--
+    https://forums.raspberrypi.com/search.php?search_id=newposts  
+
+    https://www.raspberrypi.com/documentation/  
+    https://www.raspberrypi.com/documentation/computers/raspberry-pi.html  
+    https://linuxhint.com/gpio-pinout-raspberry-pi/  
+    [tearing_test](https://www.youtube.com/watch?v=cuXsupMuik4)  
+    [howto_desktops](https://forums.raspberrypi.com/viewtopic.php?t=133691)  
+    [howto_autostart](https://forums.raspberrypi.com/viewtopic.php?t=294014)  
+
+    https://downloads.raspberrypi.org/raspios_arm64/images/  
+    https://github.com/raspberrypi/rpi-eeprom  
+
+    STATUS="Labwc on Wayland"
+    autologin-session=LXDE-pi-labwc/"
+    if [ -e "/var/lib/AccountsService/users/$USER" ] ; then
+      sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
+    fi
 
 #### Old raspi docs
-
-- Change desktop session
-
-    `geany ~/.dmrc`
-    
-    ```
-    [Desktop]
-    Session=custom
-    #Session=xfce
-    #Session=lightdm-xsession
-    ```
 
 * Compton
 
@@ -460,12 +372,6 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
     compton --backend glx --unredir-if-possible --vsync opengl-swc
     compton --backend glx --vsync opengl-swc
     ```
-
-* Firefox
-    
-    https://forums.raspberrypi.com/viewtopic.php?t=336756#p2015599  
-    https://forum.manjaro.org/t/new-mesa-drivers/39735  
-    https://forum.manjaro.org/t/firefox-webrender-pi4-400/63702  
 
 * Firefox Webrender
 
@@ -487,19 +393,6 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1725624
 	https://bugzilla.mozilla.org/show_bug.cgi?id=1725624  
 
 	https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1930982  
-
-* Chromium/Youtube audio choppy with Bullseye and KMS driver
-
-    https://forums.raspberrypi.com/viewtopic.php?p=1945157#p1935815  
-
-* Chromium 88 HW
-    
-    https://forums.raspberrypi.com/viewtopic.php?t=319304  
-
-* RPi4 HW Acceleration
-    
-    https://forums.raspberrypi.com/viewtopic.php?t=325586  
-
 -->
 
 
