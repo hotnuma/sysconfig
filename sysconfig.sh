@@ -256,6 +256,7 @@ if [[ -f "$dest" ]]; then
 fi
 
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
+which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 
 # services --------------------------------------------------------------------
 

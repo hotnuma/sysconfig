@@ -1,4 +1,4 @@
-<link href="../style.css" rel="stylesheet"></link>
+<link href="style.css" rel="stylesheet"></link>
 
 ## Raspios
 
@@ -58,6 +58,20 @@
     Exec=/usr/bin/labwc-pi
     ```
 
+* Processes
+    
+    ```
+    gtk-nop
+    gvfs-afc-volume-monitor
+    gvfsd-fuse
+    gvfs-gphoto2-volume-monitor
+    gvfs-goa-volume-monitor
+    gvfs-mtp-volume-monitor
+    systemd-inhibit
+    menu-cached
+    thd
+    kanshi
+    ```
 
 #### Manual configuration
 
