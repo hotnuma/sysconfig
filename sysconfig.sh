@@ -333,13 +333,21 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
     sudo cp "$debdir/home/xfce4-panel.xml" "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
-    xfconf-query -c xfwm4 -p '/general/workspace_count' -s 1 2>&1 | tee -a "$outfile"
-    xfconf-query -c xfce4-appfinder -np '/enable-service' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
-    xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query --create -c keyboards -p '/Default/Numlock' \
+        -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfwm4 -p '/general/workspace_count' \
+        -s 1 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-appfinder -np '/enable-service' \
+        -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' \
+        -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' \
+        -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
+    xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' \
+        -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
+    
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
     echo "*** thunar terminal" | tee -a "$outfile"
