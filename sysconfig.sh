@@ -346,7 +346,6 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
     xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' \
         -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
-
     
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
