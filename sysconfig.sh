@@ -64,6 +64,19 @@ hide_application()
     fi
 }
 
+build_src()
+{
+    local pack="$1"
+    local dest="$2"
+    if [[ ! -f "$dest" ]]; then
+        echo "*** build ${pack}" | tee -a "$outfile"
+        git clone https://github.com/hotnuma/${pack}.git 2>&1 | tee -a "$outfile"
+        pushd ${pack} 1>/dev/null
+        ./install.sh 2>&1 | tee -a "$outfile"
+        popd 1>/dev/null
+    fi
+}
+
 # -----------------------------------------------------------------------------
 
 if [[ -f /etc/os-release ]]; then
@@ -295,7 +308,6 @@ fi
 
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
-#which xarchiver && sudo apt -y purge xarchiver 2>&1 | tee -a "$outfile"
 
 # services --------------------------------------------------------------------
 
@@ -338,6 +350,13 @@ if [[ ! -f "$dest" ]]; then
 fi
 
 # user settings ===============================================================
+
+dest="$HOME/.config/user-dirs.dirs"
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** user dirs" | tee -a "$outfile"
+    cp "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    cp "$debdir/home/user-dirs.dirs" "$dest" 2>&1 | tee -a "$outfile"
+fi
 
 dest="$HOME/.bash_aliases"
 if [[ ! -f "$dest" ]]; then
@@ -404,37 +423,6 @@ if [[ ! -f "$dest" ]]; then
     cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# Disable autostart programs --------------------------------------------------
-
-hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
-hide_launcher "$HOME/.config/autostart/print-applet.desktop"
-hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
-hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
-hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
-hide_launcher "$HOME/.config/autostart/xiccd.desktop"
-hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
-
-# Hide Applications -----------------------------------------------------------
-
-hide_application "fileman"
-hide_application "gcr-prompter"
-hide_application "gcr-viewer"
-hide_application "RealTimeSync"
-hide_application "system-config-printer"
-hide_application "thunar-bulk-rename"
-hide_application "thunar-settings"
-hide_application "thunar-volman-settings"
-hide_application "xfce-backdrop-settings"
-hide_application "xfce4-appfinder"
-hide_application "xfce4-file-manager"
-hide_application "xfce4-mail-reader"
-hide_application "xfce4-run"
-hide_application "xfce4-web-browser"
-
-hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
-hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad.desktop"
-hide_launcher "$HOME/.local/share/applications/thunar.desktop"
-
 # build programs ==============================================================
 
 dest="$builddir"
@@ -443,19 +431,6 @@ if [[ ! -d "$dest" ]]; then
     mkdir "$builddir"
 fi
 pushd "$builddir" 1>/dev/null
-
-build_src()
-{
-    local pack="$1"
-    local dest="$2"
-    if [[ ! -f "$dest" ]]; then
-        echo "*** build ${pack}" | tee -a "$outfile"
-        git clone https://github.com/hotnuma/${pack}.git 2>&1 | tee -a "$outfile"
-        pushd ${pack} 1>/dev/null
-        ./install.sh 2>&1 | tee -a "$outfile"
-        popd 1>/dev/null
-    fi
-}
 
 dest="/usr/local/include/tinyc/cstring.h"
 build_src "libtinyc" "$dest"
@@ -509,6 +484,37 @@ fi
 #~ dest="/usr/local/bin/powerctl"
 #~ build_src "powerctl" "$dest"
 #~ test -f "$dest" || error_exit "compilation failed"
+
+# Disable autostart programs --------------------------------------------------
+
+hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
+hide_launcher "$HOME/.config/autostart/print-applet.desktop"
+hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
+hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
+hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
+hide_launcher "$HOME/.config/autostart/xiccd.desktop"
+hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
+
+# Hide Applications -----------------------------------------------------------
+
+hide_application "fileman"
+hide_application "gcr-prompter"
+hide_application "gcr-viewer"
+hide_application "RealTimeSync"
+hide_application "system-config-printer"
+hide_application "thunar-bulk-rename"
+hide_application "thunar-settings"
+hide_application "thunar-volman-settings"
+hide_application "xfce-backdrop-settings"
+hide_application "xfce4-appfinder"
+hide_application "xfce4-file-manager"
+hide_application "xfce4-mail-reader"
+hide_application "xfce4-run"
+hide_application "xfce4-web-browser"
+
+hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
+hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad.desktop"
+hide_launcher "$HOME/.local/share/applications/thunar.desktop"
 
 # pop dir ---------------------------------------------------------------------
 

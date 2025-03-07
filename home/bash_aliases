@@ -1,5 +1,4 @@
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
-alias evince='LC_ALL=C evince'
 alias imgconv='ffmpeg -hide_banner -loglevel error'
 alias free='LANG=C free'
 alias hgrep='grep -rin --include=*.{h,hc,hpp,hxx}'
@@ -10,4 +9,3 @@ alias pkg-find='pkg-config --list-all | grep'
 alias pyinst='python3 -m pip install --break-system-packages --user'
 alias syslog='journalctl -b -f --lines=300'
 alias sysprc='sudo sysquery -prc'
-alias testcmd=/home/hotnuma/DevFiles/testcmd/build/testcmd
