@@ -24,16 +24,11 @@ gettext
 
 git clone https://github.com/labwc/labwc.git && cd labwc
 
-* configure
-
-    meson setup -Dxwayland=disabled build/
-    or
-    meson setup -Dxwayland=disabled --wrap-mode=nodownload build/
-
 * compile & install
 
-    meson compile -C build/
-    sudo meson install --skip-subprojects -C build/
+    meson setup -Dxwayland=disabled build
+    meson compile -C build
+    sudo meson install --skip-subprojects -C build
 
 * install config files
 
