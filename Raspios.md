@@ -11,7 +11,6 @@
     https://github.com/orgs/raspberrypi-ui/repositories  
     https://github.com/orgs/RPi-Distro/repositories  
     https://github.com/orgs/raspberrypi/repositories  
-    install vcgencmd : https://raspberrypi.stackexchange.com/questions/119662/  
     
 * Labwc
     
@@ -19,6 +18,13 @@
     https://github.com/labwc/labwc-artwork/  
     https://wiki.archlinux.org/title/Labwc  
 
+* Thorium Browser
+
+    https://github.com/Alex313031/Thorium-Raspi/releases  
+    
+    `sudo unzip -d /opt/thorium thorium-browser_128.0.6613.194_arm64.zip`
+    
+    `/opt/thorium/thorium --ozone-platform=wayland 2>/dev/null`
 
 #### Startup
 
