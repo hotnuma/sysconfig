@@ -553,7 +553,7 @@ if [[ ! -f "$dest" ]]; then
     install_file "$debdir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
     sudo cp "$debdir/labwc/labwc-git" "/usr/local/bin/labwc-git"
     sudo cp "$debdir/labwc/labwc-git.desktop" \
-            "/usr/local/share/wayland-sessions/labwc-git.desktop"
+            "/usr/share/wayland-sessions/labwc-git.desktop"
 fi
 
 # pop dir ---------------------------------------------------------------------
