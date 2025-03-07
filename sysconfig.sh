@@ -54,9 +54,6 @@ install_file()
     fi
 }
 
-install_file "$debdir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
-install_file "$debdir/labwc/autostart" "/etc/xdg/labwc/autostart"
-
 hide_launcher()
 {
     test "$1" != "" || error_exit "hide_launcher failed"
@@ -546,6 +543,18 @@ hide_application "xfce4-web-browser"
 hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
 hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad.desktop"
 hide_launcher "$HOME/.local/share/applications/thunar.desktop"
+
+# install labwc files ---------------------------------------------------------
+
+dest="/usr/local/bin/labwc-git"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install labwc files" | tee -a "$outfile"
+    install_file "$debdir/labwc/autostart" "/etc/xdg/labwc/autostart"
+    install_file "$debdir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
+    sudo cp "$debdir/labwc/labwc-git" "/usr/local/bin/labwc-git"
+    sudo cp "$debdir/labwc/labwc-git.desktop" \
+            "/usr/local/share/wayland-sessions/labwc-git.desktop"
+fi
 
 # pop dir ---------------------------------------------------------------------
 
