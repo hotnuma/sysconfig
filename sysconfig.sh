@@ -311,8 +311,8 @@ if [ "$(pidof cupsd)" ]; then
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
 fi
 
-if [ "$(pidof smartd)" ]; then
-    echo "*** smartd" | tee -a "$outfile"
+if [[ -f "/etc/systemd/system/smartd.service" ]]; then
+    echo "*** disable smartd" | tee -a "$outfile"
     sudo systemctl stop smartd 2>&1 | tee -a "$outfile"
     sudo systemctl disable smartd 2>&1 | tee -a "$outfile"
 fi

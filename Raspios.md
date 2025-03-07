@@ -11,6 +11,7 @@
     https://github.com/orgs/raspberrypi-ui/repositories  
     https://github.com/orgs/RPi-Distro/repositories  
     https://github.com/orgs/raspberrypi/repositories  
+    install vcgencmd : https://raspberrypi.stackexchange.com/questions/119662/  
     
 * Labwc
     
