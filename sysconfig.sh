@@ -198,15 +198,6 @@ create_dir "$HOME/.themes/"
 create_dir "$HOME/Bureau/"
 create_dir "$HOME/Downloads/0Supprimer/"
 
-# disable autostart programs
-hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
-hide_launcher "$HOME/.config/autostart/print-applet.desktop"
-hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
-hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
-hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
-hide_launcher "$HOME/.config/autostart/xiccd.desktop"
-hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
-
 # install base ================================================================
 
 dest=/usr/bin/hsetroot
@@ -304,6 +295,7 @@ fi
 
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
+which xarchiver && sudo apt -y purge xarchiver 2>&1 | tee -a "$outfile"
 
 # services --------------------------------------------------------------------
 
@@ -413,6 +405,15 @@ if [[ ! -f "$dest" ]]; then
 fi
 
 # Hide Launchers --------------------------------------------------------------
+
+# disable autostart programs
+hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
+hide_launcher "$HOME/.config/autostart/print-applet.desktop"
+hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
+hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
+hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
+hide_launcher "$HOME/.config/autostart/xiccd.desktop"
+hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
 
 dest="$HOME"/.local/share/applications/org.xfce.mousepad.desktop
 if [[ ! -f "$dest" ]]; then
