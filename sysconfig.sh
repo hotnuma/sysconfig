@@ -26,6 +26,37 @@ create_dir()
     mkdir -p "$1"
 }
 
+install_file()
+{
+    test "$#" == 2 || error_exit "install_file must take 2 parameters"
+    src=$1
+    dest=$2
+    local destdir=$(dirname $dest)
+    if [[ ! -d "$destdir" ]]; then
+        warning "$destdir doesn't exist"
+        return
+    fi
+    test ! -f "${dest}.bak" || return
+    echo "install_file $src $dest"
+    test -f "$src" || error_exit "source file doesn't exist"
+    if [[ "$dest" == "/home"* ]]; then
+        test -f "$dest" || touch "$dest"
+        mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+        test "$?" -eq 0 || error_exit "mv $dest ${dest}.bak failed"
+        cp "$src" "$dest" 2>&1 | tee -a "$outfile"
+        test "$?" -eq 0 || error_exit "cp $src $dest failed"
+    else
+        test -f "$dest" || sudo touch "$dest"
+        sudo mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+        test "$?" -eq 0 || error_exit "sudo mv $dest ${dest}.bak failed"
+        sudo cp "$src" "$dest" 2>&1 | tee -a "$outfile"
+        test "$?" -eq 0 || error_exit "sudo cp $src $dest failed"
+    fi
+}
+
+install_file "$debdir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
+install_file "$debdir/labwc/autostart" "/etc/xdg/labwc/autostart"
+
 hide_launcher()
 {
     test "$1" != "" || error_exit "hide_launcher failed"
