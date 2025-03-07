@@ -47,17 +47,12 @@
 * Wayland sessions
     
     ```
-    /usr/local/share/wayland-sessions/
-    /usr/share/wayland-sessions/
-    ```
-    
-    ```
     ls /usr/share/wayland-sessions/
     
-    -rw-r--r--   1 root root   131 25 oct.  20:51 labwc.desktop
-    -rw-r--r--   1 root root    86 12 févr. 08:39 LXDE-pi-labwc.desktop
-    -rw-r--r--   1 root root    90 12 févr. 08:39 LXDE-pi-wayfire.desktop
-    -rw-r--r--   1 root root   102  1 déc.   2022 wayfire.desktop
+    labwc.desktop
+    LXDE-pi-labwc.desktop
+    LXDE-pi-wayfire.desktop
+    wayfire.desktop
     ```
 
 * Startup script
