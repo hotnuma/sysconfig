@@ -256,6 +256,16 @@ fi
 # other programs
 # curl inxi hardinfo
 
+# install QtCreator -----------------------------------------------------------
+
+dest=/usr/bin/qtcreator
+if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install QtCreator" | tee -a "$outfile"
+    APPLIST="qtcreator qt6-base-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
 # install dev packages --------------------------------------------------------
 
 dest=/usr/include/gumbo.h
@@ -264,16 +274,6 @@ if [[ ! -f "$dest" ]]; then
     APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
     APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
     APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
-# install QtCreator -----------------------------------------------------------
-
-dest=/usr/bin/qtcreator
-if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install QtCreator" | tee -a "$outfile"
-    APPLIST="qtcreator qt6-base-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -293,8 +293,8 @@ if [[ -f "$dest" ]]; then
     # mousepad
 fi
 
-which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
+which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 which xarchiver && sudo apt -y purge xarchiver 2>&1 | tee -a "$outfile"
 
 # services --------------------------------------------------------------------
@@ -439,7 +439,6 @@ if [[ ! -f "$dest" ]]; then
     dest="$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
     printf "[Desktop Entry]\nHidden=True\n" > "$dest"
 fi
-
 
 # build programs ==============================================================
 

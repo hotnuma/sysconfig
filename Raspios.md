@@ -39,7 +39,10 @@
 
 * Wayland sessions
     
-    `/usr/share/wayland-sessions/`
+    ```
+    /usr/local/share/wayland-sessions/
+    /usr/share/wayland-sessions/
+    ```
     
     ```
     ls /usr/share/wayland-sessions/
