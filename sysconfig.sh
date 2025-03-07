@@ -334,6 +334,8 @@ if [[ -f "$dest" ]]; then
     # mousepad
 fi
 
+dest="/usr/lib/gvfs/gvfs-afc-volume-monitor"
+test ! -f "$dest" || sudo apt -y purge gvfs-backends 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 
