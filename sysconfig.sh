@@ -22,7 +22,7 @@ create_dir()
 {
     test "$1" != "" || error_exit "create_dir failed"
     test ! -d "$1" || return
-    echo "create_dir : $1"
+    echo "*** create_dir : $1"
     mkdir -p "$1"
 }
 
@@ -30,7 +30,7 @@ hide_launcher()
 {
     test "$1" != "" || error_exit "hide_launcher failed"
     test ! -f "$1" || return
-    echo "hide_launcher : $1"
+    echo "*** hide : $1"
     printf "[Desktop Entry]\nHidden=True\n" > "$1"
 }
 
@@ -41,25 +41,25 @@ filemod()
         return
     fi
     filename=$(basename "$1")
-    echo "*** hide ${filename}" | tee -a "$outfile"
+    echo "*** hide : ${filename}" | tee -a "$outfile"
     dest="$HOME/.local/share/applications/$filename"
     cp "$1" "$HOME/.local/share/applications/"
     sed -i '/^MimeType=/d' "$dest" | tee -a "$outfile"
     echo "NoDisplay=true" >> "$dest"
 }
 
-app_hide()
+hide_application()
 {
-    syspath=$(find /usr/local/share/applications/ \
-              -name ${1}.desktop -print -quit 2>/dev/null)
-    if [[ $syspath != "" ]]; then
-        filemod $syspath
+    dest="$HOME/.local/share/applications/${1}.desktop"
+    test ! -f "$dest" || return
+    dest="/usr/local/share/applications/${1}.desktop"
+    if [[ -f "$dest" ]]; then
+        filemod $dest
         return
     fi
-    syspath=$(find /usr/share/applications/ \
-              -name ${1}.desktop -print -quit 2>/dev/null)
-    if [[ $syspath != "" ]]; then
-        filemod $syspath
+    dest="/usr/share/applications/${1}.desktop"
+    if [[ -f "$dest" ]]; then
+        filemod $dest
         return
     fi
 }
@@ -404,9 +404,8 @@ if [[ ! -f "$dest" ]]; then
     cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# Hide Launchers --------------------------------------------------------------
+# Disable autostart programs --------------------------------------------------
 
-# disable autostart programs
 hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
 hide_launcher "$HOME/.config/autostart/print-applet.desktop"
 hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
@@ -415,30 +414,26 @@ hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
 hide_launcher "$HOME/.config/autostart/xiccd.desktop"
 hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
 
-dest="$HOME"/.local/share/applications/org.xfce.mousepad.desktop
-if [[ ! -f "$dest" ]]; then
-    app_hide "fileman"
-    app_hide "gcr-prompter"
-    app_hide "gcr-viewer"
-    app_hide "RealTimeSync"
-    app_hide "system-config-printer"
-    app_hide "thunar-bulk-rename"
-    app_hide "thunar-settings"
-    app_hide "thunar-volman-settings"
-    app_hide "xfce-backdrop-settings"
-    app_hide "xfce4-appfinder"
-    app_hide "xfce4-file-manager"
-    app_hide "xfce4-mail-reader"
-    app_hide "xfce4-run"
-    app_hide "xfce4-web-browser"
-    echo "*** hide thunar launcher" | tee -a "$outfile"
-    dest="$HOME/.local/share/applications/thunar.desktop"
-    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
-    dest="$HOME/.local/share/applications/org.xfce.mousepad.desktop"
-    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
-    dest="$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
-    printf "[Desktop Entry]\nHidden=True\n" > "$dest"
-fi
+# Hide Applications -----------------------------------------------------------
+
+hide_application "fileman"
+hide_application "gcr-prompter"
+hide_application "gcr-viewer"
+hide_application "RealTimeSync"
+hide_application "system-config-printer"
+hide_application "thunar-bulk-rename"
+hide_application "thunar-settings"
+hide_application "thunar-volman-settings"
+hide_application "xfce-backdrop-settings"
+hide_application "xfce4-appfinder"
+hide_application "xfce4-file-manager"
+hide_application "xfce4-mail-reader"
+hide_application "xfce4-run"
+hide_application "xfce4-web-browser"
+
+hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
+hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad.desktop"
+hide_launcher "$HOME/.local/share/applications/thunar.desktop"
 
 # build programs ==============================================================
 
