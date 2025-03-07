@@ -103,7 +103,7 @@
     
     https://unix.stackexchange.com/questions/324843/  
     
-    `rm ~/.local/share/keyrings/*.keyrings`
+    `rm ~/.local/share/keyrings/*.keyring`
     
     Restart Chrome, when prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
 

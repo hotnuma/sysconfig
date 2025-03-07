@@ -1,7 +1,7 @@
 
 https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
 
-builddep labwc
+check dependencies : builddep labwc
 
 sudo apt install \
 cmake \
@@ -20,16 +20,22 @@ wayland-protocols \
 libxkbcommon-dev \
 libdrm-dev \
 scdoc \
-gettext \
+gettext
+
+git clone https://github.com/labwc/labwc.git && cd labwc
 
 * configure
 
-    meson setup -Dxwayland=disabled --wrap-mode=nodownload build/
-    or
     meson setup -Dxwayland=disabled build/
+    or
+    meson setup -Dxwayland=disabled --wrap-mode=nodownload build/
 
 * compile & install
 
     meson compile -C build/
     sudo meson install --skip-subprojects -C build/
+
+* install config files
+
+
 
