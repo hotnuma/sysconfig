@@ -1,13 +1,14 @@
 #!/usr/bin/bash
 
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
-debdir="$basedir"
 builddir="$HOME/DevFiles"
 currentuser="$USER"
 outfile="$HOME/install.log"
+dist_id=""
 opt_qtcreator=0
-opt_x11=1
-opt_xfce=1
+opt_x11=0
+opt_labwc=0
+opt_xfce=0
 opt_yes=0
 
 error_exit()
@@ -105,13 +106,28 @@ build_src()
     fi
 }
 
-# -----------------------------------------------------------------------------
+# tests =======================================================================
+
+if [[ "$EUID" = 0 ]]; then
+    error_exit "*** must not be run as root"
+else
+    # make sure to ask for password on next sudo
+    sudo -k
+    if ! sudo true; then
+        error_exit "*** sudo failed"
+    fi
+fi
 
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
-    DISTID=$ID
-    DISTVER=$VERSION_ID
+    dist_id=$VERSION_CODENAME
 fi
+
+test $XDG_SESSION_TYPE == "x11" && opt_x11=1
+test $XDG_CURRENT_DESKTOP == "labwc:wlroots" && opt_labwc=1
+test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
+
+# parse options ---------------------------------------------------------------
 
 while (($#)); do
     case "$1" in
@@ -128,23 +144,6 @@ while (($#)); do
 done
 
 test "$opt_yes" -eq 1 || error_exit "missing parameter"
-test $XDG_CURRENT_DESKTOP == "XFCE" || opt_xfce=0
-test $XDG_SESSION_TYPE == "x11" || opt_x11=0
-
-# test sudo -------------------------------------------------------------------
-
-if [[ "$EUID" = 0 ]]; then
-    echo "*** must not be run as root"
-    echo "abort..."
-    exit 1
-else
-    sudo -k # make sure to ask for password on next sudo
-    if ! sudo true; then
-        echo "*** sudo failed"
-        echo "abort..."
-        exit 1
-    fi
-fi
 
 # start =======================================================================
 
@@ -211,7 +210,7 @@ fi
 # disable log messages --------------------------------------------------------
 
 dest=/etc/systemd/system/rtkit-daemon.service.d/
-if [[ ! -d ${dest} ]]; then
+if [[ $(pidof rtkit-daemon) ]] && [[ ! -d ${dest} ]]; then
     echo "*** disable rtkit logs" | tee -a "$outfile"
     sudo mkdir $dest
     dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
@@ -227,7 +226,9 @@ fi
 
 if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
     echo "*** upgrade" | tee -a "$outfile"
-    sudo apt update; sudo apt upgrade 2>&1 | tee -a "$outfile"
+    sudo apt update 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "update failed"
+    sudo apt upgrade 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "upgrade failed"
 fi
 
@@ -246,23 +247,13 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
     APPLIST="dmz-cursor-theme dos2unix elementary-xfce-icon-theme fonts-dejavu"
     APPLIST+=" hsetroot htop net-tools p7zip-full python3-pip rofi"
-    APPLIST+=" build-essential clang-format git meson ninja-build pkg-config"
-    APPLIST+=" libgd-dev libglib2.0-doc libgtk-3-dev libgtk-3-doc libxml2-dev"
-    APPLIST+=" gtk-3-examples"
+    APPLIST+=" audacious ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
+    APPLIST+=" engrampa geany gimp zathura"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install softwares -----------------------------------------------------------
-
-dest=/usr/bin/zathura
-if [[ ! -f "$dest" ]]; then
-    echo "*** install softwares" | tee -a "$outfile"
-    APPLIST="audacious engrampa geany gimp zathura"
-    APPLIST+=" ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
+# other programs : curl hardinfo inxi
 
 # install xfce softwares ------------------------------------------------------
 
@@ -294,9 +285,6 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# other programs
-# curl inxi hardinfo
-
 # install QtCreator -----------------------------------------------------------
 
 dest=/usr/bin/qtcreator
@@ -312,9 +300,12 @@ fi
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo "*** install dev packages" | tee -a "$outfile"
-    APPLIST="gettext libxfce4ui-2-dev libxfconf-0-dev xfce4-dev-tools"
-    APPLIST+=" libgudev-1.0-dev libgumbo-dev libmediainfo-dev libnotify-dev"
-    APPLIST+=" libwnck-3-dev libxmu-dev libxss-dev"
+    APPLIST="build-essential clang-format gettext git meson ninja-build"
+    APPLIST+=" pkg-config libglib2.0-doc libgtk-3-dev libgtk-3-doc"
+    APPLIST+=" gtk-3-examples libgd-dev libgudev-1.0-dev libgumbo-dev"
+    APPLIST+=" libxfce4ui-2-dev libxfconf-0-dev libxml2-dev xfce4-dev-tools"
+    APPLIST+=" libmediainfo-dev libnotify-dev libwnck-3-dev libxmu-dev"
+    APPLIST+=" libxss-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -330,8 +321,7 @@ if [[ -f "$dest" ]]; then
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
-    
-    # mousepad
+    test "$?" -eq 0 || error_exit "autoremove failed"
 fi
 
 dest="/usr/lib/gvfs/gvfs-afc-volume-monitor"
@@ -347,7 +337,6 @@ if [ "$(pidof cupsd)" ]; then
     APPLIST+=" ModemManager wpa_supplicant"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-    # timers
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
@@ -365,8 +354,8 @@ dest=/etc/xdg/xfce4
 if [[ "$opt_xfce" -eq 1 ]] && [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
     echo "*** copy xdg xfce4" | tee -a "$outfile"
     sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$outfile"
-    dest=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml
-    sudo cp "$debdir"/root/xfce4-session.xml "$dest" 2>&1 | tee -a "$outfile"
+    dest="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml"
+    sudo cp "$basedir/root/xfce4-session.xml" "$dest" 2>&1 | tee -a "$outfile"
 fi
     
 # startup.sh ------------------------------------------------------------------
@@ -374,24 +363,48 @@ fi
 dest=/usr/local/bin/startup.sh
 if [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$outfile"
-    sudo cp "$debdir/root/startup.sh" "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$basedir/root/startup.sh" "$dest" 2>&1 | tee -a "$outfile"
     dest="$HOME/.config/autostart/startup.desktop"
-    cp "$debdir/home/startup.desktop" "$dest" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/startup.desktop" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
+# labwc session ---------------------------------------------------------------
+
+dest="/usr/local/bin/labwc-git"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install labwc files" | tee -a "$outfile"
+    install_file "$basedir/labwc/autostart" "/etc/xdg/labwc/autostart"
+    install_file "$basedir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
+    sudo cp "$basedir/labwc/labwc-git" "/usr/local/bin/labwc-git"
+    sudo cp "$basedir/labwc/labwc-git.desktop" \
+            "/usr/share/wayland-sessions/labwc-git.desktop"
 fi
 
 # user settings ===============================================================
+
+dest="$HOME/config"
+if [[ ! -L "$dest" ]]; then
+    echo "*** config link" | tee -a "$outfile"
+    ln -s "$HOME/.config" "$dest" 2>&1 | tee -a "$outfile"
+    echo "*** add user to adm group" | tee -a "$outfile"
+    sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
+fi
+
+# user dirs -------------------------------------------------------------------
 
 dest="$HOME/.config/user-dirs.dirs"
 if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     echo "*** user dirs" | tee -a "$outfile"
     cp "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
-    cp "$debdir/home/user-dirs.dirs" "$dest" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/user-dirs.dirs" "$dest" 2>&1 | tee -a "$outfile"
 fi
+
+# aliases ---------------------------------------------------------------------
 
 dest="$HOME/.bash_aliases"
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$outfile"
-    cp "$debdir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # autostart -------------------------------------------------------------------
@@ -400,28 +413,26 @@ dest="$HOME/.config/autostart/powerctl.desktop"
 if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
 && [[ ! -f "$dest" ]]; then
     echo "*** powerctl" | tee -a "$outfile"
-    cp "$debdir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # xfce settings ---------------------------------------------------------------
 
-dest="$HOME"/config
-if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
-    echo "*** config link" | tee -a "$outfile"
-    ln -s "$HOME"/.config "$dest" 2>&1 | tee -a "$outfile"
-    
-    echo "*** add user to adm group" | tee -a "$outfile"
-    sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
-    
+xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+dest="$xfdir/xfce4-panel.xml"
+if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
+&& [[ ! -f "${dest}.bak" ]]; then
     echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
-    dest="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$debdir/home/xfce4-keyboard-shortcuts.xml" "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
+            "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfce4-panel.xml" | tee -a "$outfile"
-    dest="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    dest="$xfdir/xfce4-panel.xml"
     sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$debdir/home/xfce4-panel.xml" "$dest" 2>&1 | tee -a "$outfile"
+    sudo cp "$basedir/home/xfce4-panel.xml" \
+            "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
     xfconf-query --create -c keyboards -p '/Default/Numlock' \
@@ -437,20 +448,32 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ ! -L "$dest" ]]; then
     xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' \
         -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
-    
-dest="$HOME/.config/Thunar/uca.xml"
-if [[ "$opt_xfce" -eq 1 ]] && [[ ! -f ${dest}.bak ]] && [[ -f "$dest" ]]; then
-    echo "*** thunar terminal" | tee -a "$outfile"
-    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    cp "$debdir/home/uca.xml" "$dest" 2>&1 | tee -a "$outfile"
+
+# labwc theme -----------------------------------------------------------------
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
+    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
+    src="$basedir/labwc/AdwaitaRevisitedLight.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# terminal --------------------------------------------------------------------
+# thunar terminal -------------------------------------------------------------
+
+dest="$HOME/.config/Thunar/uca.xml"
+if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] && [[ ! -f ${dest}.bak ]]; then
+    echo "*** thunar terminal" | tee -a "$outfile"
+    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/uca.xml" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
+# xfce4-terminal --------------------------------------------------------------
 
 dest="$HOME/.local/share/xfce4/terminal/colorschemes/custom.theme"
 if [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$outfile"
-    cp "$debdir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # build programs ==============================================================
@@ -542,29 +565,10 @@ hide_application "xfce4-mail-reader"
 hide_application "xfce4-run"
 hide_application "xfce4-web-browser"
 
-hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad-settings.desktop"
-hide_launcher "$HOME/.local/share/applications/org.xfce.mousepad.desktop"
-hide_launcher "$HOME/.local/share/applications/thunar.desktop"
-
-# install labwc files ---------------------------------------------------------
-
-dest="/usr/local/bin/labwc-git"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install labwc files" | tee -a "$outfile"
-    install_file "$debdir/labwc/autostart" "/etc/xdg/labwc/autostart"
-    install_file "$debdir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
-    sudo cp "$debdir/labwc/labwc-git" "/usr/local/bin/labwc-git"
-    sudo cp "$debdir/labwc/labwc-git.desktop" \
-            "/usr/share/wayland-sessions/labwc-git.desktop"
-fi
-
-dest="$HOME/.local/share/themes"
-if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
-    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
-    src="$debdir/labwc/AdwaitaRevisitedLight.zip"
-    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
+dest="$HOME/.local/share/applications"
+hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
+hide_launcher "$dest/org.xfce.mousepad.desktop"
+hide_launcher "$dest/thunar.desktop"
 
 # pop dir ---------------------------------------------------------------------
 
