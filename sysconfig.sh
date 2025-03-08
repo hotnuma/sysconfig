@@ -143,7 +143,7 @@ while (($#)); do
     shift
 done
 
-test "$opt_yes" -eq 1 || error_exit "missing parameter"
+#test "$opt_yes" -eq 1 || error_exit "missing parameter"
 
 # start =======================================================================
 
