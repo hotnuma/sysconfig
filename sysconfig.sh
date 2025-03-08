@@ -234,8 +234,8 @@ fi
 # create directories
 create_dir "$HOME/.config/autostart/"
 create_dir "$HOME/.local/share/applications/"
+create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
-create_dir "$HOME/.themes/"
 create_dir "$HOME/Bureau/"
 create_dir "$HOME/Downloads/0Supprimer/"
 
@@ -556,6 +556,14 @@ if [[ ! -f "$dest" ]]; then
     sudo cp "$debdir/labwc/labwc-git" "/usr/local/bin/labwc-git"
     sudo cp "$debdir/labwc/labwc-git.desktop" \
             "/usr/share/wayland-sessions/labwc-git.desktop"
+fi
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
+    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
+    src="$debdir/labwc/AdwaitaRevisitedLight.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # pop dir ---------------------------------------------------------------------
