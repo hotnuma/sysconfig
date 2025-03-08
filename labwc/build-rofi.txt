@@ -1,0 +1,24 @@
+
+https://github.com/lbonn/rofi  
+https://github.com/lbonn/rofi/blob/wayland/INSTALL.md#meson  
+
+```
+git clone https://github.com/lbonn/rofi.git && cd rofi
+```
+
+libstartup-notification-1.0
+libxkbcommon >= 0.4.1
+libxkbcommon-x11
+libxcb (sometimes split, you need libxcb, libxcb-xkb and libxcb-randr libxcb-xinerama)
+xcb-util
+xcb-util-wm (sometimes split as libxcb-ewmh and libxcb-icccm)
+xcb-util-cursor
+xcb-imdkit (optional, 1.0.3 or up preferred)
+
+```
+meson setup build
+ninja -C build
+ninja -C build install
+```
+
+

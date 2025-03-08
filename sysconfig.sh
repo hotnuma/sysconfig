@@ -245,10 +245,10 @@ create_dir "$HOME/Downloads/0Supprimer/"
 dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
-    APPLIST="dmz-cursor-theme dos2unix elementary-xfce-icon-theme fonts-dejavu"
-    APPLIST+=" hsetroot htop net-tools p7zip-full python3-pip rofi"
-    APPLIST+=" audacious ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui mpv"
-    APPLIST+=" engrampa geany gimp zathura"
+    APPLIST="curl dmz-cursor-theme dos2unix elementary-xfce-icon-theme"
+    APPLIST+=" fonts-dejavu hsetroot htop net-tools p7zip-full python3-pip"
+    APPLIST+=" rofi audacious ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui"
+    APPLIST+=" mpv engrampa geany gimp zathura"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -279,7 +279,8 @@ dest=/usr/sbin/smartctl
 if [[ ! -f "$dest" ]]; then
     echo "*** install without recommends" | tee -a "$outfile"
     APPLIST="smartmontools"
-    sudo apt -y install --no-install-recommends $APPLIST 2>&1 | tee -a "$outfile"
+    sudo apt -y install --no-install-recommends \
+        $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
@@ -298,8 +299,8 @@ fi
 dest=/usr/include/gumbo.h
 if [[ ! -f "$dest" ]]; then
     echo "*** install dev packages" | tee -a "$outfile"
-    APPLIST="build-essential clang-format gettext git meson ninja-build"
-    APPLIST+=" pkg-config libglib2.0-doc libgtk-3-dev libgtk-3-doc"
+    APPLIST="apt-file build-essential clang-format gettext git meson"
+    APPLIST+=" ninja-build pkg-config libglib2.0-doc libgtk-3-dev libgtk-3-doc"
     APPLIST+=" gtk-3-examples libgd-dev libgudev-1.0-dev libgumbo-dev"
     APPLIST+=" libxfce4ui-2-dev libxfconf-0-dev libxml2-dev xfce4-dev-tools"
     APPLIST+=" libmediainfo-dev libnotify-dev libwnck-3-dev libxmu-dev"
