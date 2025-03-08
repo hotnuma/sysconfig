@@ -253,8 +253,6 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# other programs : curl hardinfo inxi
-
 # install xfce softwares ------------------------------------------------------
 
 dest=/usr/bin/xfce4-screenshooter

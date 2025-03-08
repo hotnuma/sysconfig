@@ -1,0 +1,5 @@
+
+sudo apt purge xdg-desktop-portal*
+
+# install other programs : curl hardinfo inxi
+
