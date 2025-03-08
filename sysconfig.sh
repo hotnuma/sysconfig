@@ -483,6 +483,7 @@ if [[ ! -d "$dest" ]]; then
     echo "*** create build dir" | tee -a "$outfile"
     mkdir "$builddir"
 fi
+
 pushd "$builddir" 1>/dev/null
 
 dest="/usr/local/include/tinyc/cstring.h"
