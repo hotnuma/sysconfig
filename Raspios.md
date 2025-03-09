@@ -26,6 +26,7 @@
     
     `/opt/thorium/thorium --ozone-platform=wayland 2>/dev/null`
 
+
 #### Startup
 
 * Lightdm config
@@ -100,6 +101,12 @@
 	XDG_PICTURES_DIR="$HOME"
 	XDG_VIDEOS_DIR="$HOME"
 	```
+
+* Xfce Configuration
+    
+    https://wiki.archlinux.org/title/Xfwm  
+    
+    `xfconf-query -c xfwm4 -p /general/vblank_mode -s glx`
 
 * Avoid keyring password
     
@@ -338,14 +345,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
     - 1.2A current limit for all USB plugs
     - slow SD controller (40 MB/s)
     - incompatible usb to sata controllers
-
-#### Xfce Configuration
-
-- Screen tearing
-    
-    https://wiki.archlinux.org/title/Xfwm  
-    
-    `xfconf-query -c xfwm4 -p /general/vblank_mode -s glx`
 
 #### Other
 
