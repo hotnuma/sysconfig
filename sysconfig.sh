@@ -409,27 +409,31 @@ if [[ "$opt_xfce" -eq 1 ]] \
         -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
-# panel & shortcuts -----------------------------------------------------------
+# xfce4-panel -----------------------------------------------------------------
 
 xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 dest="$xfdir/xfce4-panel.xml"
-if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
-&& [[ ! -f "${dest}.bak" ]]; then
-    
+if [[ "$opt_xfce" -eq 1 ]] \
+&& [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     echo "*** xfce4-panel.xml" | tee -a "$outfile"
-    xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
-    dest="$xfdir/xfce4-panel.xml"
     mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "backup xfce4-panel.xml failed"
     cp "$basedir/home/xfce4-panel.xml" \
-            "$dest" 2>&1 | tee -a "$outfile"
+       "$dest" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "copy xfce4-panel.xml failed"
-    
+fi
+
+# keyboard-shortcuts ----------------------------------------------------------
+
+xfdir="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
+dest="$xfdir/xfce4-keyboard-shortcuts.xml"
+if [[ "$opt_xfce" -eq 1 ]] \
+&& [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
-    xfdir="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
-    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
     mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "backup xfce4-keyboard-shortcuts.xml failed"
     cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
-            "$dest" 2>&1 | tee -a "$outfile"
+       "$dest" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "copy xfce4-keyboard-shortcuts.xml failed"
 fi    
 
