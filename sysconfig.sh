@@ -421,16 +421,18 @@ xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 dest="$xfdir/xfce4-panel.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
 && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
-    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
-    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
+    echo "*** xfce4-panel.xml" | tee -a "$outfile"
+    xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+    dest="$xfdir/xfce4-panel.xml"
+    mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/xfce4-panel.xml" \
             "$dest" 2>&1 | tee -a "$outfile"
     
-    echo "*** xfce4-panel.xml" | tee -a "$outfile"
-    dest="$xfdir/xfce4-panel.xml"
-    sudo mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    sudo cp "$basedir/home/xfce4-panel.xml" \
+    echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
+    xfdir="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
+    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
+    sudo mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    sudo cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
             "$dest" 2>&1 | tee -a "$outfile"
     
     echo "*** xfconf settings" | tee -a "$outfile"
@@ -463,7 +465,7 @@ fi
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] && [[ ! -f ${dest}.bak ]]; then
     echo "*** thunar terminal" | tee -a "$outfile"
-    mv "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
     cp "$basedir/home/uca.xml" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
