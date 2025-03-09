@@ -143,8 +143,6 @@ while (($#)); do
     shift
 done
 
-#test "$opt_yes" -eq 1 || error_exit "missing parameter"
-
 # start =======================================================================
 
 echo "===============================================================================" | tee -a $outfile
@@ -207,21 +205,6 @@ NO_AT_BRIDGE=1
 EOF
 fi
 
-# disable log messages --------------------------------------------------------
-
-dest=/etc/systemd/system/rtkit-daemon.service.d/
-if [[ $(pidof rtkit-daemon) ]] && [[ ! -d ${dest} ]]; then
-    echo "*** disable rtkit logs" | tee -a "$outfile"
-    sudo mkdir $dest
-    dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
-    sudo tee "$dest" > /dev/null << "EOF"
-[Service]
-LogLevelMax=4
-EOF
-    sudo systemctl daemon-reload 2>&1 | tee -a "$outfile"
-    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
-fi
-
 # upgrade ---------------------------------------------------------------------
 
 if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
@@ -232,7 +215,8 @@ if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
     test "$?" -eq 0 || error_exit "upgrade failed"
 fi
 
-# create directories
+# create directories ----------------------------------------------------------
+
 create_dir "$HOME/.config/autostart/"
 create_dir "$HOME/.local/share/applications/"
 create_dir "$HOME/.local/share/themes/"
@@ -247,18 +231,10 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
     APPLIST="curl dmz-cursor-theme dos2unix elementary-xfce-icon-theme"
     APPLIST+=" fonts-dejavu hsetroot htop net-tools p7zip-full python3-pip"
-    APPLIST+=" rofi audacious ffmpeg mediainfo-gui mkvtoolnix mkvtoolnix-gui"
-    APPLIST+=" mpv engrampa geany gimp zathura"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
-# install xfce softwares ------------------------------------------------------
-
-dest=/usr/bin/xfce4-screenshooter
-if [[ "$opt_xfce" == 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install XFCE softwares" | tee -a "$outfile"
-    APPLIST="xfce4-screenshooter"
+    APPLIST+=" rofi"
+    APPLIST+=" audacious ffmpeg mkvtoolnix-gui mediainfo-gui mpv"
+    APPLIST+=" engrampa geany gimp xfce4-screenshooter xfce4-terminal"
+    APPLIST+=" zathura"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -268,7 +244,7 @@ fi
 dest=/usr/bin/wofi
 if [[ "$opt_x11" == 0 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install wayland softwares" | tee -a "$outfile"
-    APPLIST="swaybg wofi xfce4-terminal"
+    APPLIST="swaybg"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -349,16 +325,6 @@ fi
 
 # system settings =============================================================
 
-dest=/etc/xdg/xfce4
-if [[ "$opt_xfce" -eq 1 ]] && [[ -d "$dest" ]] && [[ ! -d "$dest".bak ]]; then
-    echo "*** copy xdg xfce4" | tee -a "$outfile"
-    sudo cp -r "$dest" "$dest".bak 2>&1 | tee -a "$outfile"
-    dest="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml"
-    sudo cp "$basedir/root/xfce4-session.xml" "$dest" 2>&1 | tee -a "$outfile"
-fi
-    
-# startup.sh ------------------------------------------------------------------
-
 dest=/usr/local/bin/startup.sh
 if [[ ! -f "$dest" ]]; then
     echo "*** startup.sh" | tee -a "$outfile"
@@ -415,26 +381,19 @@ if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
     cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# xfce settings ---------------------------------------------------------------
+# xfce settings ===============================================================
 
-xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
-dest="$xfdir/xfce4-panel.xml"
-if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
-&& [[ ! -f "${dest}.bak" ]]; then
-    echo "*** xfce4-panel.xml" | tee -a "$outfile"
-    xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
-    dest="$xfdir/xfce4-panel.xml"
-    mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
-    cp "$basedir/home/xfce4-panel.xml" \
-            "$dest" 2>&1 | tee -a "$outfile"
-    
-    echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
-    xfdir="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
-    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
-    sudo mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
-    sudo cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
-            "$dest" 2>&1 | tee -a "$outfile"
-    
+dest=/etc/xdg/xfce4
+if [[ "$opt_xfce" -eq 1 ]] \
+&& [[ -d "$dest" ]] && [[ ! -d "${dest}.bak" ]]; then
+
+    echo "*** copy xdg xfce4" | tee -a "$outfile"
+    sudo cp -r "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "backup xfce4-session.xml failed"
+    dest="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml"
+    sudo cp "$basedir/root/xfce4-session.xml" "$dest" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "copy xfce4-session.xml failed"
+
     echo "*** xfconf settings" | tee -a "$outfile"
     xfconf-query --create -c keyboards -p '/Default/Numlock' \
         -t 'bool' -s 'true' 2>&1 | tee -a "$outfile"
@@ -450,17 +409,31 @@ if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
         -t 'bool' -s 'false' 2>&1 | tee -a "$outfile"
 fi
 
-# labwc theme -----------------------------------------------------------------
+# panel & shortcuts -----------------------------------------------------------
 
-dest="$HOME/.local/share/themes"
-if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
-    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
-    src="$basedir/labwc/AdwaitaRevisitedLight.zip"
-    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
+xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+dest="$xfdir/xfce4-panel.xml"
+if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] \
+&& [[ ! -f "${dest}.bak" ]]; then
+    
+    echo "*** xfce4-panel.xml" | tee -a "$outfile"
+    xfdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+    dest="$xfdir/xfce4-panel.xml"
+    mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/xfce4-panel.xml" \
+            "$dest" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "copy xfce4-panel.xml failed"
+    
+    echo "*** xfce4-keyboard-shortcuts.xml" | tee -a "$outfile"
+    xfdir="/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
+    dest="$xfdir/xfce4-keyboard-shortcuts.xml"
+    mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    cp "$basedir/home/xfce4-keyboard-shortcuts.xml" \
+            "$dest" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "copy xfce4-keyboard-shortcuts.xml failed"
+fi    
 
-# thunar terminal -------------------------------------------------------------
+# thunar uca ------------------------------------------------------------------
 
 dest="$HOME/.config/Thunar/uca.xml"
 if [[ "$opt_xfce" -eq 1 ]] && [[ -f "$dest" ]] && [[ ! -f ${dest}.bak ]]; then
@@ -475,6 +448,16 @@ dest="$HOME/.local/share/xfce4/terminal/colorschemes/custom.theme"
 if [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$outfile"
     cp "$basedir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
+# labwc =======================================================================
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
+    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
+    src="$basedir/labwc/AdwaitaRevisitedLight.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # build programs ==============================================================
@@ -571,6 +554,21 @@ dest="$HOME/.local/share/applications"
 hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
 hide_launcher "$dest/org.xfce.mousepad.desktop"
 hide_launcher "$dest/thunar.desktop"
+
+# disable log messages ========================================================
+
+dest=/etc/systemd/system/rtkit-daemon.service.d/
+if [[ $(pidof rtkit-daemon) ]] && [[ ! -d ${dest} ]]; then
+    echo "*** disable rtkit logs" | tee -a "$outfile"
+    sudo mkdir $dest
+    dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
+    sudo tee "$dest" > /dev/null << "EOF"
+[Service]
+LogLevelMax=4
+EOF
+    sudo systemctl daemon-reload 2>&1 | tee -a "$outfile"
+    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
+fi
 
 # pop dir ---------------------------------------------------------------------
 
