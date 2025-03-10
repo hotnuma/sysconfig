@@ -3,6 +3,7 @@
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 currentuser="$USER"
 outfile="$HOME/install.log"
+opt_raspi=0
 
 error_exit()
 {
@@ -17,6 +18,8 @@ test ! -d "/boot/grub" || error_exit "not a Raspberry Pi"
 model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
     || error_exit "wrong board model"
+    
+test -f "/etc/apt/sources.list.d/raspios.list" && opt_raspi=1
 
 echo "===============================================================================" | tee -a "$outfile"
 echo " Raspi config..." | tee -a "$outfile"
@@ -54,15 +57,8 @@ fi
 
 # rpi configuration ===========================================================
 
-#~ dest="/boot/firmware/cmdline.txt"
-#~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    #~ echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
-    #~ sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    #~ sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
-#~ fi
-
 dest="/etc/default/raspi-firmware-custom"
-if [[ ! -f $dest ]]; then
+if [[ "$opt_raspi" -eq 0 ]] && [[ ! -f "$dest" ]]; then
     echo "*** create /etc/default/raspi-firmware-custom" | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << 'EOF'
 # http://rpf.io/configtxt
@@ -91,33 +87,41 @@ EOF
     exit 0
 fi
 
-#~ dest="/boot/firmware/config.txt"
+#~ dest="/boot/firmware/cmdline.txt"
 #~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    #~ echo "*** edit /boot/firmware/config.txt" | tee -a "$outfile"
+    #~ echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
     #~ sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    #~ sudo tee "$dest" > /dev/null << 'EOF'
-#~ # http://rpf.io/configtxt
-
-#~ dtoverlay=vc4-kms-v3d
-#~ max_framebuffers=2
-#~ arm_64bit=1
-#~ disable_overscan=1
-#~ disable_splash=1
-#~ boot_delay=0
-
-#~ # overclock
-#~ over_voltage=6
-#~ arm_freq=2000
-#~ gpu_freq=600
-
-#~ # audio
-#~ #dtparam=audio=on
-
-#~ # disable unneeded
-#~ dtoverlay=disable-bt
-#~ dtoverlay=disable-wifi
-#~ EOF
+    #~ sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
 #~ fi
+
+dest="/boot/firmware/config.txt"
+if [[ "$opt_raspi" -eq 1 ]] \
+&& [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** edit /boot/firmware/config.txt" | tee -a "$outfile"
+    sudo cp "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << 'EOF'
+# http://rpf.io/configtxt
+
+dtoverlay=vc4-kms-v3d
+max_framebuffers=2
+arm_64bit=1
+disable_overscan=1
+disable_splash=1
+boot_delay=0
+
+# overclock
+over_voltage=6
+arm_freq=2000
+gpu_freq=600
+
+# audio
+#dtparam=audio=on
+
+# disable unneeded
+dtoverlay=disable-bt
+dtoverlay=disable-wifi
+EOF
+fi
 
 echo "done" | tee -a "$outfile"
 
