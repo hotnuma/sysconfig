@@ -42,6 +42,10 @@
     xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/ Super+T
     ```
 
+* Configure a static ip
+    
+    https://github.com/hotnuma/doclinux/blob/master/10-Network.md  
+
 * xfce wayland session
     
     ```
