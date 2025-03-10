@@ -50,7 +50,11 @@
     Exec=startxfce4 --wayland
     ```
     
+* mousepad
     
+    `sudo apt purge mousepad`
+
+
 #### Startup
 
 * Lightdm config
