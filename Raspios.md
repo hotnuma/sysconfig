@@ -41,6 +41,23 @@
     /opt/thorium/thorium                                                Super+B
     xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/ Super+T
     ```
+
+* Debian firmware config
+    
+    ```
+    # Do not modify this file!
+    #
+    # It is automatically generated upon install or update of either the
+    # firmware or the Linux kernel.
+    #
+    # If you need to set boot-time parameters, do so via the
+    # /etc/default/raspi-firmware, /etc/default/raspi-firmware-custom or
+    # /etc/default/raspi-extra-cmdline files.
+    ```
+    
+    `update-initramfs -u -k all`
+    
+    
     
 #### Startup
 
@@ -99,23 +116,6 @@
 * Install Xfce
     
     `sudo apt install xfce4`
-
-* User dirs
-	
-	update : `~/.config/user-dirs.locale`
-	
-	and : `~/.config/user-dirs.dirs`
-	
-	```
-	XDG_DESKTOP_DIR="$HOME/Bureau"
-	XDG_DOWNLOAD_DIR="$HOME/Downloads"
-	XDG_TEMPLATES_DIR="$HOME/.templates
-	XDG_PUBLICSHARE_DIR="$HOME"
-	XDG_DOCUMENTS_DIR="$HOME"
-	XDG_MUSIC_DIR="$HOME"
-	XDG_PICTURES_DIR="$HOME"
-	XDG_VIDEOS_DIR="$HOME"
-	```
 
 * Xfce Configuration
     
