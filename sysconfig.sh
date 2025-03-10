@@ -221,7 +221,6 @@ create_dir "$HOME/.config/autostart/"
 create_dir "$HOME/.local/share/applications/"
 create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
-create_dir "$HOME/Bureau/"
 create_dir "$HOME/Downloads/0Supprimer/"
 
 # install base ================================================================
@@ -353,15 +352,6 @@ if [[ ! -L "$dest" ]]; then
     ln -s "$HOME/.config" "$dest" 2>&1 | tee -a "$outfile"
     echo "*** add user to adm group" | tee -a "$outfile"
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
-fi
-
-# user dirs -------------------------------------------------------------------
-
-dest="$HOME/.config/user-dirs.dirs"
-if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** user dirs" | tee -a "$outfile"
-    cp "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
-    cp "$basedir/home/user-dirs.dirs" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # aliases ---------------------------------------------------------------------
