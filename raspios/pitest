@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+
+basedir="$(dirname -- "$(readlink -f -- "$0";)")"
+
+error_exit()
+{
+    msg="$1"
+    test "$msg" != "" || msg="an error occurred"
+    printf "*** $msg\nabort...\n"
+    exit 1
+}
+
+if [[ ! -f "/usr/bin/sysbench" ]]; then
+    echo "*** install sysbench..."
+    sudo apt install -y sysbench
+    read -p "Press key to continue.. " -n1 -s
+fi
+
+clear
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+sysbench cpu --cpu-max-prime=1000 --threads=4 \
+    run >/dev/null 2>&1
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+
+sysbench cpu --cpu-max-prime=1000 --threads=4 run
+
