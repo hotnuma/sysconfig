@@ -34,7 +34,14 @@
     
     Restart Chrome, when prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
 
-
+* Keyboard shortcuts
+    
+    ```
+    fileman /home/hotnuma/Downloads/                                    Super+E
+    /opt/thorium/thorium                                                Super+B
+    xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/ Super+T
+    ```
+    
 #### Startup
 
 * Lightdm config
