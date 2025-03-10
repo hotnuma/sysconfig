@@ -330,18 +330,6 @@ if [[ ! -f "$dest" ]]; then
     cp "$basedir/home/startup.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# labwc session ---------------------------------------------------------------
-
-dest="$HOME/.config/labwc/rc.xml"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install labwc files" | tee -a "$outfile"
-    #install_file "$basedir/labwc/autostart" "/etc/xdg/labwc/autostart"
-    install_file "$basedir/labwc/rc.xml" "$dest"
-    #~ sudo cp "$basedir/labwc/labwc-git" "/usr/local/bin/labwc-git"
-    #~ sudo cp "$basedir/labwc/labwc-git.desktop" \
-            #~ "/usr/share/wayland-sessions/labwc-git.desktop"
-fi
-
 # user settings ===============================================================
 
 dest="$HOME/config"
@@ -435,10 +423,26 @@ fi
 
 # labwc =======================================================================
 
+dest="$HOME/.config/labwc/rc.xml"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install labwc files" | tee -a "$outfile"
+    test -d "$HOME/.config/labwc" || mkdir -d "$HOME/.config/labwc"
+    cp "$basedir/labwc/rc.xml" "$dest"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
 dest="$HOME/.local/share/themes"
 if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
-    echo "*** install AdwaitaRevisitedLight" | tee -a "$outfile"
+    echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
     src="$basedir/labwc/AdwaitaRevisitedLight.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/GTK" ]]; then
+    echo "*** install GTK theme" | tee -a "$outfile"
+    src="$basedir/labwc/gtktheme.zip"
     unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
