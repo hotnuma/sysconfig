@@ -434,7 +434,7 @@ fi
 dest="$HOME/.local/share/themes"
 if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
     echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
-    src="$basedir/labwc/AdwaitaRevisitedLight.zip"
+    src="$basedir/labwc/adwaita-light.zip"
     unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi

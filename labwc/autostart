@@ -2,6 +2,6 @@
 # /usr/share/doc/labwc/autostart
 
 swaybg -i /home/hotnuma/.backgrounds/winxp_bliss >/dev/null 2>&1 &
-/usr/bin/lwrespawn /usr/bin/wf-panel-pi &
-/usr/bin/kanshi &
-/usr/bin/lxsession-xdg-autostart
+xfce4-panel &
+kanshi &
+#/usr/bin/lxsession-xdg-autostart

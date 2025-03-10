@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<labwc_config>
+   <theme>
+	  <name>GTK</name>
+   </theme>
+
+  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no">
+    <fields>
+      <field content="type" width="20%"/>
+      <field content="trimmed_identifier" width="20%"/>
+      <field content="title" width="60%"/>
+    </fields>
+  </windowSwitcher>
+
+  <windowRules>
+    <windowRule identifier="xfce4-notifyd" serverDecoration="no"/>
+  </windowRules>
+
+  <snapping>
+    <!-- Set range to 0 to disable window snapping completely -->
+    <range>100</range>
+    <overlay enabled="yes">
+      <delay inner="50" outer="50"/>
+    </overlay>
+    <topMaximize>yes</topMaximize>
+    <notifyClient>always</notifyClient>
+  </snapping>
+
+	<placement>
+	  <policy>automatic</policy>
+	</placement>
+
+  <keyboard>
+    <default/>
+    <numlock>on</numlock>
+    <layoutScope>global</layoutScope>
+    <repeatRate>25</repeatRate>
+    <repeatDelay>300</repeatDelay>    
+    <keybind key="A-F1"><action name="Execute" command="xfce4-popup-whiskermenu"/></keybind>
+    
+		<keybind key="A-Right"/>
+		<keybind key="A-Left"/>
+		<keybind key="A-Up"/>
+		<keybind key="A-Down"/>
+
+    <keybind key="Scroll_Lock">
+      <action name="Execute" command="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"/>
+    </keybind>
+    <keybind key="Pause">
+      <action name="Execute" command="wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 5%+"/>
+    </keybind>
+
+		<keybind key="A-C-l" name.action="Execute" command.action="xflock4"/>
+
+	  <keybind key="A-C-f" name.action="Execute" command.action="thunar"/>
+	  <keybind key="A-C-t" name.action="Execute" command.action="alacritty"/>
+
+	  <keybind key="A-C-d" name.action="Execute" command.action="wlrctl toplevel minimize"/>
+  </keyboard>
+
+	<mouse>
+		<default/>
+		<context name="All">
+		  <mousebind direction="A-Up" action="Scroll">
+		    <action name="ZoomIn"/>
+		  </mousebind>
+		  <mousebind direction="A-Down" action="Scroll">
+		    <action name="ZoomOut"/>
+		  </mousebind>
+
+      <mousebind button="A-Left" action="DoubleClick">
+        <action name="ToggleMaximize"/>
+      </mousebind>
+		  
+		</context>
+	</mouse>
+
+  <magnifier>
+    <width>4096</width>
+    <height>4096</height>
+    <initScale>2.0</initScale>
+    <increment>0.4</increment>
+    <useFilter>false</useFilter>
+  </magnifier>	
+	
+</labwc_config>

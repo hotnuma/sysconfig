@@ -1,86 +1,135 @@
-<?xml version="1.0"?>
-<labwc_config>
-   <theme>
-	  <name>GTK</name>
-   </theme>
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_config xmlns="http://openbox.org/3.4/rc">
 
-  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no">
-    <fields>
-      <field content="type" width="20%"/>
-      <field content="trimmed_identifier" width="20%"/>
-      <field content="title" width="60%"/>
-    </fields>
-  </windowSwitcher>
+  <core>
+    <xwaylandPersistence>yes</xwaylandPersistence>
+  </core>
+
+  <placement>
+    <policy>automatic</policy>
+  </placement>
+
+  <theme>
+    <name>GTK</name>
+    <cornerRadius>6</cornerRadius>
+    <keepBorder>yes</keepBorder>
+<!--
+    <font place="ActiveWindow">
+      <name>PibotoLt</name>
+      <size>12</size>
+      <weight>Normal</weight>
+      <slant>Normal</slant>
+    </font>
+    <font place="InactiveWindow">
+      <name>PibotoLt</name>
+      <size>12</size>
+      <weight>Normal</weight>
+      <slant>Normal</slant>
+    </font>
+    <font place="OnScreenDisplay">
+      <name>PibotoLt</name>
+      <size>12</size>
+      <weight>Normal</weight>
+      <slant>Normal</slant>
+    </font>
+-->
+    <dropShadows>no</dropShadows>
+  </theme>
+
+  <keyboard>
+    <numlock>on</numlock>
+    <default />
+
+    <keybind key="W-S-r">
+      <action name="Execute" command="systemctl reboot" /></keybind>
+    <keybind key="W-S-q">
+      <action name="Execute" command="systemctl poweroff" /></keybind>
+    
+    <keybind key="W-b">
+      <action name="Execute" command="chromium-browser" /></keybind>
+    <keybind key="W-e">
+      <action name="Execute" command="fileman /home/hotnuma/Downloads/" /></keybind>
+    <keybind key="W-s">
+      <action name="Execute" command="xfce4-taskmanager" /></keybind>
+    <keybind key="W-t">
+      <action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/" /></keybind>
+    <keybind key="W-space">
+      <action name="Execute" command="wofi --show run" /></keybind>
+
+    <keybind key="A-Left" />
+    <keybind key="A-Right" />
+    <keybind key="A-Down" />
+
+    <keybind key="W-KP_4">
+      <action name="SnapToEdge" direction="left"></action></keybind>
+    <keybind key="W-KP_6">
+      <action name="SnapToEdge" direction="right"></action></keybind>
+    <keybind key="C-A-Up">
+      <action name="Maximize"></action></keybind>
+    <keybind key="C-A-Down">
+      <action name="UnMaximize"></action></keybind>
+    
+    <keybind key="Print">
+      <action name="Execute"><command>grim</command></action></keybind>
+    <keybind key="C-A-m">
+      <action name="ToggleMagnify" /></keybind>
+  
+  </keyboard>
+
+  <mouse>
+    <default />
+    <context name="Title">
+      <mousebind button="Right" action="Click">
+      </mousebind>
+    </context>
+    <context name="WindowMenu">
+      <mousebind button="Left" action="Click">
+      </mousebind>
+      <mousebind button="Right" action="Click">
+      </mousebind>
+    </context>
+    <context name="All">
+      <mousebind direction="W-Up" action="Scroll">
+        <action name="ZoomIn" />
+      </mousebind>
+      <mousebind direction="W-Down" action="Scroll">
+        <action name="ZoomOut" />
+      </mousebind>
+     </context>
+  </mouse>
 
   <windowRules>
-    <windowRule identifier="xfce4-notifyd" serverDecoration="no"/>
+    <windowRule identifier="Kodi" serverDecoration="yes" />
   </windowRules>
 
   <snapping>
-    <!-- Set range to 0 to disable window snapping completely -->
-    <range>100</range>
-    <overlay enabled="yes">
-      <delay inner="50" outer="50"/>
-    </overlay>
-    <topMaximize>yes</topMaximize>
-    <notifyClient>always</notifyClient>
+    <range>0</range>
+    <topMaximize>no</topMaximize>
   </snapping>
 
-	<placement>
-	  <policy>automatic</policy>
-	</placement>
-
-  <keyboard>
-    <default/>
-    <numlock>on</numlock>
-    <layoutScope>global</layoutScope>
-    <repeatRate>25</repeatRate>
-    <repeatDelay>300</repeatDelay>    
-    <keybind key="A-F1"><action name="Execute" command="xfce4-popup-whiskermenu"/></keybind>
-    
-		<keybind key="A-Right"/>
-		<keybind key="A-Left"/>
-		<keybind key="A-Up"/>
-		<keybind key="A-Down"/>
-
-    <keybind key="Scroll_Lock">
-      <action name="Execute" command="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"/>
-    </keybind>
-    <keybind key="Pause">
-      <action name="Execute" command="wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 5%+"/>
-    </keybind>
-
-		<keybind key="A-C-l" name.action="Execute" command.action="xflock4"/>
-
-	  <keybind key="A-C-f" name.action="Execute" command.action="thunar"/>
-	  <keybind key="A-C-t" name.action="Execute" command.action="alacritty"/>
-
-	  <keybind key="A-C-d" name.action="Execute" command.action="wlrctl toplevel minimize"/>
-  </keyboard>
-
-	<mouse>
-		<default/>
-		<context name="All">
-		  <mousebind direction="A-Up" action="Scroll">
-		    <action name="ZoomIn"/>
-		  </mousebind>
-		  <mousebind direction="A-Down" action="Scroll">
-		    <action name="ZoomOut"/>
-		  </mousebind>
-
-      <mousebind button="A-Left" action="DoubleClick">
-        <action name="ToggleMaximize"/>
-      </mousebind>
-		  
-		</context>
-	</mouse>
-
   <magnifier>
-    <width>4096</width>
-    <height>4096</height>
+    <width>-1</width>
+    <height>-1</height>
     <initScale>2.0</initScale>
-    <increment>0.4</increment>
+    <increment>0.2</increment>
     <useFilter>false</useFilter>
-  </magnifier>	
-	
-</labwc_config>
+  </magnifier>
+
+  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no">
+    <fields>
+      <field content="title" width="100%" />
+    </fields>
+  </windowSwitcher>
+
+  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes" />
+
+</openbox_config>
+
