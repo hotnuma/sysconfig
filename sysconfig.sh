@@ -6,7 +6,6 @@ currentuser="$USER"
 outfile="$HOME/install.log"
 dist_id=""
 opt_qtcreator=0
-opt_x11=0
 opt_labwc=0
 opt_xfce=0
 opt_yes=0
@@ -123,8 +122,6 @@ if [[ -f /etc/os-release ]]; then
     dist_id=$VERSION_CODENAME
 fi
 
-test $XDG_SESSION_TYPE == "x11" && opt_x11=1
-test $XDG_CURRENT_DESKTOP == "labwc:wlroots" && opt_labwc=1
 test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
 
 # parse options ---------------------------------------------------------------
@@ -134,8 +131,8 @@ while (($#)); do
         qtcreator)
         opt_qtcreator=1
         ;;
-        yes)
-        opt_yes=1
+        wayland)
+        opt_labwc=1
         ;;
         *)
         ;;
@@ -218,6 +215,7 @@ fi
 # create directories ----------------------------------------------------------
 
 create_dir "$HOME/.config/autostart/"
+create_dir "$HOME/.config/labwc/"
 create_dir "$HOME/.local/share/applications/"
 create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
@@ -240,10 +238,10 @@ fi
 
 # install wayland softwares ---------------------------------------------------
 
-dest=/usr/bin/wofi
-if [[ "$opt_x11" == 0 ]] && [[ ! -f "$dest" ]]; then
+dest=/usr/bin/swaybg
+if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install wayland softwares" | tee -a "$outfile"
-    APPLIST="swaybg"
+    APPLIST="labwc swaybg"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -334,14 +332,14 @@ fi
 
 # labwc session ---------------------------------------------------------------
 
-dest="/usr/local/bin/labwc-git"
+dest="$HOME/.config/labwc/rc.xml"
 if [[ ! -f "$dest" ]]; then
     echo "*** install labwc files" | tee -a "$outfile"
-    install_file "$basedir/labwc/autostart" "/etc/xdg/labwc/autostart"
-    install_file "$basedir/labwc/rc.xml" "/etc/xdg/labwc/rc.xml"
-    sudo cp "$basedir/labwc/labwc-git" "/usr/local/bin/labwc-git"
-    sudo cp "$basedir/labwc/labwc-git.desktop" \
-            "/usr/share/wayland-sessions/labwc-git.desktop"
+    #install_file "$basedir/labwc/autostart" "/etc/xdg/labwc/autostart"
+    install_file "$basedir/labwc/rc.xml" "$dest"
+    #~ sudo cp "$basedir/labwc/labwc-git" "/usr/local/bin/labwc-git"
+    #~ sudo cp "$basedir/labwc/labwc-git.desktop" \
+            #~ "/usr/share/wayland-sessions/labwc-git.desktop"
 fi
 
 # user settings ===============================================================
@@ -360,15 +358,6 @@ dest="$HOME/.bash_aliases"
 if [[ ! -f "$dest" ]]; then
     echo "*** aliases" | tee -a "$outfile"
     cp "$basedir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
-fi
-
-# autostart -------------------------------------------------------------------
-
-dest="$HOME/.config/autostart/powerctl.desktop"
-if [[ "$opt_x11" -eq 1 ]] && [[ -f "/usr/local/bin/powerctl" ]] \
-&& [[ ! -f "$dest" ]]; then
-    echo "*** powerctl" | tee -a "$outfile"
-    cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
 # xfce settings ===============================================================
@@ -513,9 +502,18 @@ if [[ ! -f "$dest" ]]; then
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
 
+# powerctl --------------------------------------------------------------------
+
 #~ dest="/usr/local/bin/powerctl"
 #~ build_src "powerctl" "$dest"
 #~ test -f "$dest" || error_exit "compilation failed"
+
+dest="$HOME/.config/autostart/powerctl.desktop"
+if [[ -f "/usr/local/bin/powerctl" ]] \
+&& [[ ! -f "$dest" ]]; then
+    echo "*** powerctl" | tee -a "$outfile"
+    cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
+fi
 
 # Disable autostart programs --------------------------------------------------
 

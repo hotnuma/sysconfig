@@ -48,6 +48,8 @@
 
 * xfce wayland session
     
+    `sudo apt install labwc`
+    
     ```
     cat /usr/share/wayland-sessions/xfce-wayland.desktop
     
