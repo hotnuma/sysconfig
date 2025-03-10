@@ -24,7 +24,7 @@
     
     `sudo unzip -d /opt/thorium thorium-browser_128.0.6613.194_arm64.zip`
     
-    `/opt/thorium/thorium --ozone-platform=wayland 2>/dev/null`
+    under wayland : `/opt/thorium/thorium --ozone-platform=wayland 2>/dev/null`
 
 * Avoid keyring password
     
