@@ -42,21 +42,13 @@
     xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/ Super+T
     ```
 
-* Debian firmware config
+* xfce wayland session
     
     ```
-    # Do not modify this file!
-    #
-    # It is automatically generated upon install or update of either the
-    # firmware or the Linux kernel.
-    #
-    # If you need to set boot-time parameters, do so via the
-    # /etc/default/raspi-firmware, /etc/default/raspi-firmware-custom or
-    # /etc/default/raspi-extra-cmdline files.
+    cat /usr/share/wayland-sessions/xfce-wayland.desktop
+    
+    Exec=startxfce4 --wayland
     ```
-    
-    `update-initramfs -u -k all`
-    
     
     
 #### Startup
