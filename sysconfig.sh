@@ -505,7 +505,7 @@ test -f "$dest" || error_exit "compilation failed"
 
 dest="/usr/local/bin/viewnior"
 if [[ ! -f "$dest" ]]; then
-    sudo apt install shared-mime-info libexiv2-dev libgdk-pixbuf-2.0-dev
+    sudo apt -y install shared-mime-info libexiv2-dev libgdk-pixbuf-2.0-dev
     build_src "viewnior" "$dest"
     test -f "$dest" || error_exit "compilation failed"
 fi
