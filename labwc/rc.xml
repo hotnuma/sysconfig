@@ -1,83 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_config xmlns="http://openbox.org/3.4/rc">
-
   <core>
     <xwaylandPersistence>yes</xwaylandPersistence>
   </core>
-
   <placement>
     <policy>automatic</policy>
   </placement>
-
   <theme>
-    <name>GTK</name>
+    <name>AdwaitaRevisitedLight</name>
     <cornerRadius>6</cornerRadius>
     <keepBorder>yes</keepBorder>
-<!--
     <font place="ActiveWindow">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="OnScreenDisplay">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
--->
     <dropShadows>no</dropShadows>
   </theme>
-
   <keyboard>
     <numlock>on</numlock>
-    <default />
-
+    <default/>
     <keybind key="W-S-r">
-      <action name="Execute" command="systemctl reboot" /></keybind>
+      <action name="Execute" command="systemctl reboot"/>
+    </keybind>
     <keybind key="W-S-q">
-      <action name="Execute" command="systemctl poweroff" /></keybind>
-    
+      <action name="Execute" command="systemctl poweroff"/>
+    </keybind>
     <keybind key="W-b">
-      <action name="Execute" command="chromium-browser" /></keybind>
+      <action name="Execute" command="/opt/thorium/thorium --ozone-platform=wayland"/>
+    </keybind>
     <keybind key="W-e">
-      <action name="Execute" command="fileman /home/hotnuma/Downloads/" /></keybind>
+      <action name="Execute" command="fileman /home/hotnuma/Downloads/"/>
+    </keybind>
     <keybind key="W-s">
-      <action name="Execute" command="xfce4-taskmanager" /></keybind>
+      <action name="Execute" command="xfce4-taskmanager"/>
+    </keybind>
     <keybind key="W-t">
-      <action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/" /></keybind>
+      <action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/"/>
+    </keybind>
     <keybind key="W-space">
-      <action name="Execute" command="wofi --show run" /></keybind>
-
-    <keybind key="A-Left" />
-    <keybind key="A-Right" />
-    <keybind key="A-Down" />
-
+      <action name="Execute" command="/usr/local/bin/rofi -show run"/>
+    </keybind>
+    <keybind key="A-Left"/>
+    <keybind key="A-Right"/>
+    <keybind key="A-Down"/>
     <keybind key="W-KP_4">
-      <action name="SnapToEdge" direction="left"></action></keybind>
+      <action name="SnapToEdge" direction="left"/>
+    </keybind>
     <keybind key="W-KP_6">
-      <action name="SnapToEdge" direction="right"></action></keybind>
+      <action name="SnapToEdge" direction="right"/>
+    </keybind>
     <keybind key="C-A-Up">
-      <action name="Maximize"></action></keybind>
+      <action name="Maximize"/>
+    </keybind>
     <keybind key="C-A-Down">
-      <action name="UnMaximize"></action></keybind>
-    
+      <action name="UnMaximize"/>
+    </keybind>
     <keybind key="Print">
-      <action name="Execute"><command>grim</command></action></keybind>
+      <action name="Execute">
+        <command>xfce4-screenshooter</command>
+      </action>
+    </keybind>
     <keybind key="C-A-m">
-      <action name="ToggleMagnify" /></keybind>
-  
+      <action name="ToggleMagnify"/>
+    </keybind>
   </keyboard>
-
   <mouse>
-    <default />
+    <default/>
     <context name="Title">
       <mousebind button="Right" action="Click">
       </mousebind>
@@ -90,23 +92,20 @@
     </context>
     <context name="All">
       <mousebind direction="W-Up" action="Scroll">
-        <action name="ZoomIn" />
+        <action name="ZoomIn"/>
       </mousebind>
       <mousebind direction="W-Down" action="Scroll">
-        <action name="ZoomOut" />
+        <action name="ZoomOut"/>
       </mousebind>
-     </context>
+    </context>
   </mouse>
-
   <windowRules>
-    <windowRule identifier="Kodi" serverDecoration="yes" />
+    <windowRule identifier="Kodi" serverDecoration="yes"/>
   </windowRules>
-
   <snapping>
     <range>0</range>
     <topMaximize>no</topMaximize>
   </snapping>
-
   <magnifier>
     <width>-1</width>
     <height>-1</height>
@@ -114,22 +113,103 @@
     <increment>0.2</increment>
     <useFilter>false</useFilter>
   </magnifier>
-
   <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no">
     <fields>
-      <field content="title" width="100%" />
+      <field content="title" width="100%"/>
     </fields>
   </windowSwitcher>
-
-  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes" />
-
+  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <labwc_config>
+    <theme>
+      <cornerRadius/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <name/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <libinput>
+      <device>
+        <naturalScroll/>
+      </device>
+    </libinput>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <cornerRadius/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <name/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <libinput>
+      <device>
+        <naturalScroll/>
+      </device>
+    </libinput>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <cornerRadius/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <name/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <libinput>
+      <device>
+        <naturalScroll/>
+      </device>
+    </libinput>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <cornerRadius/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <name/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <libinput>
+      <device>
+        <naturalScroll/>
+      </device>
+    </libinput>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <cornerRadius/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <theme>
+      <name/>
+    </theme>
+  </labwc_config>
+  <labwc_config>
+    <libinput>
+      <device>
+        <naturalScroll/>
+      </device>
+    </libinput>
+  </labwc_config>
 </openbox_config>
-

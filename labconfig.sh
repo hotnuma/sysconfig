@@ -87,6 +87,16 @@ if [[ ! -f "$dest" ]]; then
     popd 1>/dev/null
 fi
 
+dest=/usr/local/bin/rofi
+pattern="command=\"wofi --show run\""
+if [[ -f "$dest" ]] && [[ $(grep "$pattern" ~/.config/labwc/rc.xml) ]]; then
+    echo "*** set rofi command" | tee -a "$outfile"
+    sed -i \
+    's|command=\"wofi --show run\"|command=\"/usr/local/bin/rofi -show run\"|g' \
+    "$HOME/.config/labwc/rc.xml"
+    labwc --reconfigure
+fi
+
 # pop dir ---------------------------------------------------------------------
 
 popd 1>/dev/null
