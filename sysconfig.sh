@@ -525,6 +525,38 @@ if [[ -f "/usr/local/bin/powerctl" ]] \
     cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
+# labwc-tweaks-gtk ------------------------------------------------------------
+
+dest=/usr/local/bin/labwc-tweaks-gtk
+if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** build labwc-tweaks-gtk" | tee -a "$outfile"
+    git clone https://github.com/labwc/labwc-tweaks-gtk.git \
+    && pushd labwc-tweaks-gtk 1>/dev/null
+    meson setup build | tee -a "$outfile"
+    meson compile -C build | tee -a "$outfile"
+    sudo meson install -C build | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+    popd 1>/dev/null
+fi
+
+# rofi ------------------------------------------------------------
+
+# https://github.com/lbonn/rofi  
+# https://github.com/lbonn/rofi/blob/wayland/INSTALL.md#meson  
+
+dest=/usr/local/bin/rofi
+if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** build rofi" | tee -a "$outfile"
+    sudo apt -y install bison flex
+    git clone https://github.com/lbonn/rofi.git \
+    && pushd rofi 1>/dev/null
+    meson setup build -Dcheck=disabled -Dxcb=disabled \
+    | tee -a "$outfile"
+    ninja -C build | tee -a "$outfile"
+    sudo ninja -C build install | tee -a "$outfile"
+    popd 1>/dev/null
+fi
+
 # Disable autostart programs --------------------------------------------------
 
 hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
