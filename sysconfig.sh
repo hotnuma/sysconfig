@@ -423,12 +423,18 @@ fi
 
 # labwc =======================================================================
 
-dest="$HOME/.config/labwc/rc.xml"
-if [[ ! -f "$dest" ]]; then
+dest="$HOME/.config/labwc"
+test -d "$dest" || mkdir -p "$dest"
+if [[ ! -d "${dest}.bak" ]]; then
     echo "*** install labwc files" | tee -a "$outfile"
-    test -d "$HOME/.config/labwc" || mkdir -d "$HOME/.config/labwc"
-    cp "$basedir/labwc/rc.xml" "$dest"
-    test "$?" -eq 0 || error_exit "installation failed"
+    cp -r "$dest" "${dest}.bak"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/autostart" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/environment" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/rc.xml" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
 fi
 
 dest="$HOME/.local/share/themes"

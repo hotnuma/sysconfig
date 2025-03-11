@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openbox_config xmlns="http://openbox.org/3.4/rc">
+<labwc_config xmlns="http://openbox.org/3.4/rc">
   <core>
     <xwaylandPersistence>yes</xwaylandPersistence>
   </core>
@@ -28,7 +28,7 @@
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
-    <dropShadows>no</dropShadows>
+    <dropShadows>yes</dropShadows>
   </theme>
   <keyboard>
     <numlock>on</numlock>
@@ -128,88 +128,10 @@
   <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
   <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes"/>
   <labwc_config>
-    <theme>
-      <cornerRadius/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <name/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
     <libinput>
       <device>
         <naturalScroll/>
       </device>
     </libinput>
   </labwc_config>
-  <labwc_config>
-    <theme>
-      <cornerRadius/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <name/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <libinput>
-      <device>
-        <naturalScroll/>
-      </device>
-    </libinput>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <cornerRadius/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <name/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <libinput>
-      <device>
-        <naturalScroll/>
-      </device>
-    </libinput>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <cornerRadius/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <name/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <libinput>
-      <device>
-        <naturalScroll/>
-      </device>
-    </libinput>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <cornerRadius/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <theme>
-      <name/>
-    </theme>
-  </labwc_config>
-  <labwc_config>
-    <libinput>
-      <device>
-        <naturalScroll/>
-      </device>
-    </libinput>
-  </labwc_config>
-</openbox_config>
+</labwc_config>
