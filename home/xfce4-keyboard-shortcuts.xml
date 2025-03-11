@@ -42,7 +42,7 @@
       <property name="&lt;Primary&gt;&lt;Alt&gt;Escape" type="string" value="xkill"/>
       <property name="XF86Display" type="string" value="xfce4-display-settings --minimal"/>
       <property name="override" type="bool" value="true"/>
-      <property name="&lt;Super&gt;space" type="string" value="rofi -show run"/>
+      <property name="&lt;Super&gt;space" type="string" value="/usr/bin/rofi -show run"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;q" type="string" value="systemctl poweroff"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;r" type="string" value="systemctl reboot"/>
       <property name="&lt;Super&gt;e" type="string" value="thunar"/>
