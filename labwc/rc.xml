@@ -6,6 +6,11 @@
   <placement>
     <policy>automatic</policy>
   </placement>
+  <libinput>
+    <device>
+      <naturalScroll>no</naturalScroll>
+    </device>
+  </libinput>
   <theme>
     <name>AdwaitaRevisitedLight</name>
     <cornerRadius>6</cornerRadius>
@@ -127,11 +132,4 @@
   <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
   <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
   <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes"/>
-  <labwc_config>
-    <libinput>
-      <device>
-        <naturalScroll/>
-      </device>
-    </libinput>
-  </labwc_config>
 </labwc_config>
