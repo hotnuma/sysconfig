@@ -1,12 +1,3 @@
 
-cursor is changing
-
-/opt/thorium/thorium --ozone-platform=wayland
-
-sudo apt-file update
-
-sudo apt purge xdg-desktop-portal*
-other programs : hardinfo inxi
-
 
 

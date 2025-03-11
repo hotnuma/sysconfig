@@ -190,6 +190,31 @@
 
 <!--
 
+cursor is changing
+
+/opt/thorium/thorium --ozone-platform=wayland
+
+sudo apt-file update
+
+sudo apt purge xdg-desktop-portal*
+other programs : hardinfo inxi
+
+# labwc -----------------------------------------------------------------------
+
+dest=/usr/local/bin/labwc
+if [[ ! -f "$dest" ]]; then
+    echo "*** build labwc" | tee -a "$outfile"
+    # sudo apt install libdrm-dev libinput-dev
+    git clone https://github.com/labwc/labwc.git \
+    && pushd labwc 1>/dev/null
+    meson setup build -Dxwayland=disabled | tee -a "$outfile"
+    meson compile -C build | tee -a "$outfile"
+    sudo meson install --skip-subprojects -C build | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+    popd 1>/dev/null
+fi
+
+
 [best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
 
 #### Raspios configuration
