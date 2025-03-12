@@ -548,9 +548,6 @@ fi
 
 # rofi ------------------------------------------------------------
 
-# https://github.com/lbonn/rofi  
-# https://github.com/lbonn/rofi/blob/wayland/INSTALL.md#meson  
-
 dest=/usr/local/bin/rofi
 if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** build rofi" | tee -a "$outfile"

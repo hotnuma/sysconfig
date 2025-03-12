@@ -18,13 +18,27 @@
     https://github.com/labwc/labwc-artwork/  
     https://wiki.archlinux.org/title/Labwc  
 
-* Thorium Browser
+
+#### Manual configuration
+
+* Install Xfce
+    
+    `sudo apt install xfce4` or `sudo tasksel`
+
+* Xfce Configuration
+    
+    https://wiki.archlinux.org/title/Xfwm  
+    
+    `xfconf-query -c xfwm4 -p /general/vblank_mode -s glx`
+
+* Install Thorium Browser
 
     https://github.com/Alex313031/Thorium-Raspi/releases  
     
     `sudo unzip -d /opt/thorium thorium-browser_128.0.6613.194_arm64.zip`
     
-    under wayland : `/opt/thorium/thorium --ozone-platform=wayland 2>/dev/null`
+    under wayland : `/opt/thorium/thorium --ozone-platform=wayland`
+
 
 * Avoid keyring password
     
@@ -34,31 +48,17 @@
     
     Restart Chrome, when prompted to create a keyring, continue without entering a password. (Turns out you would have been okay if you did this the first time.)
 
-* Keyboard shortcuts
-    
-    ```
-    fileman /home/hotnuma/Downloads/                                    Super+E
-    /opt/thorium/thorium                                                Super+B
-    xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/ Super+T
-    ```
-
 * Configure a static ip
     
     https://github.com/hotnuma/doclinux/blob/master/10-Network.md  
 
-* xfce wayland session
-    
-    `sudo apt install labwc`
-    
-    ```
-    cat /usr/share/wayland-sessions/xfce-wayland.desktop
-    
-    Exec=startxfce4 --wayland
-    ```
-    
-* mousepad
+* Uninstall Mousepad
     
     `sudo apt purge mousepad`
+
+* gvfs-backends
+    
+    `sudo apt purge gvfs-backends`
 
 
 #### Startup
@@ -113,41 +113,6 @@
     thd                         triggerhappy
     ```
 
-#### Manual configuration
-
-* Install Xfce
-    
-    `sudo apt install xfce4`
-
-* Xfce Configuration
-    
-    https://wiki.archlinux.org/title/Xfwm  
-    
-    `xfconf-query -c xfwm4 -p /general/vblank_mode -s glx`
-
-* labwc-tweak-gtk
-
-    https://github.com/labwc/labwc-tweaks-gtk  
-    
-    ```
-    git clone https://github.com/labwc/labwc-tweaks-gtk.git
-    cd labwc-tweaks-gtk
-    meson setup build
-    meson compile -C build
-    sudo meson install -C build
-    ```
-
-* Disable smartmontools
-	
-	```
-	sudo systemctl stop smartmontools
-	sudo systemctl disable smartmontools
-	```
-
-* gvfs-backends
-    
-    `sudo apt purge gvfs-backends`
-
 
 #### Rpi specifics
 
@@ -186,46 +151,62 @@
     with a udev rule.
     ```
 
+#### Other notes
+
+* apt-file
+
+    ```
+    sudo apt install apt-file
+    sudo apt-file update
+    ```
+    
+* desktop portals
+
+    `sudo apt purge xdg-desktop-portal*`
+    
+* other programs
+    
+    ` sudo apt install hardinfo inxi`
+
+* build labwc
+
+    ```
+    dest=/usr/local/bin/labwc
+    if [[ ! -f "$dest" ]]; then
+        echo "*** build labwc" | tee -a "$outfile"
+        # sudo apt install libdrm-dev libinput-dev
+        git clone https://github.com/labwc/labwc.git \
+        && pushd labwc 1>/dev/null
+        meson setup build -Dxwayland=disabled | tee -a "$outfile"
+        meson compile -C build | tee -a "$outfile"
+        sudo meson install --skip-subprojects -C build | tee -a "$outfile"
+        test "$?" -eq 0 || error_exit "installation failed"
+        popd 1>/dev/null
+    fi
+    ```
+
 
 
 <!--
 
-cursor is changing
+#### Old raspi docs
 
-/opt/thorium/thorium --ozone-platform=wayland
+* SD cards
 
-sudo apt-file update
+    [best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
 
-sudo apt purge xdg-desktop-portal*
-other programs : hardinfo inxi
+* Session
 
-# labwc -----------------------------------------------------------------------
+    https://askubuntu.com/questions/77191/  
 
-dest=/usr/local/bin/labwc
-if [[ ! -f "$dest" ]]; then
-    echo "*** build labwc" | tee -a "$outfile"
-    # sudo apt install libdrm-dev libinput-dev
-    git clone https://github.com/labwc/labwc.git \
-    && pushd labwc 1>/dev/null
-    meson setup build -Dxwayland=disabled | tee -a "$outfile"
-    meson compile -C build | tee -a "$outfile"
-    sudo meson install --skip-subprojects -C build | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-    popd 1>/dev/null
-fi
+    _The Name entry is what lightdm would display for this session. The Exec entry is the important thing, and it should be the name of the program that starts the actual session. When you log in, lightdm calls the /etc/X11/Xsession script, passing it the value of Exec as an argument, and Xsession will, eventually, execute this program (for example, it could be startxfce4 for starting a xfce4 session). If the Exec entry is the special string default, then Xsession will execute the user's ~/.xsession file. (Xsession would also execute ~/.xsession if it's called without arguments.)_
 
-
-[best-ssd-storage](https://jamesachambers.com/best-ssd-storage-adapters-for-raspberry-pi-4-400/)  
-
-#### Raspios configuration
-
-https://www.raspberrypi.com/documentation/computers/os.html  
 
 * Revert to specific firmware using git commit hash
 
-    ```
-    sudo rpi-update 6e61ab523f0a9d2fbb4319f6f6430d4c13203c0e
-    ```
+    https://www.raspberrypi.com/documentation/computers/os.html  
+    
+    `sudo rpi-update 6e61ab523f0a9d2fbb4319f6f6430d4c13203c0e`
 
 * Revert to stable firmware
 
@@ -234,16 +215,7 @@ https://www.raspberrypi.com/documentation/computers/os.html
     sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-bootloader raspberrypi-kernel
     ```
 
-
-* Session
-
-    https://askubuntu.com/questions/77191/  
-
-    _The Name entry is what lightdm would display for this session. The Exec entry is the important thing, and it should be the name of the program that starts the actual session. When you log in, lightdm calls the /etc/X11/Xsession script, passing it the value of Exec as an argument, and Xsession will, eventually, execute this program (for example, it could be startxfce4 for starting a xfce4 session). If the Exec entry is the special string default, then Xsession will execute the user's ~/.xsession file. (Xsession would also execute ~/.xsession if it's called without arguments.)_
-
-#### Openbox
-
-* Config
+* OpenBox Config
 
     Openbox is set in `~/config/lxsession/LXDE-pi/desktop.conf` using a wrapper script.
 
@@ -260,11 +232,7 @@ https://www.raspberrypi.com/documentation/computers/os.html
     window_manager=openbox
     ```
 
-* Reload openbox config :
-
-    ```
-    openbox --reconfigure
-    ```
+    reload config : `openbox --reconfigure`
 
 * Picom
     
@@ -272,11 +240,9 @@ https://www.raspberrypi.com/documentation/computers/os.html
     
     `picom --backend glx`
 
-#### Application menu
-
-`/etc/xdg/menus/lxde-pi-applications.menu`
-
 * Fix screen tearing
+    
+    `/etc/xdg/menus/lxde-pi-applications.menu`
     
     https://forum.manjaro.org/t/how-to-fix-intel-screen-tearing-on-xfce/31361/1  
     
@@ -294,8 +260,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
     xfconf-query -c xfwm4 -p /general/vblank_mode -s glx
     ```
 
-#### Other
-
 * SSD Boot
     
     Change boot order with `raspi-config`
@@ -308,15 +272,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
     
     [udev_trim](https://forums.raspberrypi.com/viewtopic.php?t=307276#p1839171)  
 
-* Upgrade to Debian 12
-    
-    [rpios_bookworm](https://forums.raspberrypi.com/viewtopic.php?t=352477)  
-    [upgrade_bookworm](https://forums.raspberrypi.com/viewtopic.php?p=2110754)  
-    [metapackages_bookworm](https://forums.raspberrypi.com/viewtopic.php?t=351201)  
-    
-    https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
-    https://blog.fernvenue.com/archives/upgrade-raspberrypi-to-debian-12-bookworm/  
-    
 * CPU governor
 
     https://askubuntu.com/questions/1021748/  
@@ -380,20 +335,18 @@ https://www.raspberrypi.com/documentation/computers/os.html
     - slow SD controller (40 MB/s)
     - incompatible usb to sata controllers
 
-#### Other
-
-- Drive consumption
+* Drive consumption
 
     Toshiba Canvio Basics : a maximum of 900mA power, even in the largest capacity version.
     
     Kingston a400 SSD : 0.195W Idle / 0.279W Avg / 0.642W (MAX) Read / 1.535W (MAX) Write
 
-- Upgrade
+* Upgrade
     
     https://gist.github.com/jauderho/6b7d42030e264a135450ecc0ba521bd8  
     https://raspberrytips.com/update-raspberry-pi-latest-version/  
 
-- Install previous version
+* Install previous version
     
     https://unix.stackexchange.com/questions/242014/  
     
@@ -417,8 +370,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
       sed "/var/lib/AccountsService/users/$USER" -i -e "s/XSession=.*/XSession=LXDE-pi-wayfire/"
     fi
 
-#### Old raspi docs
-
 * Compton
 
     https://www.youtube.com/watch?v=3esPpe-fclI  
@@ -428,27 +379,6 @@ https://www.raspberrypi.com/documentation/computers/os.html
     compton --backend glx --unredir-if-possible --vsync opengl-swc
     compton --backend glx --vsync opengl-swc
     ```
-
-* Firefox Webrender
-
-	https://www.google.com/search?q=raspberry+pi+webrender  
-	https://bugzilla.mozilla.org/show_bug.cgi?id=1663285  
-	https://forum.manjaro.org/t/firefox-webrender-pi4-400/63702  
-		
-	https://forums.raspberrypi.com/search.php?keywords=webrender  
-
-	https://www.google.com/search?q=raspberry+pi+firefox+webrender  
-
-	https://bugzilla.mozilla.org/show_bug.cgi?id=1663285  
-
-	```
-	gfx.webrender.all to true
-	Run 'MOZ_X11_EGL=1 firefox' in terminal
-	```
-	
-	https://bugzilla.mozilla.org/show_bug.cgi?id=1725624  
-
-	https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1930982  
 -->
 
 
