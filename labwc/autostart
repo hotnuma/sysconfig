@@ -3,5 +3,7 @@
 
 swaybg -i /home/hotnuma/.backgrounds/winxp_bliss >/dev/null 2>&1 &
 xfce4-panel &
+wl-clip-persist -c regular &
 kanshi &
+
 #/usr/bin/lxsession-xdg-autostart

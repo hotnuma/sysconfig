@@ -10,8 +10,8 @@ error_exit()
     exit 1
 }
 
-sudo cp ./autostart /etc/xdg/labwc/
-sudo cp ./environment /etc/xdg/labwc/
-sudo cp ./rc.xml /etc/xdg/labwc/
+#~ sudo cp ./autostart /etc/xdg/labwc/
+#~ sudo cp ./environment /etc/xdg/labwc/
+#~ sudo cp ./rc.xml /etc/xdg/labwc/
 
-labwc --reconfigure
+#~ labwc --reconfigure
