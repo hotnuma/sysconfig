@@ -341,6 +341,12 @@ if [[ -f "/etc/systemd/system/smartd.service" ]]; then
     sudo systemctl disable smartd 2>&1 | tee -a "$outfile"
 fi
 
+if [[ "$(pidof sshd)" ]]; then
+    echo "*** disable sshd" | tee -a "$outfile"
+    sudo systemctl stop sshd 2>&1 | tee -a "$outfile"
+    sudo systemctl disable sshd 2>&1 | tee -a "$outfile"
+fi
+
 # system settings =============================================================
 
 dest=/usr/local/bin/startup.sh
