@@ -11,6 +11,7 @@
     https://github.com/orgs/raspberrypi-ui/repositories  
     https://github.com/orgs/RPi-Distro/repositories  
     https://github.com/orgs/raspberrypi/repositories  
+    https://github.com/raspberrypi/bookworm-feedback/issues  
     
 * Labwc
     
