@@ -10,15 +10,3 @@ error_exit()
     exit 1
 }
 
-dest="/usr/bin/plymouth"
-if [[ -f "$dest" ]]; then
-    echo "*** uninstall plymouth"
-    sudo apt -y purge plymouth
-fi
-
-dest="/usr/bin/mousepad"
-if [[ -f "$dest" ]]; then
-    echo "*** uninstall mousepad"
-    sudo apt -y purge mousepad
-fi
-

@@ -5,10 +5,6 @@ builddir="$HOME/DevFiles"
 currentuser="$USER"
 outfile="$HOME/install.log"
 dist_id=""
-opt_qtcreator=0
-opt_labwc=0
-opt_xfce=0
-opt_yes=0
 
 error_exit()
 {
@@ -122,16 +118,25 @@ if [[ -f /etc/os-release ]]; then
     dist_id=$VERSION_CODENAME
 fi
 
-test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
-
 # parse options ---------------------------------------------------------------
+
+opt_cleanup=0
+opt_qtcreator=0
+opt_labwc=0
+opt_xfce=0
+opt_yes=0
+
+test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
 
 while (($#)); do
     case "$1" in
+        cleanup)
+        opt_cleanup=1
+        ;;
         qtcreator)
         opt_qtcreator=1
         ;;
-        wayland)
+        labwc)
         opt_labwc=1
         ;;
         *)
@@ -145,6 +150,22 @@ done
 echo "===============================================================================" | tee -a $outfile
 echo " Debian install..." | tee -a $outfile
 echo "===============================================================================" | tee -a $outfile
+
+# cleanup ---------------------------------------------------------------------
+
+if [[ "$opt_cleanup" -eq 1 ]]; then
+    dest="/usr/bin/mousepad"
+    if [[ -f "$dest" ]]; then
+        echo "*** uninstall mousepad" | tee -a "$outfile"
+        sudo apt -y purge mousepad 2>&1 | tee -a "$outfile"
+    fi
+    dest="/usr/bin/plymouth"
+    if [[ -f "$dest" ]]; then
+        echo "*** uninstall plymouth" | tee -a "$outfile"
+        sudo apt -y purge plymouth 2>&1 | tee -a "$outfile"
+    fi
+    exit 0
+fi
 
 # sudoers ---------------------------------------------------------------------
 
