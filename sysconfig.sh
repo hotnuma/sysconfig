@@ -461,15 +461,7 @@ fi
 dest="$HOME/.local/share/themes"
 if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
     echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
-    src="$basedir/labwc/adwaita-light.zip"
-    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
-dest="$HOME/.local/share/themes"
-if [[ ! -d "$dest/GTK" ]]; then
-    echo "*** install GTK theme" | tee -a "$outfile"
-    src="$basedir/labwc/gtktheme.zip"
+    src="$basedir/labwc/theme-adwaita-light.zip"
     unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
