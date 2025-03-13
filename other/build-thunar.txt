@@ -19,9 +19,9 @@ xfce4-dev-tools \
 gtk-doc-tools \
 autopoint
 
-git clone https://gitlab.xfce.org/xfce/thunar
-git checkout <branch|tag>  #optional step. Per default master is checked out
-cd thunar
+git clone https://gitlab.xfce.org/xfce/thunar && cd thunar
+# optional step. Per default master is checked out
+git checkout <branch|tag>
 ./autogen.sh
-make
-make install
+make -j 4
+sudo make install
