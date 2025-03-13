@@ -1,0 +1,13 @@
+
+# rofi
+git clone https://github.com/lbonn/rofi.git && cd rofi
+meson setup build -Dcheck=disabled -Dxcb=disabled
+ninja -C build
+sudo ninja -C build install
+
+# labwc-tweaks-gtk
+git clone https://github.com/labwc/labwc-tweaks-gtk.git
+cd labwc-tweaks-gtk
+meson setup build
+meson compile -C build
+sudo meson install -C build
