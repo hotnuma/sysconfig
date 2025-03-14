@@ -223,6 +223,21 @@ NO_AT_BRIDGE=1
 EOF
 fi
 
+# disable rtkit-daemon spam messages ------------------------------------------
+
+dest=/etc/systemd/system/rtkit-daemon.service.d/
+if [[ $(pidof rtkit-daemon) ]] && [[ ! -d ${dest} ]]; then
+    echo "*** disable rtkit logs" | tee -a "$outfile"
+    sudo mkdir $dest
+    dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
+    sudo tee "$dest" > /dev/null << "EOF"
+[Service]
+LogLevelMax=4
+EOF
+    sudo systemctl daemon-reload 2>&1 | tee -a "$outfile"
+    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
+fi
+
 # upgrade ---------------------------------------------------------------------
 
 if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
@@ -322,6 +337,11 @@ test ! -f "$dest" || sudo apt -y purge gvfs-backends 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 
+if [[ "$(pidof exim4)" ]]; then
+    echo "*** uninstall exim4" | tee -a "$outfile"
+    sudo apt -y purge exim4-base 2>&1 | tee -a "$outfile"
+fi
+
 # services --------------------------------------------------------------------
 
 if [ "$(pidof cupsd)" ]; then
@@ -333,6 +353,18 @@ if [ "$(pidof cupsd)" ]; then
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
+fi
+
+if [[ "$(pidof blkmapd)" ]]; then
+    echo "*** disable nfs-blkmap" | tee -a "$outfile"
+    sudo systemctl stop nfs-blkmap 2>&1 | tee -a "$outfile"
+    sudo systemctl disable nfs-blkmap 2>&1 | tee -a "$outfile"
+fi
+
+if [[ "$(pidof bluetoothd)" ]]; then
+    echo "*** disable bluetooth" | tee -a "$outfile"
+    sudo systemctl stop bluetooth 2>&1 | tee -a "$outfile"
+    sudo systemctl disable bluetooth 2>&1 | tee -a "$outfile"
 fi
 
 if [[ -f "/etc/systemd/system/smartd.service" ]]; then
@@ -611,21 +643,6 @@ dest="$HOME/.local/share/applications"
 hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
 hide_launcher "$dest/org.xfce.mousepad.desktop"
 hide_launcher "$dest/thunar.desktop"
-
-# disable log messages ========================================================
-
-dest=/etc/systemd/system/rtkit-daemon.service.d/
-if [[ $(pidof rtkit-daemon) ]] && [[ ! -d ${dest} ]]; then
-    echo "*** disable rtkit logs" | tee -a "$outfile"
-    sudo mkdir $dest
-    dest=/etc/systemd/system/rtkit-daemon.service.d/log.conf
-    sudo tee "$dest" > /dev/null << "EOF"
-[Service]
-LogLevelMax=4
-EOF
-    sudo systemctl daemon-reload 2>&1 | tee -a "$outfile"
-    sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
-fi
 
 # pop dir ---------------------------------------------------------------------
 
