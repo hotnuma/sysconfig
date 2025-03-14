@@ -11,7 +11,7 @@ sudo ninja -C build install
 
 wlroots -----------------------------------------------------------------------
 
-https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
+https://gitlab.freedesktop.org/wlroots/wlroots  
 https://packages.debian.org/trixie/libwlroots-0.18  
 
 builddep libwlroots-0.18
@@ -37,10 +37,38 @@ libseat-dev \
 libsystemd-dev \
 libvulkan-dev \
 libwayland-dev \
-meson \
 pkgconf \
 wayland-protocols \
 
+git clone https://gitlab.freedesktop.org/wlroots/wlroots.git && cd wlroots
+meson setup build -Dexamples=false -Dxwayland=disabled
+
+wlroots 0.19.0-dev
+
+    drm-backend      : YES
+    x11-backend      : NO
+    libinput-backend : YES
+    xwayland         : NO
+    gles2-renderer   : YES
+    vulkan-renderer  : YES
+    gbm-allocator    : YES
+    udmabuf-allocator: YES
+    session          : YES
+    color-management : YES
+    xcb-errors       : NO
+    egl              : YES
+    libliftoff       : YES
+
+  User defined options
+    examples         : false
+    xwayland         : disabled
+
+ninja -C build
+sudo ninja -C build install
+
+labwc -------------------------------------------------------------------------
+
+https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
 git clone https://github.com/labwc/labwc.git && cd labwc
 meson setup -Dxwayland=disabled build
 meson compile -C build
