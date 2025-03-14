@@ -1,36 +1,49 @@
 
-https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
+libsfdo -----------------------------------------------------------------------
 
-check dependencies : builddep labwc
+https://gitlab.freedesktop.org/vyivel/libsfdo  
+
+git clone https://gitlab.freedesktop.org/vyivel/libsfdo.git
+cd libsfdo
+meson setup build
+ninja -C build
+sudo ninja -C build install
+
+wlroots -----------------------------------------------------------------------
+
+https://github.com/labwc/labwc?tab=readme-ov-file#2-build-and-installation  
+https://packages.debian.org/trixie/libwlroots-0.18  
+
+builddep libwlroots-0.18
 
 sudo apt install \
-cmake \
-libwlroots-0.18-dev \
-libxml2-dev \
-liblzma-dev \
-libglib2.0-dev \
+dpkg-dev \
+glslang-tools \
+hwdata \
+libcap-dev \
 libcairo2-dev \
-libpango1.0-dev \
+libdisplay-info-dev \
+libdrm-dev \
+libegl1-mesa-dev \
+libegl-dev \
+libgbm-dev \
+libgles2-mesa-dev \
 libinput-dev \
+liblcms2-dev \
+libliftoff-dev \
+libpixman-1-dev \
 libpng-dev \
-librsvg2-dev \
+libseat-dev \
+libsystemd-dev \
+libvulkan-dev \
+libwayland-dev \
 meson \
 pkgconf \
 wayland-protocols \
-libxkbcommon-dev \
-libdrm-dev \
-scdoc \
-gettext
 
 git clone https://github.com/labwc/labwc.git && cd labwc
-
-* compile & install
-
-    meson setup -Dxwayland=disabled build
-    meson compile -C build
-    sudo meson install --skip-subprojects -C build
-
-* install config files
-
+meson setup -Dxwayland=disabled build
+meson compile -C build
+sudo meson install --skip-subprojects -C build
 
 
