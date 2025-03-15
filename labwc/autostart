@@ -5,4 +5,4 @@ swaybg -i $HOME/.config/wallpaper >/dev/null 2>&1 &
 xfce4-panel &
 volman &
 wl-clip-persist -c regular &
-kanshi &
+#kanshi &

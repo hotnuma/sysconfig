@@ -23,6 +23,15 @@ create_dir()
     mkdir -p "$1"
 }
 
+sys_upgrade()
+{
+    echo "*** sys upgrade" | tee -a "$outfile"
+    sudo apt update 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "update failed"
+    sudo apt upgrade 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "upgrade failed"
+}
+
 install_file()
 {
     test "$#" == 2 || error_exit "install_file must take 2 parameters"
@@ -131,14 +140,14 @@ test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
 
 while (($#)); do
     case "$1" in
-        cleanup)
-        opt_cleanup=1
+        labwc)
+        opt_labwc=1
         ;;
         qtcreator)
         opt_qtcreator=1
         ;;
-        labwc)
-        opt_labwc=1
+        cleanup)
+        opt_cleanup=1
         ;;
         *)
         ;;
@@ -151,22 +160,6 @@ done
 echo "===============================================================================" | tee -a $outfile
 echo " Debian install..." | tee -a $outfile
 echo "===============================================================================" | tee -a $outfile
-
-# cleanup ---------------------------------------------------------------------
-
-if [[ "$opt_cleanup" -eq 1 ]]; then
-    dest="/usr/bin/mousepad"
-    if [[ -f "$dest" ]]; then
-        echo "*** uninstall mousepad" | tee -a "$outfile"
-        sudo apt -y purge mousepad 2>&1 | tee -a "$outfile"
-    fi
-    dest="/usr/bin/plymouth"
-    if [[ -f "$dest" ]]; then
-        echo "*** uninstall plymouth" | tee -a "$outfile"
-        sudo apt -y purge plymouth 2>&1 | tee -a "$outfile"
-    fi
-    exit 0
-fi
 
 # sudoers ---------------------------------------------------------------------
 
@@ -239,16 +232,6 @@ EOF
     sudo systemctl restart rtkit-daemon.service 2>&1 | tee -a "$outfile"
 fi
 
-# upgrade ---------------------------------------------------------------------
-
-if [[ ! -d "$HOME/Downloads/0Supprimer/" ]]; then
-    echo "*** upgrade" | tee -a "$outfile"
-    sudo apt update 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "update failed"
-    sudo apt upgrade 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "upgrade failed"
-fi
-
 # create directories ----------------------------------------------------------
 
 create_dir "$HOME/.config/autostart/"
@@ -256,12 +239,12 @@ create_dir "$HOME/.config/labwc/"
 create_dir "$HOME/.local/share/applications/"
 create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
-create_dir "$HOME/Downloads/0Supprimer/"
 
 # install base ================================================================
 
 dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
+    sys_upgrade
     echo "*** install base" | tee -a "$outfile"
     APPLIST="curl dmz-cursor-theme dos2unix elementary-xfce-icon-theme"
     APPLIST+=" fonts-dejavu hsetroot htop net-tools p7zip-full python3-pip"
@@ -269,16 +252,6 @@ if [[ ! -f "$dest" ]]; then
     APPLIST+=" audacious ffmpeg mkvtoolnix-gui mediainfo-gui mpv"
     APPLIST+=" engrampa geany gimp xfce4-screenshooter xfce4-terminal"
     APPLIST+=" zathura"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
-# install wayland softwares ---------------------------------------------------
-
-dest=/usr/bin/swaybg
-if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install wayland softwares" | tee -a "$outfile"
-    APPLIST="labwc swaybg"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -593,12 +566,40 @@ hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
 hide_launcher "$dest/org.xfce.mousepad.desktop"
 hide_launcher "$dest/thunar.desktop"
 
+# cleanup =====================================================================
+
+if [[ "$opt_cleanup" -eq 1 ]]; then
+    dest="/usr/bin/mousepad"
+    if [[ -f "$dest" ]]; then
+        echo "*** uninstall mousepad" | tee -a "$outfile"
+        sudo apt -y purge mousepad 2>&1 | tee -a "$outfile"
+    fi
+    dest="/usr/bin/plymouth"
+    if [[ -f "$dest" ]]; then
+        echo "*** uninstall plymouth" | tee -a "$outfile"
+        sudo apt -y purge plymouth 2>&1 | tee -a "$outfile"
+    fi
+    popd 1>/dev/null
+    echo "done" | tee -a "$outfile"
+    exit 0
+fi
+
 # labwc =======================================================================
 
 if [[ "$opt_labwc" -eq 0 ]]; then
     popd 1>/dev/null
     echo "done" | tee -a "$outfile"
     exit 0
+fi
+
+# install wayland softwares ---------------------------------------------------
+
+dest=/usr/bin/swaybg
+if [[ ! -f "$dest" ]]; then
+    echo "*** install wayland softwares" | tee -a "$outfile"
+    APPLIST="labwc swaybg"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # config files ----------------------------------------------------------------
