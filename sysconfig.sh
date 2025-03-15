@@ -367,6 +367,12 @@ if [[ "$(pidof bluetoothd)" ]]; then
     sudo systemctl disable bluetooth 2>&1 | tee -a "$outfile"
 fi
 
+if [[ "$(pidof mpris-proxy)" ]]; then
+    echo "*** disable mpris-proxy" | tee -a "$outfile"
+    systemctl --user stop mpris-proxy 2>&1 | tee -a "$outfile"
+    systemctl --user disable mpris-proxy 2>&1 | tee -a "$outfile"
+fi
+
 if [[ -f "/etc/systemd/system/smartd.service" ]]; then
     echo "*** disable smartd" | tee -a "$outfile"
     sudo systemctl stop smartd 2>&1 | tee -a "$outfile"
