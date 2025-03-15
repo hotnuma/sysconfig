@@ -5,6 +5,7 @@ builddir="$HOME/DevFiles"
 currentuser="$USER"
 outfile="$HOME/install.log"
 dist_id=""
+cpu=$(arch)
 
 error_exit()
 {
@@ -481,30 +482,6 @@ if [[ ! -f "$dest" ]]; then
     cp "$basedir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# labwc =======================================================================
-
-dest="$HOME/.config/labwc"
-test -d "$dest" || mkdir -p "$dest"
-if [[ ! -d "${dest}.bak" ]]; then
-    echo "*** install labwc files" | tee -a "$outfile"
-    cp -r "$dest" "${dest}.bak"
-    test "$?" -eq 0 || error_exit "install labwc files failed"
-    cp "$basedir/labwc/autostart" "$dest/"
-    test "$?" -eq 0 || error_exit "install labwc files failed"
-    cp "$basedir/labwc/environment" "$dest/"
-    test "$?" -eq 0 || error_exit "install labwc files failed"
-    cp "$basedir/labwc/rc.xml" "$dest/"
-    test "$?" -eq 0 || error_exit "install labwc files failed"
-fi
-
-dest="$HOME/.local/share/themes"
-if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
-    echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
-    src="$basedir/labwc/theme-adwaita-light.zip"
-    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
 # build programs ==============================================================
 
 dest="$builddir"
@@ -584,35 +561,6 @@ if [[ -f "/usr/local/bin/powerctl" ]] \
     cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# labwc-tweaks-gtk ------------------------------------------------------------
-
-dest=/usr/local/bin/labwc-tweaks-gtk
-if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** build labwc-tweaks-gtk" | tee -a "$outfile"
-    git clone https://github.com/labwc/labwc-tweaks-gtk.git \
-    && pushd labwc-tweaks-gtk 1>/dev/null
-    meson setup build | tee -a "$outfile"
-    meson compile -C build | tee -a "$outfile"
-    sudo meson install -C build | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-    popd 1>/dev/null
-fi
-
-# rofi ------------------------------------------------------------
-
-dest=/usr/local/bin/rofi
-if [[ "$opt_labwc" -eq 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** build rofi" | tee -a "$outfile"
-    sudo apt -y install bison flex
-    git clone https://github.com/lbonn/rofi.git \
-    && pushd rofi 1>/dev/null
-    meson setup build -Dcheck=disabled -Dxcb=disabled \
-    | tee -a "$outfile"
-    ninja -C build | tee -a "$outfile"
-    sudo ninja -C build install | tee -a "$outfile"
-    popd 1>/dev/null
-fi
-
 # Disable autostart programs --------------------------------------------------
 
 hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
@@ -645,7 +593,80 @@ hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
 hide_launcher "$dest/org.xfce.mousepad.desktop"
 hide_launcher "$dest/thunar.desktop"
 
-# pop dir ---------------------------------------------------------------------
+# labwc =======================================================================
+
+if [[ "$opt_labwc" -eq 0 ]]; then
+    popd 1>/dev/null
+    echo "done" | tee -a "$outfile"
+    exit 0
+fi
+
+# config files ----------------------------------------------------------------
+
+dest="$HOME/.config/labwc"
+test -d "$dest" || mkdir -p "$dest"
+if [[ ! -d "${dest}.bak" ]]; then
+    echo "*** install labwc files" | tee -a "$outfile"
+    cp -r "$dest" "${dest}.bak"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/autostart" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/environment" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+    cp "$basedir/labwc/rc.xml" "$dest/"
+    test "$?" -eq 0 || error_exit "install labwc files failed"
+fi
+
+# AdwaitaRevisitedLight -------------------------------------------------------
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
+    echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
+    src="$basedir/labwc/theme-adwaita-light.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# wl-clip-persist -------------------------------------------------------------
+
+dest="/usr/local/bin"
+if [[ $cpu == "aarch64" ]] && [[ ! -f "$dest/wl-clip-persist" ]]; then
+    echo "*** install wl-clip-persist" | tee -a "$outfile"
+    src="$basedir/labwc/wl-clip-persist-aarch64.zip"
+    sudo unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# labwc-tweaks-gtk ------------------------------------------------------------
+
+dest=/usr/local/bin/labwc-tweaks-gtk
+if [[ ! -f "$dest" ]]; then
+    echo "*** build labwc-tweaks-gtk" | tee -a "$outfile"
+    git clone https://github.com/labwc/labwc-tweaks-gtk.git \
+    && pushd labwc-tweaks-gtk 1>/dev/null
+    meson setup build | tee -a "$outfile"
+    meson compile -C build | tee -a "$outfile"
+    sudo meson install -C build | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+    popd 1>/dev/null
+fi
+
+# rofi ------------------------------------------------------------
+
+dest=/usr/local/bin/rofi
+if [[ ! -f "$dest" ]]; then
+    echo "*** build rofi" | tee -a "$outfile"
+    sudo apt -y install bison flex
+    git clone https://github.com/lbonn/rofi.git \
+    && pushd rofi 1>/dev/null
+    meson setup build -Dcheck=disabled -Dxcb=disabled \
+    | tee -a "$outfile"
+    ninja -C build | tee -a "$outfile"
+    sudo ninja -C build install | tee -a "$outfile"
+    popd 1>/dev/null
+fi
+
+# terminate ===================================================================
 
 popd 1>/dev/null
 echo "done" | tee -a "$outfile"
