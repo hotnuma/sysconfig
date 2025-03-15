@@ -334,6 +334,7 @@ fi
 
 dest="/usr/lib/gvfs/gvfs-afc-volume-monitor"
 test ! -f "$dest" || sudo apt -y purge gvfs-backends 2>&1 | tee -a "$outfile"
+which mpris-proxy && sudo apt -y purge bluez 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
 
@@ -365,12 +366,6 @@ if [[ "$(pidof bluetoothd)" ]]; then
     echo "*** disable bluetooth" | tee -a "$outfile"
     sudo systemctl stop bluetooth 2>&1 | tee -a "$outfile"
     sudo systemctl disable bluetooth 2>&1 | tee -a "$outfile"
-fi
-
-if [[ "$(pidof mpris-proxy)" ]]; then
-    echo "*** disable mpris-proxy" | tee -a "$outfile"
-    systemctl --user stop mpris-proxy 2>&1 | tee -a "$outfile"
-    systemctl --user disable mpris-proxy 2>&1 | tee -a "$outfile"
 fi
 
 if [[ -f "/etc/systemd/system/smartd.service" ]]; then
