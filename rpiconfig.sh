@@ -25,7 +25,7 @@ echo "==========================================================================
 echo " Raspi config..." | tee -a "$outfile"
 echo "===============================================================================" | tee -a "$outfile"
 
-# test if sudo is succesfull ==================================================
+# test if sudo is succesfull --------------------------------------------------
 
 if [[ "$EUID" = 0 ]]; then
     echo "*** must not be run as root, abort..." | tee -a "$outfile"
@@ -38,7 +38,7 @@ else
     fi
 fi
 
-# cpu governor ================================================================
+# cpu governor ----------------------------------------------------------------
 
 dest="/etc/default/cpufrequtils"
 if [[ ! -f $dest ]]; then
@@ -48,44 +48,7 @@ GOVERNOR="performance"
 EOF
 fi
 
-#~ dest="~/.local/share/keyrings"
-#~ if [[ -d $dest ]] && [[ ! -d ${dest}.bak ]]; then
-    #~ echo "*** reset keyring password" | tee -a "$outfile"
-	#~ cp -r "$dest" ${dest}.bak 
-	#~ rm "$dest/*.keyring"
-#~ fi
-
-# rpi configuration ===========================================================
-
-dest="/etc/default/raspi-firmware-custom"
-if [[ "$opt_raspi" -eq 0 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** create /etc/default/raspi-firmware-custom" | tee -a "$outfile"
-    sudo tee "$dest" > /dev/null << 'EOF'
-# http://rpf.io/configtxt
-
-dtoverlay=vc4-kms-v3d
-max_framebuffers=2
-arm_64bit=1
-disable_overscan=1
-disable_splash=1
-boot_delay=0
-
-# overclock
-over_voltage=6
-arm_freq=2000
-gpu_freq=600
-
-# audio
-#dtparam=audio=on
-
-# disable unneeded
-dtoverlay=disable-bt
-dtoverlay=disable-wifi
-EOF
-    sudo update-initramfs -u -k all
-    echo "done" | tee -a "$outfile"
-    exit 0
-fi
+# raspios ---------------------------------------------------------------------
 
 #~ dest="/boot/firmware/cmdline.txt"
 #~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
@@ -121,6 +84,36 @@ gpu_freq=600
 dtoverlay=disable-bt
 dtoverlay=disable-wifi
 EOF
+fi
+
+# debian ----------------------------------------------------------------------
+
+dest="/etc/default/raspi-firmware-custom"
+if [[ "$opt_raspi" -eq 0 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** create /etc/default/raspi-firmware-custom" | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << 'EOF'
+# http://rpf.io/configtxt
+
+dtoverlay=vc4-kms-v3d
+max_framebuffers=2
+arm_64bit=1
+disable_overscan=1
+disable_splash=1
+boot_delay=0
+
+# overclock
+over_voltage=6
+arm_freq=2000
+gpu_freq=600
+
+# audio
+#dtparam=audio=on
+
+# disable unneeded
+dtoverlay=disable-bt
+dtoverlay=disable-wifi
+EOF
+    sudo update-initramfs -u -k all
 fi
 
 echo "done" | tee -a "$outfile"
