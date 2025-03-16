@@ -4,8 +4,7 @@
 
 ---
 
-Experimental post install script for Debian XFCE.  
-**This is an example script it must not be executed as is.**
+*Experimental post install script for Debian XFCE. This is meant to be an example and shouldn't be executed as is.*
 
 
 #### System Install
@@ -33,7 +32,7 @@ Experimental post install script for Debian XFCE.
 
 * Upgrade packages
     
-    `sudo apt update; sudo apt upgrade`
+    `sudo apt update && sudo apt upgrade`
     
 * Install and Configure Git
     
@@ -46,10 +45,10 @@ Experimental post install script for Debian XFCE.
 * Execute the script
 
     ```
-    mkdir ~/DevFiles; cd ~/DevFiles
-    git clone https://github.com/hotnuma/sysconfig.git; cd sysconfig
-    ./debian/config.sh
-    systemctl reboot
+    mkdir ~/DevFiles && cd ~/DevFiles
+    git clone https://github.com/hotnuma/sysconfig.git && cd sysconfig
+    ./sysconfig.sh
+    reboot
     ```
 
 
