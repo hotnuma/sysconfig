@@ -297,9 +297,9 @@ fi
 dest=/usr/bin/xfce4-power-manager
 if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
-    APPLIST="at-spi2-core exfalso light-locker parole synaptic tumbler"
-    APPLIST+=" wpasupplicant xdg-desktop-portal xfburn xfce4-power-manager"
-    APPLIST+=" xsane xterm yt-dlp zutty"
+    APPLIST="at-spi2-core exfalso light-locker mousepad parole synaptic"
+    APPLIST+=" tumbler wpasupplicant xdg-desktop-portal xfburn"
+    APPLIST+=" xfce4-power-manager xsane xterm yt-dlp zutty"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
@@ -561,19 +561,11 @@ hide_application "xfce4-mail-reader"
 hide_application "xfce4-run"
 hide_application "xfce4-web-browser"
 
-dest="$HOME/.local/share/applications"
-hide_launcher "$dest/org.xfce.mousepad-settings.desktop"
-hide_launcher "$dest/org.xfce.mousepad.desktop"
-hide_launcher "$dest/thunar.desktop"
+hide_launcher "$HOME/.local/share/applications/thunar.desktop"
 
 # cleanup =====================================================================
 
 if [[ "$opt_cleanup" -eq 1 ]]; then
-    dest="/usr/bin/mousepad"
-    if [[ -f "$dest" ]]; then
-        echo "*** uninstall mousepad" | tee -a "$outfile"
-        sudo apt -y purge mousepad 2>&1 | tee -a "$outfile"
-    fi
     dest="/usr/bin/plymouth"
     if [[ -f "$dest" ]]; then
         echo "*** uninstall plymouth" | tee -a "$outfile"
