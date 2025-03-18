@@ -10,10 +10,15 @@ def error_exit(msg):
 
 def usage_exit():
     print("*** usage :")
-    print("%s -opt1" % appname)
-    print("%s -opt2 bla" % appname)
+    print("%s /path/to/file.txt" % appname)
+    print("%s -opt val" % appname)
     print("abort...")
     exit(1)
+
+def runcmd(cmd):
+    ret = subprocess.run(cmd, shell=True, capture_output=True)
+    result = ret.stdout.decode()
+    return (result, ret.returncode)
 
 args = sys.argv
 size = len(args)
