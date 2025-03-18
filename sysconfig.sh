@@ -279,15 +279,11 @@ fi
 
 # install dev packages --------------------------------------------------------
 
-dest=/usr/include/gumbo.h
+dest=/usr/bin/apt-file
 if [[ ! -f "$dest" ]]; then
     echo "*** install dev packages" | tee -a "$outfile"
-    APPLIST="apt-file build-essential clang-format gettext git meson"
-    APPLIST+=" ninja-build pkg-config libglib2.0-doc libgtk-3-dev libgtk-3-doc"
-    APPLIST+=" gtk-3-examples libgd-dev libgudev-1.0-dev libgumbo-dev"
-    APPLIST+=" libxfce4ui-2-dev libxfconf-0-dev libxml2-dev xfce4-dev-tools"
-    APPLIST+=" libmediainfo-dev libnotify-dev libwnck-3-dev libxmu-dev"
-    APPLIST+=" libxss-dev"
+    APPLIST="apt-file build-essential clang-format gettext git gtk-3-examples"
+    APPLIST+=" libglib2.0-doc libgtk-3-dev libgtk-3-doc libxml2-dev meson"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -464,6 +460,16 @@ if [[ ! -d "$dest" ]]; then
 fi
 
 pushd "$builddir" 1>/dev/null
+
+dest=/usr/include/gumbo.h
+if [[ ! -f "$dest" ]]; then
+    echo "*** install libraries" | tee -a "$outfile"
+    APPLIST="libgd-dev libgudev-1.0-dev libgumbo-dev libmediainfo-dev"
+    APPLIST+=" libnotify-dev libwnck-3-dev libxfce4ui-2-dev libxfconf-0-dev"
+    APPLIST+=" libxmu-dev libxss-dev xfce4-dev-tools"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
 
 dest="/usr/local/include/tinyc/cstring.h"
 build_src "libtinyc" "$dest"
