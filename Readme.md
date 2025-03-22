@@ -38,8 +38,8 @@
     
     ```
     sudo apt install git
-    git config --global user.name "John Doe"
-    git config --global user.email johndoe@example.com
+    git config --global user.name "My Name"
+    git config --global user.email mymail@example.com
     ```
 
 * Execute the script
