@@ -54,41 +54,6 @@
 
 #### <a name="disable"></a> Manual configuration
 
-* Configure hotkeys
-    
-    Predefined shorcut using super key :
-
-    ```
-    Super+Tab                           swith window in the same application
-    Super+Arrows                        mosaic placing
-    Super+P                             screen settings
-    ```
-
-    Run `xfce4-keyboard-settings` and add new hotkeys :
-
-    ```
-    fileman /home/hotnuma/Downloads/    Super+E
-    firefox                             Super+B
-    rofi -show run                      Super+Space
-    systemctl poweroff                  Maj+Super+Q
-    systemctl reboot                    Maj+Super+R
-    xfce4-taskmanager                   Super+S
-    ```
-    
-    run terminal in a specific directory :  
-    
-    https://unix.stackexchange.com/questions/676601/  
-    
-    `xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/`
-    
-    shortcut : `Super+T`
-    
-    Run `xfwm4-settings` and edit hotkeys :
-
-    ```
-    show desktop                        Super+D
-    ```
-
 * Firefox
     
     Install uBlock Origin, SingleFile, cookies.txt.  
