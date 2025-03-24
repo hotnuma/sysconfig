@@ -211,7 +211,7 @@ if [[ ! -f ${dest}.bak ]]; then
     echo "*** environment" | tee -a "$outfile"
     sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << "EOF"
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 GTK_OVERLAY_SCROLLING=0
 NO_AT_BRIDGE=1
 EOF
