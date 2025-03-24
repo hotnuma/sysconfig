@@ -237,6 +237,7 @@ fi
 create_dir "$HOME/.config/autostart/"
 create_dir "$HOME/.config/labwc/"
 create_dir "$HOME/.local/share/applications/"
+create_dir "$HOME/.local/share/icons/"
 create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
 
@@ -615,6 +616,16 @@ if [[ ! -d "${dest}.bak" ]]; then
     test "$?" -eq 0 || error_exit "install labwc files failed"
     cp "$basedir/labwc/rc.xml" "$dest/"
     test "$?" -eq 0 || error_exit "install labwc files failed"
+fi
+
+# Notwaita White Cursors ------------------------------------------------------
+
+dest="$HOME/.local/share/icons"
+if [[ ! -d "$dest/NotwaitaWhite" ]]; then
+    echo "*** install NotwaitaWhite cursors" | tee -a "$outfile"
+    src="$basedir/labwc/cursors-notwaita-white.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 # AdwaitaRevisitedLight -------------------------------------------------------
