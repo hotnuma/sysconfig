@@ -513,10 +513,10 @@ dest="/usr/local/bin/volman"
 build_src "volman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/viewnior"
+dest="/usr/local/bin/imgview"
 if [[ ! -f "$dest" ]]; then
-    sudo apt -y install shared-mime-info libexiv2-dev libgdk-pixbuf-2.0-dev
-    build_src "viewnior" "$dest"
+    sudo apt -y install libexiv2-dev libgdk-pixbuf-2.0-dev
+    build_src "imgview" "$dest"
     test -f "$dest" || error_exit "compilation failed"
 fi
 
