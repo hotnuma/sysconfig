@@ -380,6 +380,14 @@ if [[ ! -f "$dest" ]]; then
     cp "$basedir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
+# wallpaper -------------------------------------------------------------------
+
+dest="$HOME/.config/wallpaper"
+if [[ ! -f "$dest" ]]; then
+    echo "*** wallpaper" | tee -a "$outfile"
+    cp "$basedir/home/wallpaper" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
 # xfce settings ===============================================================
 
 dest=/etc/xdg/xfce4
