@@ -20,7 +20,7 @@ it shouldn't be executed as is.*
     
 * Raspi
 
-    https://hotnuma.github.io/docpages/other/05-raspi.html  
+    https://hotnuma.github.io/docpages/other/10-raspi.html  
     
     Install RaspiOS Lite 64 bits or Debian 64 bits.
     
