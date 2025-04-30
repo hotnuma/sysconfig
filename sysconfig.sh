@@ -303,8 +303,6 @@ if [[ -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "autoremove failed"
 fi
 
-dest="/usr/lib/gvfs/gvfs-afc-volume-monitor"
-test ! -f "$dest" || sudo apt -y purge gvfs-backends 2>&1 | tee -a "$outfile"
 which fluidsynth && sudo apt -y purge fluidsynth 2>&1 | tee -a "$outfile"
 which mpris-proxy && sudo apt -y purge bluez 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
@@ -350,6 +348,30 @@ if [[ "$(pidof sshd)" ]]; then
     echo "*** disable sshd" | tee -a "$outfile"
     sudo systemctl stop sshd 2>&1 | tee -a "$outfile"
     sudo systemctl disable sshd 2>&1 | tee -a "$outfile"
+fi
+
+dest="/usr/share/gvfs/remote-volume-monitors/afc.monitor"
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** disable afc.monitor" | tee -a "$outfile"
+    sudo mv "$dest" "${dest}.bak"
+fi
+
+dest="/usr/share/gvfs/remote-volume-monitors/goa.monitor"
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** disable goa.monitor" | tee -a "$outfile"
+    sudo mv "$dest" "${dest}.bak"
+fi
+
+dest="/usr/share/gvfs/remote-volume-monitors/gphoto2.monitor"
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** disable gphoto2.monitor" | tee -a "$outfile"
+    sudo mv "$dest" "${dest}.bak"
+fi
+
+dest="/usr/share/gvfs/remote-volume-monitors/mtp.monitor"
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+    echo "*** disable mtp.monitor" | tee -a "$outfile"
+    sudo mv "$dest" "${dest}.bak"
 fi
 
 # system settings =============================================================
