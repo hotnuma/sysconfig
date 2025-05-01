@@ -350,30 +350,6 @@ if [[ "$(pidof sshd)" ]]; then
     sudo systemctl disable sshd 2>&1 | tee -a "$outfile"
 fi
 
-dest="/usr/share/gvfs/remote-volume-monitors/afc.monitor"
-if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** disable afc.monitor" | tee -a "$outfile"
-    sudo mv "$dest" "${dest}.bak"
-fi
-
-dest="/usr/share/gvfs/remote-volume-monitors/goa.monitor"
-if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** disable goa.monitor" | tee -a "$outfile"
-    sudo mv "$dest" "${dest}.bak"
-fi
-
-dest="/usr/share/gvfs/remote-volume-monitors/gphoto2.monitor"
-if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** disable gphoto2.monitor" | tee -a "$outfile"
-    sudo mv "$dest" "${dest}.bak"
-fi
-
-dest="/usr/share/gvfs/remote-volume-monitors/mtp.monitor"
-if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
-    echo "*** disable mtp.monitor" | tee -a "$outfile"
-    sudo mv "$dest" "${dest}.bak"
-fi
-
 # system settings =============================================================
 
 dest=/usr/local/bin/startup.sh
