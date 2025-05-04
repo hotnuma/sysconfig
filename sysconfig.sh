@@ -603,7 +603,7 @@ fi
 dest=/usr/bin/swaybg
 if [[ ! -f "$dest" ]]; then
     echo "*** install wayland softwares" | tee -a "$outfile"
-    APPLIST="labwc swaybg"
+    APPLIST="labwc swaybg swayidle wlopm"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
