@@ -7,6 +7,9 @@ outfile="$HOME/install.log"
 dist_id=""
 cpu=$(arch)
 
+
+# functions ===================================================================
+
 error_exit()
 {
     msg="$1"
@@ -111,6 +114,7 @@ build_src()
     fi
 }
 
+
 # tests =======================================================================
 
 if [[ "$EUID" = 0 ]]; then
@@ -155,7 +159,8 @@ while (($#)); do
     shift
 done
 
-# start =======================================================================
+
+# startup =====================================================================
 
 echo "===============================================================================" | tee -a $outfile
 echo " Debian install..." | tee -a $outfile
@@ -201,6 +206,7 @@ autologin-guest=false
 autologin-user=$currentuser
 autologin-user-timeout=0
 autologin-session=lightdm-xsession
+#autologin-session=labwc
 EOF
 fi
 
@@ -241,7 +247,8 @@ create_dir "$HOME/.local/share/icons/"
 create_dir "$HOME/.local/share/themes/"
 create_dir "$HOME/.local/share/xfce4/terminal/colorschemes/"
 
-# install base ================================================================
+
+# base install ================================================================
 
 dest=/usr/bin/hsetroot
 if [[ ! -f "$dest" ]]; then
@@ -268,16 +275,6 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
-# install QtCreator -----------------------------------------------------------
-
-dest=/usr/bin/qtcreator
-if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** install QtCreator" | tee -a "$outfile"
-    APPLIST="qtcreator qt6-base-dev"
-    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
-    test "$?" -eq 0 || error_exit "installation failed"
-fi
-
 # install dev packages --------------------------------------------------------
 
 dest=/usr/bin/apt-file
@@ -288,6 +285,17 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
+
+# install QtCreator -----------------------------------------------------------
+
+dest=/usr/bin/qtcreator
+if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
+    echo "*** install QtCreator" | tee -a "$outfile"
+    APPLIST="qtcreator qt6-base-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
 
 # uninstall ===================================================================
 
@@ -303,17 +311,11 @@ if [[ -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "autoremove failed"
 fi
 
+# services --------------------------------------------------------------------
+
 which fluidsynth && sudo apt -y purge fluidsynth 2>&1 | tee -a "$outfile"
 which mpris-proxy && sudo apt -y purge bluez 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
-which vlc && sudo apt -y purge vlc 2>&1 | tee -a "$outfile"
-
-if [[ "$(pidof exim4)" ]]; then
-    echo "*** uninstall exim4" | tee -a "$outfile"
-    sudo apt -y purge exim4-base 2>&1 | tee -a "$outfile"
-fi
-
-# services --------------------------------------------------------------------
 
 if [ "$(pidof cupsd)" ]; then
     echo "*** disable services" | tee -a "$outfile"
@@ -338,6 +340,11 @@ if [[ "$(pidof bluetoothd)" ]]; then
     sudo systemctl disable bluetooth 2>&1 | tee -a "$outfile"
 fi
 
+if [[ "$(pidof exim4)" ]]; then
+    echo "*** uninstall exim4" | tee -a "$outfile"
+    sudo apt -y purge exim4-base 2>&1 | tee -a "$outfile"
+fi
+
 if [[ -f "/etc/systemd/system/smartd.service" ]]; then
     echo "*** disable smartd" | tee -a "$outfile"
     sudo systemctl stop smartd 2>&1 | tee -a "$outfile"
@@ -350,6 +357,7 @@ if [[ "$(pidof sshd)" ]]; then
     sudo systemctl disable sshd 2>&1 | tee -a "$outfile"
 fi
 
+
 # system settings =============================================================
 
 dest=/usr/local/bin/startup.sh
@@ -359,6 +367,7 @@ if [[ ! -f "$dest" ]]; then
     dest="$HOME/.config/autostart/startup.desktop"
     cp "$basedir/home/startup.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
+
 
 # user settings ===============================================================
 
@@ -385,6 +394,7 @@ if [[ ! -f "$dest" ]]; then
     echo "*** wallpaper" | tee -a "$outfile"
     cp "$basedir/home/wallpaper" "$dest" 2>&1 | tee -a "$outfile"
 fi
+
 
 # xfce settings ===============================================================
 
@@ -458,6 +468,7 @@ if [[ ! -f "$dest" ]]; then
     echo "*** terminal colors" | tee -a "$outfile"
     cp "$basedir/home/custom.theme" "$dest" 2>&1 | tee -a "$outfile"
 fi
+
 
 # build programs ==============================================================
 
@@ -548,7 +559,7 @@ if [[ -f "/usr/local/bin/powerctl" ]] \
     cp "$basedir/home/powerctl.desktop" "$dest" 2>&1 | tee -a "$outfile"
 fi
 
-# Disable autostart programs --------------------------------------------------
+# disable autostart programs --------------------------------------------------
 
 hide_launcher "$HOME/.config/autostart/nm-applet.desktop"
 hide_launcher "$HOME/.config/autostart/print-applet.desktop"
@@ -558,7 +569,7 @@ hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
 hide_launcher "$HOME/.config/autostart/xiccd.desktop"
 hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
 
-# Hide Applications -----------------------------------------------------------
+# hide launchers --------------------------------------------------------------
 
 hide_application "fileman"
 hide_application "gcr-prompter"
@@ -577,6 +588,7 @@ hide_application "xfce4-web-browser"
 
 hide_launcher "$HOME/.local/share/applications/thunar.desktop"
 
+
 # cleanup =====================================================================
 
 if [[ "$opt_cleanup" -eq 1 ]]; then
@@ -589,6 +601,7 @@ if [[ "$opt_cleanup" -eq 1 ]]; then
     echo "done" | tee -a "$outfile"
     exit 0
 fi
+
 
 # labwc =======================================================================
 
@@ -624,7 +637,7 @@ if [[ ! -d "${dest}.bak" ]]; then
     test "$?" -eq 0 || error_exit "install labwc files failed"
 fi
 
-# Notwaita White Cursors ------------------------------------------------------
+# Notwaita White cursors ------------------------------------------------------
 
 dest="$HOME/.local/share/icons"
 if [[ ! -d "$dest/NotwaitaWhite" ]]; then
@@ -682,6 +695,7 @@ if [[ ! -f "$dest" ]]; then
     sudo ninja -C build install | tee -a "$outfile"
     popd 1>/dev/null
 fi
+
 
 # terminate ===================================================================
 
