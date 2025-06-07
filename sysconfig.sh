@@ -319,14 +319,13 @@ which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 
 if [ "$(pidof cupsd)" ]; then
     echo "*** disable services" | tee -a "$outfile"
-    APPLIST="anacron apparmor avahi-daemon cron"
+    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
     APPLIST+=" ModemManager"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-    sudo apt -y purge cups 2>&1 | tee -a "$outfile"
 fi
 
 if [[ "$(pidof blkmapd)" ]]; then
