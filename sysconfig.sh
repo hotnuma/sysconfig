@@ -319,13 +319,14 @@ which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
 
 if [ "$(pidof cupsd)" ]; then
     echo "*** disable services" | tee -a "$outfile"
-    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
+    APPLIST="anacron apparmor avahi-daemon cron"
     APPLIST+=" ModemManager"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
     APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
     sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
     sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
+    sudo apt -y purge cups 2>&1 | tee -a "$outfile"
 fi
 
 if [[ "$(pidof blkmapd)" ]]; then
@@ -498,20 +499,24 @@ dest="/usr/local/include/tinyui/etkaction.h"
 build_src "libtinyui" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
+dest="/usr/local/bin/apt-upgrade"
+build_src "systools" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/sfind"
+build_src "sfind" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
 dest="/usr/local/bin/fileman"
 build_src "fileman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/sysquery"
-build_src "sysquery" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/colortest"
-build_src "systools" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
 dest="/usr/local/bin/xfce4-taskmanager"
 build_src "taskman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/sysquery"
+build_src "sysquery" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
 dest="/usr/local/bin/applist"
@@ -522,21 +527,6 @@ dest="/usr/local/bin/firebook"
 build_src "firebook" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/mpvcmd"
-build_src "mpvcmd" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/volman"
-build_src "volman" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/imgview"
-if [[ ! -f "$dest" ]]; then
-    sudo apt -y install libexiv2-dev libgdk-pixbuf-2.0-dev
-    build_src "imgview" "$dest"
-    test -f "$dest" || error_exit "compilation failed"
-fi
-
 dest=/usr/local/bin/hoedown
 if [[ ! -f "$dest" ]]; then
     echo "*** build hoedown" | tee -a "$outfile"
@@ -545,6 +535,21 @@ if [[ ! -f "$dest" ]]; then
     make && sudo make install 2>&1 | tee -a "$outfile"
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
+
+dest="/usr/local/bin/imgview"
+if [[ ! -f "$dest" ]]; then
+    sudo apt -y install libexiv2-dev libgdk-pixbuf-2.0-dev
+    build_src "imgview" "$dest"
+    test -f "$dest" || error_exit "compilation failed"
+fi
+
+dest="/usr/local/bin/mpvcmd"
+build_src "mpvcmd" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/volman"
+build_src "volman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
 
 # powerctl --------------------------------------------------------------------
 
