@@ -502,28 +502,8 @@ dest="/usr/local/bin/apt-upgrade"
 build_src "systools" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/sfind"
-build_src "sfind" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
 dest="/usr/local/bin/fileman"
 build_src "fileman" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/xfce4-taskmanager"
-build_src "taskman" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/sysquery"
-build_src "sysquery" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/applist"
-build_src "applist" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
-dest="/usr/local/bin/firebook"
-build_src "firebook" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
 dest=/usr/local/bin/hoedown
@@ -534,6 +514,28 @@ if [[ ! -f "$dest" ]]; then
     make && sudo make install 2>&1 | tee -a "$outfile"
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
+
+dest="/usr/local/bin/sfind"
+build_src "sfind" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/sysquery"
+build_src "sysquery" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/xfce4-taskmanager"
+build_src "taskman" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+# build additional tools ------------------------------------------------------
+
+dest="/usr/local/bin/applist"
+build_src "applist" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/firebook"
+build_src "firebook" "$dest"
+test -f "$dest" || error_exit "compilation failed"
 
 dest="/usr/local/bin/imgview"
 if [[ ! -f "$dest" ]]; then
