@@ -304,7 +304,7 @@ if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
     APPLIST="at-spi2-core exfalso light-locker mousepad parole synaptic"
     APPLIST+=" tumbler wpasupplicant xdg-desktop-portal xfburn"
-    APPLIST+=" xfce4-power-manager xsane xterm yt-dlp zutty"
+    APPLIST+=" xfce4-power-manager xarchiver xsane xterm yt-dlp zutty"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
