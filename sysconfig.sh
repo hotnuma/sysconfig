@@ -7,6 +7,9 @@ outfile="$HOME/install.log"
 dist_id=""
 cpu=$(arch)
 
+opt_xfce=0
+test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
+
 
 # functions ===================================================================
 
@@ -134,13 +137,8 @@ fi
 
 # parse options ---------------------------------------------------------------
 
-opt_cleanup=0
-opt_qtcreator=0
 opt_labwc=0
-opt_xfce=0
-opt_yes=0
-
-test $XDG_CURRENT_DESKTOP == "XFCE" && opt_xfce=1
+opt_qtcreator=0
 
 while (($#)); do
     case "$1" in
@@ -149,9 +147,6 @@ while (($#)); do
         ;;
         qtcreator)
         opt_qtcreator=1
-        ;;
-        cleanup)
-        opt_cleanup=1
         ;;
         *)
         ;;
@@ -309,6 +304,14 @@ if [[ -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "autoremove failed"
+fi
+
+dest=/usr/bin/vlc
+if [[ -f "$dest" ]] && [[ $cpu == "x86_64" ]]; then
+    echo "*** uninstall x86_64 softwares" | tee -a "$outfile"
+    APPLIST="vlc"
+    sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "uninstall failed"
 fi
 
 # services --------------------------------------------------------------------
@@ -593,20 +596,6 @@ hide_application "xfce4-run"
 hide_application "xfce4-web-browser"
 
 hide_launcher "$HOME/.local/share/applications/thunar.desktop"
-
-
-# cleanup =====================================================================
-
-if [[ "$opt_cleanup" -eq 1 ]]; then
-    dest="/usr/bin/plymouth"
-    if [[ -f "$dest" ]]; then
-        echo "*** uninstall plymouth" | tee -a "$outfile"
-        sudo apt -y purge plymouth 2>&1 | tee -a "$outfile"
-    fi
-    popd 1>/dev/null
-    echo "done" | tee -a "$outfile"
-    exit 0
-fi
 
 
 # labwc =======================================================================
