@@ -24,12 +24,13 @@
     
     Install RaspiOS Lite 64 bits.
     
-    *experimental configuration scripts tested only on RPI 4b*
-
     ```
     ./sysconfig.sh
     ./sysconfig.sh labwc
     ./sysconfig.sh qtcreator
-    ./rpiconfig.sh
     ```
+    
+    *enable overclocking on RPI 4b*
+
+    `./rpiconfig.sh`
 
