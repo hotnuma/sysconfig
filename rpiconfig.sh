@@ -19,7 +19,7 @@ model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
     || error_exit "wrong board model"
     
-test -f "/etc/apt/sources.list.d/raspi.list" && opt_raspi=1
+test -f "/etc/apt/sources.list.d/raspi.sources" && opt_raspi=1
 
 echo "===============================================================================" | tee -a "$outfile"
 echo " Raspi config..." | tee -a "$outfile"
