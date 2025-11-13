@@ -3,7 +3,7 @@
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 currentuser="$USER"
 outfile="$HOME/install.log"
-opt_raspi=0
+model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 
 error_exit()
 {
@@ -15,12 +15,9 @@ error_exit()
 
 test ! -d "/boot/grub" || error_exit "not a Raspberry Pi"
 
-model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
     || error_exit "wrong board model"
     
-test -f "/etc/apt/sources.list.d/raspi.sources" && opt_raspi=1
-
 echo "===============================================================================" | tee -a "$outfile"
 echo " Raspi config..." | tee -a "$outfile"
 echo "===============================================================================" | tee -a "$outfile"
@@ -58,62 +55,28 @@ fi
 #~ fi
 
 dest="/boot/firmware/config.txt"
-if [[ "$opt_raspi" -eq 1 ]] \
-&& [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     echo "*** edit /boot/firmware/config.txt" | tee -a "$outfile"
     sudo cp "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
     sudo tee "$dest" > /dev/null << 'EOF'
-# http://rpf.io/configtxt
+# https://www.raspberrypi.com/documentation/computers/config_txt.html
 
+[all]
 dtoverlay=vc4-kms-v3d
-max_framebuffers=2
 arm_64bit=1
+max_framebuffers=2
 disable_overscan=1
 disable_splash=1
 boot_delay=0
 
-# overclock
-over_voltage=6
+[pi4]
 arm_freq=2000
 gpu_freq=600
-
-# audio
-#dtparam=audio=on
-
-# disable unneeded
 dtoverlay=disable-bt
 dtoverlay=disable-wifi
+
+[pi5]
 EOF
-fi
-
-# debian ----------------------------------------------------------------------
-
-dest="/etc/default/raspi-firmware-custom"
-if [[ "$opt_raspi" -eq 0 ]] && [[ ! -f "$dest" ]]; then
-    echo "*** create /etc/default/raspi-firmware-custom" | tee -a "$outfile"
-    sudo tee "$dest" > /dev/null << 'EOF'
-# http://rpf.io/configtxt
-
-dtoverlay=vc4-kms-v3d
-max_framebuffers=2
-arm_64bit=1
-disable_overscan=1
-disable_splash=1
-boot_delay=0
-
-# overclock
-over_voltage=6
-arm_freq=2000
-gpu_freq=600
-
-# audio
-#dtparam=audio=on
-
-# disable unneeded
-dtoverlay=disable-bt
-dtoverlay=disable-wifi
-EOF
-    sudo update-initramfs -u -k all
 fi
 
 echo "done" | tee -a "$outfile"
