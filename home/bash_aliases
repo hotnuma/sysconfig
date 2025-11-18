@@ -1,4 +1,5 @@
 alias cgrep='grep -rin --include=*.{h,c,cpp,cxx}'
+alias ecalc='wcalc -E'
 alias evince='LC_ALL=C evince'
 alias free='LC_ALL=C free'
 alias fs='sfind'
