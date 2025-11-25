@@ -137,16 +137,16 @@ fi
 
 # parse options ---------------------------------------------------------------
 
+opt_dev=0
 opt_labwc=0
-opt_qtcreator=0
 
 while (($#)); do
     case "$1" in
+        dev)
+        opt_dev=1
+        ;;
         labwc)
         opt_labwc=1
-        ;;
-        qtcreator)
-        opt_qtcreator=1
         ;;
         *)
         ;;
@@ -284,7 +284,7 @@ fi
 # install QtCreator -----------------------------------------------------------
 
 dest=/usr/bin/qtcreator
-if [[ $opt_qtcreator == 1 ]] && [[ ! -f "$dest" ]]; then
+if [[ $opt_dev == 1 ]] && [[ ! -f "$dest" ]]; then
     echo "*** install QtCreator" | tee -a "$outfile"
     APPLIST="qtcreator qt6-base-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
