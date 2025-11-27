@@ -251,7 +251,7 @@ if [[ ! -f "$dest" ]]; then
     echo "*** install base" | tee -a "$outfile"
     APPLIST="curl dmz-cursor-theme dos2unix elementary-xfce-icon-theme"
     APPLIST+=" fonts-dejavu hsetroot htop net-tools p7zip-full python3-pip"
-    APPLIST+=" rofi wget"
+    APPLIST+=" rofi wcalc wget"
     APPLIST+=" audacious ffmpeg mkvtoolnix-gui mediainfo-gui mpv"
     APPLIST+=" engrampa geany gimp xfce4-screenshooter xfce4-terminal"
     APPLIST+=" zathura"
