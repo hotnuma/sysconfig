@@ -39,10 +39,10 @@
     <numlock>on</numlock>
     <default/>
     <keybind key="W-S-r">
-      <action name="Execute" command="systemctl reboot"/>
+      <action name="Execute" command="shutdown -r now"/>
     </keybind>
     <keybind key="W-S-q">
-      <action name="Execute" command="systemctl poweroff"/>
+      <action name="Execute" command="shutdown -h now"/>
     </keybind>
     <keybind key="W-a">
       <action name="Execute" command="pavucontrol"/>
