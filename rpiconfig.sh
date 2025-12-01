@@ -68,12 +68,12 @@ max_framebuffers=2
 disable_overscan=1
 disable_splash=1
 boot_delay=0
+dtoverlay=disable-bt
+dtoverlay=disable-wifi
 
 [pi4]
 arm_freq=2000
 gpu_freq=600
-dtoverlay=disable-bt
-dtoverlay=disable-wifi
 
 [pi5]
 EOF
