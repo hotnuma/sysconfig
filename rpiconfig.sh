@@ -15,9 +15,6 @@ error_exit()
 
 test ! -d "/boot/grub" || error_exit "not a Raspberry Pi"
 
-test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
-    || error_exit "wrong board model"
-    
 echo "===============================================================================" | tee -a "$outfile"
 echo " Raspi config..." | tee -a "$outfile"
 echo "===============================================================================" | tee -a "$outfile"
@@ -76,6 +73,7 @@ arm_freq=2000
 gpu_freq=600
 
 [pi5]
+usb_max_current_enable=1
 EOF
 fi
 
