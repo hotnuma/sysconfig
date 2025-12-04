@@ -11,7 +11,8 @@ if [[ $XDG_SESSION_TYPE == "x11" ]]; then
 fi
 
 if [[ $XDG_SESSION_DESKTOP == "labwc" ]]; then
-    echo performance | sudo tee /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+    dest="/sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+    echo performance | sudo tee "$dest"
     sleep 2
     sudo systemctl restart systemd-timesyncd.service
     exit 0
