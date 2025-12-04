@@ -1,8 +1,8 @@
 # https://github.com/labwc/labwc/blob/master/docs/autostart
 # /usr/share/doc/labwc/autostart
 
-sudo systemctl restart systemd-timesyncd.service
-swaybg -i $HOME/.config/wallpaper >/dev/null 2>&1 &
+/usr/local/bin/startup.sh
+swaybg -i $HOME/.config/wallpaper &
 xfce4-panel &
 volman &
 wl-clip-persist -c regular &
