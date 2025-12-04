@@ -13,7 +13,10 @@ fi
 if [[ $XDG_SESSION_DESKTOP == "labwc" ]]; then
     dest="/sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
     echo performance | sudo tee "$dest"
-    sleep 2
+    for i in {1..5} ; do
+        ping -c1 192.168.1.254 &>/dev/null && break;
+        sleep 1
+    done
     sudo systemctl restart systemd-timesyncd.service
     exit 0
 fi
