@@ -33,16 +33,6 @@ else
     fi
 fi
 
-# cpu governor ----------------------------------------------------------------
-
-dest="/etc/default/cpufrequtils"
-if [[ ! -f $dest ]]; then
-    echo "*** set governor to performance" | tee -a "$outfile"
-    sudo tee "$dest" > /dev/null << 'EOF'
-GOVERNOR="performance"
-EOF
-fi
-
 # raspios ---------------------------------------------------------------------
 
 dest="/boot/firmware/config.txt"
