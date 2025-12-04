@@ -3,7 +3,8 @@
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 currentuser="$USER"
 outfile="$HOME/install.log"
-model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
+model=$(cat /proc/device-tree/model)
+model=${model::14}
 
 error_exit()
 {
@@ -43,13 +44,6 @@ EOF
 fi
 
 # raspios ---------------------------------------------------------------------
-
-#~ dest="/boot/firmware/cmdline.txt"
-#~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    #~ echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
-    #~ sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    #~ sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
-#~ fi
 
 dest="/boot/firmware/config.txt"
 if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
