@@ -3,8 +3,6 @@
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 currentuser="$USER"
 outfile="$HOME/install.log"
-model=$(cat /proc/device-tree/model)
-model=${model::14}
 
 error_exit()
 {
