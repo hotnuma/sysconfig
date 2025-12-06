@@ -445,8 +445,7 @@ fi
 
 destdir="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 dest="$destdir/xfce4-panel.xml"
-if [[ "$opt_xfce" -eq 1 ]] \
-&& [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
+if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     echo "*** xfce4-panel.xml" | tee -a "$outfile"
     mv "$dest" "${dest}.bak" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "backup xfce4-panel.xml failed"
