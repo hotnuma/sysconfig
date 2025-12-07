@@ -44,10 +44,8 @@ if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
 auto_initramfs=1
 dtoverlay=vc4-kms-v3d
 max_framebuffers=2
-#disable_fw_kms_setup=1
 arm_64bit=1
 disable_overscan=1
-arm_boost=1
 
 # user config
 disable_splash=1
