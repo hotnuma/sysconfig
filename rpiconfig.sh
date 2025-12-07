@@ -40,11 +40,16 @@ if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
     sudo tee "$dest" > /dev/null << 'EOF'
 # https://www.raspberrypi.com/documentation/computers/config_txt.html
 
-[all]
+# default config
+auto_initramfs=1
 dtoverlay=vc4-kms-v3d
-arm_64bit=1
 max_framebuffers=2
+#disable_fw_kms_setup=1
+arm_64bit=1
 disable_overscan=1
+arm_boost=1
+
+# user config
 disable_splash=1
 boot_delay=0
 dtoverlay=disable-bt
