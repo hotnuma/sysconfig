@@ -319,6 +319,7 @@ fi
 which fluidsynth && sudo apt -y purge fluidsynth 2>&1 | tee -a "$outfile"
 which mpris-proxy && sudo apt -y purge bluez 2>&1 | tee -a "$outfile"
 which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
+which xfce4-screensaver && sudo apt -y purge xfce4-screensaver 2>&1 | tee -a "$outfile"
 
 if [ "$(pidof cupsd)" ]; then
     echo "*** disable services" | tee -a "$outfile"
@@ -575,7 +576,6 @@ hide_launcher "$HOME/.config/autostart/pwrkey.desktop"
 hide_launcher "$HOME/.config/autostart/xdg-user-dirs.desktop"
 hide_launcher "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
 hide_launcher "$HOME/.config/autostart/xiccd.desktop"
-hide_launcher "$HOME/.config/autostart/xscreensaver.desktop"
 
 # hide launchers --------------------------------------------------------------
 
