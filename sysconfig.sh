@@ -547,6 +547,10 @@ if [[ ! -f "$dest" ]]; then
     test -f "$dest" || error_exit "compilation failed"
 fi
 
+dest="/usr/local/bin/mpvcmd"
+build_src "mpvcmd" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
 dest="/usr/local/bin/volman"
 build_src "volman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
