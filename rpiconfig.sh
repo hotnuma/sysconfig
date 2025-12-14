@@ -49,7 +49,6 @@ disable_overscan=1
 
 # user config
 disable_splash=1
-boot_delay=0
 dtoverlay=disable-bt
 dtoverlay=disable-wifi
 
